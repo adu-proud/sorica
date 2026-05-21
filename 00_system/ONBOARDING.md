@@ -1,39 +1,63 @@
-# Onboarding Process
+---
+type: onboarding_protocol
+agent: Varro
+created: 2026-05-21
+updated: 2026-05-21
+---
 
-## Purpose
-This document describes how a new researcher sets up the Ecology of Agent-Human Research system from scratch.
+# Onboarding Protocol
+
+Use once for a new research Realm.
+
+The agent starts this protocol automatically when `AGENTS.md` is read and the configuration or blueprint still contains placeholders. If the user already ran `npm run onboard`, treat those answers as a first draft and ask only precise follow-up questions.
 
 ## Steps
+1. Inspect `02_user_realm/RESEARCH_BLUEPRINT.md` and `00_system/REALM_CONFIGURATION.md`.
+2. If available, use the CLI's question/input tool to ask the researcher only for missing or underspecified required fields.
+3. Fill `02_user_realm/RESEARCH_BLUEPRINT.md`.
+4. Fill `00_system/REALM_CONFIGURATION.md`, especially `root_vault_path` and source policy.
+5. If `01_llm_realm/06_research_tendencies/MASTER_OMEN.md` does not exist, create it from `MASTER_OMEN_TEMPLATE.md`.
+6. Confirm the Root Vault exists and is protected.
+7. Ask the researcher whether to start the initial translation.
+8. If yes, run `00_system/INITIAL_TRANSLATION_PROTOCOL.md`.
 
-### 1. Prepare the Root Vault
-- Gather all raw research material into a Root Vault folder (e.g., `EVOLUTION - ROOTVAULT/`)
-- Convert as much material as possible into machine-readable formats (markdown OCR, transcriptions)
-- Create at minimum a high-level INDEX.md describing what the vault contains
+Use the CLI's todo/task tool if available to track onboarding. Keep the todo list in the tool UI, not in the Realm, unless the researcher asks for a written checklist.
 
-### 2. Configure the LLM Realm
-- Clone or copy this repository to your working directory
-- Rename the folder to match your project (e.g., `MY_PROJECT - LLM REALM/`)
-- The folder should already contain AGENTS.md and all subdirectories
+## Minimum Research Blueprint
+- Project title
+- Research object
+- Current questions
+- Source universe
+- Evidence standards
+- External source policy
 
-### 3. Create the User Blueprint
-- Fill out `02_user_realm/USER_BLUEPRINT.md` with research project, scope, questions, expertise, expected outputs, and constraints
-- This is the most important step — the Blueprint orients the entire system
+## Minimum Configuration
+- `root_vault_path`
+- `root_vault_mode`
+- `source_policy`
+- `external_sources_allowed`
+- `preferred_llm_cli`
+- `claim_standard`
+- `l2_policy`
 
-### 4. Create the Writing Space
-- Place any existing drafts, notes, or working documents in `02_user_realm/writing/`
-- This can be a single note or multiple files; it will grow over time
+## Suggested Question Groups
+Ask in small groups rather than one long interview:
+1. Project: title, object, scope, current questions.
+2. Sources: Root Vault path, source types, expected incoming material.
+3. Tooling: preferred LLM CLI.
+4. Rules: external source policy, evidence standards, sensitivity constraints.
+5. Outputs: briefs, indexes, memos, articles, diagrams, or other expected products.
 
-### 5. Run the Initial Translation
-- Cicero performs the bootstrap pass following `00_system/INITIAL_TRANSLATION_PROTOCOL.md`
-- This populates the Realm with exercise maps, concept indexes, evidence fragments, and metadata
+## Done When
+- Root Vault is protected and locatable.
+- Configuration points to the Root Vault.
+- `MASTER_OMEN.md` exists.
+- Initial source mapping has a clear target.
 
-### 6. Verify
-- Check that the Realm Index (`01_llm_realm/00_realm_index.md`) shows all exercises as mapped
-- Ask a test question to verify the pipeline works
-- Check that the Mailbox (`04_mailbox/inbox.md`) receives a test note from Tacito
-
-### 7. Begin research
-- The system is now operational. Log questions normally in `03_logs/user_questions.md`.
-- Lucrezio will begin detecting tendencies as questions accumulate.
-- Varro will maintain the Realm as Cicero adds new material.
-- Tacito will send serendipitous leads to the Mailbox.
+## Smoke Test
+After onboarding, test with one small source batch:
+1. Create one source map.
+2. Extract one evidence fragment.
+3. Link it to one concept index.
+4. Back-search it.
+5. Answer one small question with source path, evidence type, and evidence level.

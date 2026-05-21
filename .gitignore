@@ -21,6 +21,14 @@ Thumbs.db
 .idea/
 .vscode/
 *.sublime-*
+.obsidian/
+.cursorrules
+
+# Dependencies
+node_modules/
+
+# Secrets
+.env*
 
 # Python (for report generation scripts)
 __pycache__/

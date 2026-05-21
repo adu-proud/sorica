@@ -1,44 +1,49 @@
 # Evidence Fragment Template
 
-Store one fragment per entry. Multiple fragments for the same concept are collected in the concept index.
+Use for reusable evidence only.
 
-```
+```md
 ---
 type: evidence_fragment
-evidence_type: [primary / processed / interpretive]
-evidence_level: [L1 / L2]
-confidence: [high / medium / low]
-tags: [tag1, tag2, tag3]
-source: /root_vault/folder_NNN/[subfolder]/[file]
 agent: Cicero
 created: [date]
 updated: [date]
+source: /root_vault/source_batch_NNN/[file]
+source_type: [source type]
+evidence_type: primary | processed | interpretive | external
+evidence_level: L1 | L2
+confidence: high | medium | low
+tags: [tag1, tag2]
+codes:
+  - [optional descriptive code]
+concepts:
+  - "[[Optional Concept]]"
+category: "[[Optional Category]]"
 ---
 
 ## Fragment
-[short verbatim quote or precise paraphrase]
-
-## Source
-/root_vault/folder_NNN/[subfolder]/[file]
+[quote, claim, observation, data point, or precise paraphrase]
 
 ## Context
-[1-2 sentences of surrounding context, enough to interpret]
+[minimal context needed to interpret the fragment]
 
-## Evidence type
-[primary / processed / interpretive]
+## Coding
+- Codes: [optional]
+- Concept: [[optional]]
+- Category: [[optional]]
 
-## Evidence level
-[L1 / L2]
+## Comparison
+- Similar: [[optional]]
+- Contrasting: [[optional]]
+- Note: [what this reinforces, weakens, or complicates]
 
-## Tags
-[tag1, tag2, tag3]
+## Serendipity
+- Type: none / anomaly / metaphor / contradiction / weak_signal / adjacent_case / negative_space
+- Relation: direct / adjacent / oppositional / speculative
+- Requires back-search: true / false
 
-## Confidence
-[high / medium / low]
-
-## Linked concept
-[concept index this belongs to]
-
-## Back-search status
-[pending / partial / verified — if L2, must be verified before reporting]
+## Back-search
+[pending / partial / verified]
 ```
+
+Omit optional fields when they do not help retrieval or analysis.

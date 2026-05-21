@@ -7,7 +7,7 @@ updated: [date]
 
 # Mailbox — Agent Notes for the Researcher
 
-*Tacito writes leads, warnings, patterns, contradictions, serendipitous clues, quick notes, and quotes here. The researcher reads these as suggestions — not conclusions.*
+*Tacito writes outward-facing leads, warnings, patterns, contradictions, serendipitous clues, quick notes, and quotes here. The researcher reads these as suggestions — not conclusions. Internal analytic memory belongs in `05_agent_reports/memos/`.*
 
 | Date | Type | Agent | Summary | Status |
 |---|---|---|---|---|
@@ -38,4 +38,10 @@ updated: [date]
 
 ## Serendipity method (if applicable)
 [metaphor_mapping / cross_modal_adjacency / weak_signal / negative_space / marginalia]
+
+## Serendipity type (if applicable)
+[anomaly / metaphor / contradiction / weak_signal / adjacent_case / negative_space]
+
+## Relation to query
+[direct / adjacent / oppositional / speculative]
 ```

@@ -1,0 +1,15 @@
+{
+  "name": "llm-realm",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "onboard": "node bin/onboard.mjs",
+    "llm-onboard": "node bin/onboard.mjs",
+    "llm-realm-onboard": "node bin/onboard.mjs"
+  },
+  "bin": {
+    "llm-realm-onboard": "bin/onboard.mjs",
+    "llm-onboard": "bin/onboard.mjs"
+  }
+}

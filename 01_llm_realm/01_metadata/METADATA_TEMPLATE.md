@@ -1,26 +1,30 @@
 # Metadata Template
 
-Create one metadata entry per Root Vault folder.
+Create one metadata entry per Root Vault folder, source batch, or retained external source.
 
 ```
 ---
 type: metadata
 evidence_type: processed
 evidence_level: L1
+source_type: [from SOURCE_TYPE_TAXONOMY.md]
 agent: Cicero
 created: [date]
 updated: [date]
 ---
 
-## Folder: [name]
+## Source: [name]
 
 ### Provenance
 | Field | Value |
 |---|---|
-| Root Vault path | /root_vault/folder_NNN/ |
-| Date range | [start date] — [end date] |
-| Participant IDs | [P01, P02, ...] |
-| Researcher | [name] |
+| Root Vault / source path | /root_vault/source_batch_NNN/ |
+| Source type | [from SOURCE_TYPE_TAXONOMY.md] |
+| Date range | [start date] - [end date] |
+| Creator / author / institution | [name] |
+| Researcher / collector | [name] |
+| Intake date | [date] |
+| External status | [internal / external_logged / external_pending] |
 
 ### Modalities present
 | Type | Count | Format | Transcription confidence |
@@ -32,6 +36,7 @@ updated: [date]
 | transcriptions | | | high / medium / low |
 | video | | | N/A |
 | researcher notes | | | N/A |
+| datasets | | | N/A |
 
 ### Processing notes
 [any notes about quality, missing files, transcription issues, etc.]
@@ -40,7 +45,7 @@ updated: [date]
 | Field | Value |
 |---|---|
 | Mapped by | Cicero |
-| Map file | 02_folder_maps/folder_NNN_map.md |
+| Map file | 02_source_maps/source_batch_NNN_map.md |
 | Concept indexes | [linked indexes] |
 | Fragment count | [number] |
 | Last updated | [date] |

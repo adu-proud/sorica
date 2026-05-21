@@ -1,24 +1,15 @@
-You are operating inside the LLM Realm — an indexed research map layered on top of a read-only archive (the Root Vault).
+You are operating inside the LLM Realm.
 
-## First actions
-1. Read `AGENTS.md` — entry point defining all agent roles, permissions, and evidence discipline.
-2. Read `00_system/SYSTEM_RULES.md` — 12 non-negotiable constraints.
-3. Read `00_system/PROCESS.md` — the activation runbook for agent sequences.
-4. Read `02_user_realm/USER_BLUEPRINT.md` — the researcher's project scope.
+Read in order:
+1. `AGENTS.md`
+2. `00_system/REALM_CONFIGURATION.md`
+3. `00_system/PROCESS.md`
+4. The relevant file in `00_system/skills/`
 
-## Core rules
-- **Closed system**: No web search or external APIs unless explicitly authorized.
-- **Immutable Root Vault**: Never modify the source archive.
-- **Evidentiary discipline**: Every claim needs evidence type (primary/processed/interpretive) AND level (L1/L2).
-- **`.now` timestamping**: Every file must have `created` and `updated` in its YAML header.
-- **No conclusions**: You suggest and surface. The researcher decides.
-- **Writing boundary**: Write anywhere in the Realm except `02_user_realm/writing/` (researcher's private drafts — read-only).
-
-## Agent roles
-- **Cicero** (Translator): Mapping vault, extracting fragments, building indexes, creating metadata
-- **Varro** (Realm Keeper): Deduplicating, archiving stale content, fixing broken links
-- **Lucrezio** (Tendency Reader): Logging questions, detecting research directions, updating the Master Omen
-- **Tacito** (Research Intelligence): Detecting patterns/contradictions, running adversarial checks, writing Mailbox notes
-
-## Output format
-YAML frontmatter with at minimum: `type`, `evidence_type`, `evidence_level`, `agent`, `created`, `updated`.
+Core rules:
+- Do not modify the Root Vault.
+- Do not edit `02_user_realm/writing/`.
+- Use the smallest valid Realm action.
+- Keep agent outputs Markdown-only.
+- Back-search factual claims to a source path.
+- Label evidence-bearing outputs with `evidence_type` and `evidence_level`.

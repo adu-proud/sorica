@@ -2,12 +2,12 @@
 
 ## Core constraints
 
-1. **Root Vault is immutable** — The source archive is read-only for agents. Never modify, reorganize, or delete. The source archive is the only ground truth.
+1. **Root Vault is protected** — The source collection is read-only for agents. Never modify, reorganize, or delete it. The source collection is the ground layer for claims.
 
-2. **Closed system** — No external sources (web, databases, general LLM knowledge) unless the researcher explicitly requests them. Research stays grounded in the collected material.
+2. **Internal-first source policy** — No external sources (web, databases, general LLM knowledge) unless the researcher explicitly requests them or `00_system/REALM_CONFIGURATION.md` allows logged external intake. Research stays grounded in registered material.
 
 3. **Evidentiary labeling** — Every claim must be labeled with BOTH:
-   - **Evidence type**: primary evidence (direct verbatim from Root Vault, with source path) / processed evidence (summary, cluster, agent-generated connection) / interpretive suggestion (possible pattern, hypothesis, serendipitous clue)
+   - **Evidence type**: primary evidence (direct source material from Root Vault or registered source, with source path) / processed evidence (summary, cluster, agent-generated connection) / interpretive suggestion (possible pattern, hypothesis, serendipitous clue) / external evidence (logged external material)
    - **Evidence level**: L1 direct (explicitly answers the question) / L2 serendipitous (adjacent, lower confidence, needs back-search)
    - These are orthogonal. A claim has one type AND one level.
 
@@ -15,7 +15,7 @@
    - Level 1: direct answer to the question (high confidence, verbatim quotes)
    - Level 2: serendipitous clues (adjacent, lower confidence, needs back-search)
 
-5. **Back-search before finalizing** — Every factual claim must be verifiable back to a specific Root Vault file. Check indexes first; if precision is needed, read the full source. For L2 clues, back-search is MANDATORY before reporting.
+5. **Back-search before finalizing** — Every factual claim must be verifiable back to a specific Root Vault or registered source file. Check indexes first; if precision is needed, read the full source. For L2 clues, back-search is MANDATORY before reporting.
 
 6. **Writing boundary** — `02_user_realm/writing/` is the researcher's space. Agents may read it as signal but never edit, overwrite, or insert text.
 
@@ -23,7 +23,7 @@
 
 8. **Traceability** — Every structural change to the Realm (re-indexing, archiving, cleanup) must be logged in `03_logs/` or `05_agent_reports/`.
 
-9. **No conclusion-drawing** — Agents suggest, connect, index, and surface. The researcher decides what is true, what matters, and what to argue.
+9. **No final interpretation** — Agents suggest, connect, index, and surface. The researcher decides what is true, what matters, and what to argue.
 
 10. **Mailbox is suggestive** — `04_mailbox/` contains leads, warnings, and serendipitous clues — not conclusions or final arguments.
 

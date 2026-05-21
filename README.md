@@ -1,56 +1,92 @@
 # LLM Realm
 
-A portable, agent-guided research map for qualitative archives. Clone this template, point it at your Root Vault, and let four AI agents help you index, connect, and reason about your material.
+LLM Realm is a lightweight research framework for using CLI-based LLM agents over large, evolving source collections.
 
-## What this is
+```txt
+Root Vault = protected source collection
+LLM Realm  = writable research map
+```
 
-The LLM Realm is a **writable synthetic map** of a read-only archive (the Root Vault). It is not a copy of the archive — it is a layer of indexes, concept maps, evidence fragments, and research notes that sit on top of it. Four agent roles maintain this map:
+The Root Vault holds your research material. Agents may read it, but never edit it. The Realm holds source maps, metadata, evidence fragments, concept indexes, logs, memos, mailbox notes, and reports.
 
-| Agent | Role |
+The point is governed assistance: source paths, evidence labels, back-search, adversarial checks, and researcher control.
+
+## Install
+
+```bash
+git clone https://github.com/TommasoPrinetti/llm-realm.git my-llm-realm
+cd my-llm-realm
+```
+
+Open the folder with Codex, Claude Code, Opencode, or another CLI agent that can read and write Markdown.
+
+## Start
+
+Optional fast start:
+
+```bash
+npm run llm-onboard
+```
+
+This opens a small terminal questionnaire and writes a first draft of:
+
+```txt
+02_user_realm/RESEARCH_BLUEPRINT.md
+00_system/REALM_CONFIGURATION.md
+```
+
+Then open the repo with your LLM agent.
+
+Tell the agent:
+
+```txt
+Read AGENTS.md and continue onboarding.
+```
+
+The agent will:
+
+1. detect missing or underspecified fields,
+2. use its question/input tool, when available, to ask precise follow-up questions,
+3. fill `02_user_realm/RESEARCH_BLUEPRINT.md`,
+4. fill `00_system/REALM_CONFIGURATION.md`,
+5. initialize `MASTER_OMEN.md` if missing,
+6. ask whether to start the initial translation.
+
+If the CLI has a todo/task tool, the agent should use it to track onboarding progress without creating extra files.
+
+If you agree, the agent starts the first mapping pass and then runs the smoke test in `00_system/ONBOARDING.md`.
+
+## Daily Use
+
+| Task | Path |
 |---|---|
-| **Cicero** — Translator | Maps the vault, extracts evidence, builds concept indexes |
-| **Varro** — Realm Keeper | Deduplicates, fixes links, archives stale content |
-| **Lucrezio** — Tendency Reader | Reads blueprint + logs to detect recurring research directions |
-| **Tacito** — Research Intelligence | Finds patterns, contradictions, and serendipitous clues |
+| New source batch | `00_system/INCOMING_SOURCE_PROTOCOL.md` |
+| Research question | `03_logs/user_questions.md` |
+| Evidence answer | indexes → back-search → L1/L2 answer |
+| Contradiction or lead | mailbox note or internal memo |
+| Cleanup | archive/report |
 
-## Quick start
+## Internal Roles
 
-```
-1. Place your archive in EVOLUTION - ROOTVAULT/ (or a path of your choice)
-2. Fill in 02_user_realm/USER_BLUEPRINT.md
-3. Have Cicero run the Initial Translation Protocol (00_system/INITIAL_TRANSLATION_PROTOCOL.md)
-4. Log questions in 03_logs/user_questions.md
-5. Let the agents cycle: Cicero → Lucrezio → Varro → Tacito
-```
+The framework uses internal roles to route work. You do not need to call them directly.
 
-## Structure
+| Role | Job |
+|---|---|
+| Cicero | map sources, extract reusable fragments, build indexes |
+| Lucrezio | log questions, detect repeated research needs |
+| Tacito | find contradictions, negative cases, missing sources, weak signals |
+| Varro | keep the Realm clean, archived, and navigable |
 
-```
-00_system/              Agent definitions, system rules, operating loop, skills
-01_llm_realm/           Indexes, concept maps, evidence fragments, back-search protocols
-02_user_realm/          User Blueprint, research tendencies, research writing space
-03_logs/                User questions, structured research needs
-04_mailbox/             Agent-to-researcher notes, leads, serendipitous clues
-05_agent_reports/       Audits, maintenance reports, cleanup logs
-06_mirror/              User-facing output layer (HTML, Telegram, etc.)
-AGENTS.md               Full permissions and operating rules
-```
+## Rules
 
-## Core principles
-
-- **Root Vault is immutable** — never modify the source archive
-- **Closed system** — no external sources unless requested
-- **Evidentiary discipline** — every claim labelled with type AND level
-- **`.now` timestamping** — every file stamps `created` / `updated` at write time
-- **No conclusions** — agents suggest, the researcher decides
-
-## Requirements
-
-- A Root Vault (your archive of research material)
-- An LLM agent that reads and writes markdown files (e.g., Claude, GPT-4, any system that supports tool use)
-- Git (for version control — optional but recommended)
+- Do not edit the Root Vault.
+- Do not edit `02_user_realm/writing/`.
+- Do the smallest valid Realm action.
+- Every factual claim needs a source path.
+- L2/serendipitous material requires back-search before reporting.
+- External sources must be logged.
+- Archived files are historical, not active instructions.
 
 ## License
 
-MIT — use freely, adapt as needed.
-# llm-realm
+MIT.

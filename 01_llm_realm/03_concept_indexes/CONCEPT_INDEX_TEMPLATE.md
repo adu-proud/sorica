@@ -1,52 +1,50 @@
 # Concept Index Template
 
-Create one file per thematic concept.
+Use when several fragments share a concept.
 
-```
+```md
 ---
 type: concept_index
-evidence_type: processed
-evidence_level: L1
-tags: [tag1, tag2, tag3]
-source: [aggregate]
 agent: Cicero
 created: [date]
 updated: [date]
+evidence_type: processed
+evidence_level: L1
+tags: [tag1, tag2]
+negative_case_status: none_found | partial | present | needs_search
 ---
 
-# [Concept Name] Index
+# [[Concept Name]]
 
-## Concept
-[short description of the concept]
+## Definition
+[short working definition]
 
-## Relevant Root Vault areas
-- /root_vault/folder_NNN/audio/
-- /root_vault/folder_NNN/scans/
-- /root_vault/folder_NNN/researcher_notes/
+## Codes
+- [code]
 
-## Small evidence fragments
-> "[verbatim quote]"
-Source: /root_vault/folder_NNN/audio/transcription_NNN.md
-Confidence: high / medium / low
-Tags: [tag1, tag2]
+## Category
+[[Category]]
 
-> "[verbatim quote]"
-Source: /root_vault/folder_NNN/scans/page_NNN.md
-Confidence: high / medium / low
-Tags: [tag1, tag3]
+## Evidence
+| Fragment/source | Why it matters | Confidence |
+|---|---|---|
+| [[fragment]] or `/root_vault/path` | [short note] | high / medium / low |
 
-## Contradictions
-> "[counter-quote or alternative view]"
-Source: /root_vault/folder_NNN/[type]/[file]
-Confidence: [low / medium / high]
-Note: [why this contradicts or qualifies the concept]
+## Negative Cases
+| Fragment/source | Counter-pattern | Back-search |
+|---|---|---|
+| [[fragment]] or `/root_vault/path` | [what it weakens] | pending / partial / verified |
 
-## Why this matters
-[why this concept is relevant to the research]
+## Comparison
+- Similar: [[concept]]
+- Contrasting: [[concept]]
+- Code changes: [reinforced / weakened / renamed / split / merged]
 
-## Back-search instructions
-[what to check in the Root Vault before reporting this as evidence]
+## Memos
+- [[memo]]
 
-## Last updated
-[date]
+## Back-search
+[what to verify before using this concept in an answer or draft]
 ```
+
+Omit empty sections only when they do not apply. Do not leave `Negative Cases` blank; use `negative_case_status`.

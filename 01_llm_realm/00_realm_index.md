@@ -15,18 +15,18 @@ updated: [date]
 01_llm_realm/
   00_realm_index.md              This file
   01_metadata/                   Folder metadata with provenance info
-  02_folder_maps/                Per-folder source maps (Cicero)
+  02_source_maps/                Per-source and per-batch source maps (Cicero)
   03_concept_indexes/            Thematic concept indexes (Cicero)
   04_evidence_fragments/         Small verbatim quotes with source links (Cicero)
   05_backsearch_instructions/    Protocols for Root Vault back-search and serendipity
   06_research_tendencies/        Master omen document for tendency detection (Lucrezio)
-  06_serendipity_links/          Cross-modal and cross-concept serendipity connections (Tacito)
+  06_serendipity_links/          Cross-source and cross-concept serendipity connections (Tacito)
   archive/                       Deprecated indexes, archived by Varro
 ```
 
 ## Mapping status
 
-| Folder | Map | Metadata | Concept Indexes | Fragments | Last updated |
+| Source batch / folder | Source map | Metadata | Concept Indexes | Fragments | Last updated |
 |---|---|---|---|---|---|
 | — | — | — | — | — | — |
 
@@ -39,6 +39,9 @@ updated: [date]
 ## Research tendencies (from Lucrezio)
 See `06_research_tendencies/MASTER_OMEN.md` for the full accumulation and repetition tracker.
 
+## Source intake
+See `03_logs/source_intake_log.md` for new Root Vault batches and retained external sources.
+
 ## Back-search protocols
 
 | Protocol | Description |
@@ -50,8 +53,9 @@ See `06_research_tendencies/MASTER_OMEN.md` for the full accumulation and repeti
 See `06_serendipity_links/` for cross-modal connections discovered by Tacito.
 
 ## Vault overview
-- Total folders: [count]
+- Total source folders / batches: [count]
 - Total machine-readable files: [count]
 - Total scans/images: [count]
 - Total audio/video: [count]
+- Total registered external sources: [count]
 - Mapping status: [not started / partial / complete]

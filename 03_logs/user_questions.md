@@ -7,7 +7,7 @@ updated: [date]
 
 # User Questions
 
-*Running log of every question the researcher asks. Lucrezio updates this.*
+*Running log of every question the researcher asks. Lucrezio updates this and connects repeated questions to active source intake and research tendencies.*
 
 | Date | Question | Type | Agent | Status |
 |---|---|---|---|---|

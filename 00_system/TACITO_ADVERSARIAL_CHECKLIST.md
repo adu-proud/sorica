@@ -10,7 +10,7 @@ When reviewing the researcher's working hypothesis, you MUST answer:
 4. **Fixation check**: Has the same concept appeared in the last 3+ questions? (If yes, flag it)
 5. **Domain contingency**: Is this finding specific to one domain/subject area, or does it generalize?
 6. **Evidence integrity**: Are the evidence type + level labels correct on all referenced pieces?
-7. **Silent majority**: Are there participants or data points that are silent on this topic? What might their silence mean?
+7. **Silent material**: Are there sources, actors, cases, participants, or data points that are silent on this topic? What might that silence mean?
 
 ## After writing the note, verify:
 
