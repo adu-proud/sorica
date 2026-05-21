@@ -9,42 +9,17 @@ const noColor = process.argv.includes("--no-color") || process.env.NO_COLOR;
 const a = (code) => noColor ? "" : `\x1b[${code}m`;
 
 const c = {
-  reset:    a(0),
-  bold:     a(1),
-  dim:      a(2),
-  italic:   a(3),
-  underline:a(4),
-  invert:   a(7),
-  hidden:   a(8),
-  // regular
-  cyan:     a(36),
-  green:    a(32),
-  yellow:   a(33),
-  red:      a(31),
-  magenta:  a(35),
-  blue:     a(34),
-  white:    a(37),
+  reset:    a(0),  bold:    a(1),  dim:   a(2),
+  cyan:     a(36), green:   a(32), yellow:a(33), red: a(31), magenta: a(35),
   gray:     a(90),
-  // bright
-  bCyan:    a(96),
-  bGreen:   a(92),
-  bYellow:  a(93),
-  bRed:     a(91),
-  bMagenta: a(95),
-  bBlue:    a(94),
-  // bg
-  bgCyan:   a(46),
-  bgGreen:  a(42),
-  bgYellow: a(43),
-  bgRed:    a(41),
-  bgMagenta:a(45),
-  bgBlue:   a(44),
+  bCyan:    a(96), bGreen:  a(92), bYellow:a(93), bRed: a(91), bMagenta: a(95),
 };
 
 // ── helpers ──────────────────────────────────────────────────────────────────
 const root = process.cwd();
 const today = new Date().toISOString().slice(0, 10);
 const W = process.stdout.columns || 80;
+const isForce = process.argv.includes("--force");
 
 const paths = {
   blueprint: resolve(root, "02_user_realm/RESEARCH_BLUEPRINT.md"),
@@ -61,58 +36,90 @@ const cliLaunch = {
   Other:         { command: null, prompt: "Open this folder with your LLM agent, then ask: Read AGENTS.md and continue onboarding." },
 };
 
-// ── YAML sanitize ────────────────────────────────────────────────────────────
-function sanitizeYaml(s) {
-  return s.replace(/"/g, "\\\"").replace(/\n/g, "\\n").replace(/```/g, "`\\`\\`");
+function sanitizeYaml(s) { return s.replace(/"/g, "\\\"").replace(/\n/g, "\\n").replace(/```/g, "`\\`\\`"); }
+function ensureParent(file) { mkdirSync(dirname(file), { recursive: true }); }
+function splitList(v) { return v.split(/[,;\n]/).map(i => i.trim()).filter(Boolean); }
+function yamlList(items, fb = "[not specified]") { return (items.length ? items : [fb]).map(i => `- ${i}`).join("\n"); }
+
+// ── display ──────────────────────────────────────────────────────────────────
+function divider(ch = "─") { output.write(c.dim + ch.repeat(W - 1) + c.reset + "\n"); }
+function bold(s) { return c.bold + s + c.reset; }
+function dim(s)  { return c.dim + s + c.reset; }
+
+function step(n, total, title) {
+  output.write("\n" + dim("┌" + "─".repeat(W - 2) + "┐\n"));
+  output.write(dim("│ ") + `${bold(c.bCyan + `Step ${n}/${total}`)}` + dim(" · ") + bold(title) + "\n");
+  output.write(dim("└" + "─".repeat(W - 2) + "┘\n\n"));
 }
 
-// ── display helpers ──────────────────────────────────────────────────────────
-function fmt(template, ...args) { return noColor ? String.raw(template, ...args) : String.raw(template, ...args); }
-
-function divider(char = "─") {
-  output.write(c.dim + char.repeat(W - 1) + c.reset + "\n");
+// ── readline helpers ─────────────────────────────────────────────────────────
+function createRL() {
+  return readline.createInterface({ input, output, terminal: !noColor });
 }
 
-function step(num, total, title) {
-  output.write("\n" + c.dim + "┌" + "─".repeat(W - 2) + "┐\n" + c.reset);
-  output.write(c.dim + "│ " + c.reset + `${c.bold}${c.bCyan}Step ${num}/${total}${c.reset}` + c.dim + " · " + c.reset + `${c.bold}${title}${c.reset}` + "\n");
-  output.write(c.dim + "└" + "─".repeat(W - 2) + "┘" + c.reset + "\n\n");
+async function ask(rl, text, fallback = "") {
+  const fb = fallback ? dim(` (${fallback})`) : "";
+  const a = (await rl.question(bold(text) + fb + dim(": "))).trim();
+  return a || fallback;
 }
 
-function label(text) {
-  return `${c.bold}${text}${c.reset}`;
+// ── arrow-key selection (raw stdin, zero-dependency) ─────────────────────────
+function select(text, choices, fallback, note = "") {
+  // fallback to numbered list when stdin is not a TTY (piped, redirected)
+  if (!input.isTTY) return selectNumbered(text, choices, fallback, note);
+
+  return new Promise((resolve) => {
+    let idx = choices.indexOf(fallback);
+    if (idx === -1) idx = 0;
+    const total = choices.length + (note ? 1 : 0) + 1;
+
+    const render = () => {
+      for (let i = 0; i < total; i++) output.write(`\x1b[A\x1b[2K`);
+      output.write("\r" + bold(text) + "\n");
+      if (note) output.write(dim("  " + note) + "\n");
+      choices.forEach((ch, i) => {
+        if (i === idx) output.write(`  ${c.bCyan}${c.bold}❯ ${ch}${c.reset}\n`);
+        else output.write(`  ${dim("  " + ch)}\n`);
+      });
+    };
+
+    const cleanup = () => {
+      if (input.isRaw) { input.setRawMode(false); input.pause(); }
+      input.removeListener("data", onData);
+    };
+
+    const onData = (buf) => {
+      const k = buf.toString();
+      if (k === "\x1b[A")      { idx = Math.max(0, idx - 1); render(); }
+      else if (k === "\x1b[B") { idx = Math.min(choices.length - 1, idx + 1); render(); }
+      else if (k === "\r" || k === "\n") { output.write("\n"); cleanup(); resolve(choices[idx]); }
+      else if (k === "\x03") { cleanup(); process.exit(0); }
+    };
+
+    render();
+    input.setRawMode(true);
+    input.resume();
+    input.on("data", onData);
+  });
 }
 
-function hint(text) {
-  return ` ${c.dim}${text}${c.reset}`;
-}
-
-function ok(text) {
-  return `${c.green}${c.bold}✔${c.reset} ${text}`;
-}
-
-function info(text) {
-  return `${c.bCyan}${c.bold}ℹ${c.reset} ${c.dim}${text}${c.reset}`;
-}
-
-function warn(text) {
-  return `${c.yellow}${c.bold}⚠${c.reset} ${text}`;
-}
-
-// ── ensureParent ─────────────────────────────────────────────────────────────
-function ensureParent(file) {
-  mkdirSync(dirname(file), { recursive: true });
-}
-
-// ── splitList ─────────────────────────────────────────────────────────────────
-function splitList(value) {
-  return value.split(/[,;\n]/).map(i => i.trim()).filter(Boolean);
-}
-
-// ── yamlList ──────────────────────────────────────────────────────────────────
-function yamlList(items, fallback = "[not specified]") {
-  const list = items.length ? items : [fallback];
-  return list.map(i => `- ${i}`).join("\n");
+async function selectNumbered(text, choices, fallback, note = "") {
+  // fallback: numbered list with readline (non-TTY environments)
+  const rl = createRL();
+  output.write("\n" + bold(text) + "\n");
+  if (note) output.write(dim("  " + note) + "\n");
+  const defIdx = choices.indexOf(fallback);
+  choices.forEach((ch, i) => {
+    const prefix = i === defIdx ? c.bCyan + "●" : dim("○");
+    const num = dim(` ${i + 1}. `);
+    const name = i === defIdx ? bold(c.bCyan + ch) : ch;
+    const tag = i === defIdx ? dim(" (default)") : "";
+    output.write(`  ${prefix}${num}${name}${tag}\n`);
+  });
+  const raw = await ask(rl, "Enter number", String(defIdx + 1));
+  const idx = Number(raw) - 1;
+  rl.close();
+  return choices[idx] || fallback;
 }
 
 // ── hasFilledOnboarding ──────────────────────────────────────────────────────
@@ -124,55 +131,25 @@ function hasFilledOnboarding() {
   return !ph.some(p => b.includes(p) || cfg.includes(p));
 }
 
-// ── ask / choose ─────────────────────────────────────────────────────────────
-async function ask(rl, text, fallback = "") {
-  const prompt = label(text) + (fallback ? c.dim + ` (${fallback})` + c.reset : "") + c.dim + ": " + c.reset;
-  const answer = (await rl.question(prompt)).trim();
-  return answer || fallback;
-}
-
-async function choose(rl, text, choices, fallback) {
-  output.write("\n" + label(text) + "\n");
-  const defIdx = choices.indexOf(fallback);
-  choices.forEach((choice, i) => {
-    const prefix = i === defIdx ? c.bCyan + "●" : c.dim + "○";
-    const num = c.dim + ` ${i + 1}. ` + c.reset;
-    const name = i === defIdx ? c.bold + c.bCyan + choice + c.reset : choice;
-    const tag = i === defIdx ? c.dim + " (default)" + c.reset : "";
-    output.write(`  ${prefix}${num}${name}${tag}\n`);
-  });
-  const raw = await ask(rl, "Enter number", String(defIdx + 1));
-  const idx = Number(raw) - 1;
-  return choices[idx] || fallback;
-}
-
-// ── review screen ────────────────────────────────────────────────────────────
+// ── review ───────────────────────────────────────────────────────────────────
 function review(data) {
   output.write("\n");
   divider("━");
-  output.write(`\n  ${c.bold}${c.bMagenta}Review${c.reset}\n\n`);
-
+  output.write(`\n  ${bold(c.bMagenta + "Review")}\n\n`);
   const rows = [
-    ["Project",       data.projectTitle],
+    ["Project",        data.projectTitle],
     ["Research object", data.researchObject],
-    ["Scope",         data.scope],
-    ["Questions",     data.questions.join(", ")],
-    ["Root Vault",    data.rootVaultPath],
-    ["Source types",  data.sourceTypes.join(", ")],
-    ["Incoming",      data.incoming],
+    ["Scope",          data.scope],
+    ["Questions",      data.questions.join(", ")],
+    ["Root Vault",     data.rootVaultPath],
     ["External policy", data.externalPolicy],
-    ["Preferred CLI", data.preferredCli],
-    ["Outputs",       data.outputs.join(", ")],
-    ["Preferences",   data.preferences],
+    ["Preferred CLI",  data.preferredCli],
   ];
-
   const pad = Math.max(...rows.map(r => r[0].length)) + 2;
-  for (const [key, val] of rows) {
-    const k = c.dim + key.padEnd(pad) + c.reset;
-    const v = val && val !== "to refine during LLM onboarding"
-      ? val
-      : c.dim + val + c.reset;
-    output.write(`  ${k}${v}\n`);
+  for (const [k, v] of rows) {
+    const dk = dim(k.padEnd(pad));
+    const dv = v ? v : dim("—");
+    output.write(`  ${dk}${dv}\n`);
   }
   output.write("\n");
   divider("━");
@@ -180,111 +157,89 @@ function review(data) {
 
 // ── main ─────────────────────────────────────────────────────────────────────
 async function main() {
-  // clear screen
   if (!noColor) output.write("\x1b[2J\x1b[H");
 
   if (process.argv.includes("--help") || process.argv.includes("-h")) {
-    output.write(`\n  ${c.bold}llm-realm onboard${c.reset}\n\n`);
-    output.write(`  ${c.dim}Usage:${c.reset} npm run llm-onboard [--force] [--no-color]\n`);
-    output.write(`  ${c.dim}       ${c.reset} node bin/onboard.mjs [--force] [--no-color]\n\n`);
-    output.write(`  ${c.dim}Flags:${c.reset}\n`);
+    output.write(`\n  ${bold("llm-realm onboard")}\n\n`);
+    output.write(`  ${dim("Usage:")} npm run llm-onboard [--force] [--no-color]\n`);
+    output.write(`  ${dim("       ")} node bin/onboard.mjs [--force] [--no-color]\n\n`);
+    output.write(`  ${dim("Flags:")}\n`);
     output.write(`    --force     Overwrite existing onboarding data\n`);
     output.write(`    --no-color  Disable colored output\n\n`);
     return;
   }
 
   // ── title ──────────────────────────────────────────────────────────────────
-  const title = `
+  output.write(`
 ${c.bCyan}██╗  ██╗      ██╗     ██╗     ███╗   ███╗    ██████╗ ███████╗███████╗███████╗ █████╗ ██████╗  ██████╗██╗  ██╗
 ██║  ██║      ██║     ██║     ████╗ ████║    ██╔══██╗██╔════╝██╔════╝██╔════╝██╔══██╗██╔══██╗██╔════╝██║  ██║
 ███████║█████╗██║     ██║     ██╔████╔██║    ██████╔╝█████╗  ███████╗█████╗  ███████║██████╔╝██║     ███████║
 ██╔══██║╚════╝██║     ██║     ██║╚██╔╝██║    ██╔══██╗██╔══╝  ╚════██║██╔══╝  ██╔══██║██╔══██╗██║     ██╔══██║
 ██║  ██║      ███████╗███████╗██║ ╚═╝ ██║    ██║  ██║███████╗███████║███████╗██║  ██║██║  ██║╚██████╗██║  ██║
 ╚═╝  ╚═╝      ╚══════╝╚══════╝╚═╝     ╚═╝    ╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝${c.reset}
-  ${c.dim}LLM Researcher · Realm Onboarding${c.reset}
-`;
-  output.write(title);
-  output.write(`\n  ${c.dim}A guided setup for your research project. The LLM will refine the results later.${c.reset}\n`);
-
-  // ── readline ───────────────────────────────────────────────────────────────
-  const rl = readline.createInterface({ input, output, terminal: !noColor });
+  ${dim("LLM Researcher · Realm Onboarding")}
+`);
+  output.write(`\n  ${dim("Quick setup — the LLM will refine placeholders during onboarding.")}\n`);
 
   // ── overwrite check ───────────────────────────────────────────────────────
-  if (hasFilledOnboarding() && !process.argv.includes("--force")) {
-    output.write("\n" + warn("Existing onboarding data found.\n"));
-    const overwrite = (await ask(rl, "Overwrite?", "no")).toLowerCase();
-    if (!["y", "yes"].includes(overwrite)) {
-      output.write("\n  " + info("No changes made. Use --force to overwrite.\n"));
-      await rl.close();
+  let rl = createRL();
+  if (hasFilledOnboarding() && !isForce) {
+    output.write("\n" + c.yellow + c.bold + "⚠" + c.reset + " Existing onboarding data found.\n");
+    const o = (await ask(rl, "Overwrite?", "no")).toLowerCase();
+    if (!["y", "yes"].includes(o)) {
+      output.write("\n  " + dim("No changes made. Use --force to overwrite.\n\n"));
+      rl.close();
       return;
     }
     output.write("\n");
   }
 
-  // ── Step 1 ────────────────────────────────────────────────────────────────
-  step(1, 5, "Project Identity");
-  output.write(info("Defines what your research is about. Press Enter to accept defaults.\n\n"));
+  // ── Step 1: Project ───────────────────────────────────────────────────────
+  step(1, 4, "Project Identity");
+  const projectTitle   = await ask(rl, "Project name");
+  const researchObject = await ask(rl, "Research object");
+  const scope          = await ask(rl, "Scope — period, place, cases", "to refine during LLM onboarding");
+  const questions      = splitList(await ask(rl, "Current questions (comma-separated)", "to refine during LLM onboarding"));
 
-  const projectTitle    = await ask(rl, "Project name");
-  const researchObject  = await ask(rl, "Research object");
-  const scope           = await ask(rl, "Scope (period / place / cases)", "to refine during LLM onboarding");
-  const questions       = splitList(await ask(rl, "Current questions (comma-separated)", "to refine during LLM onboarding"));
+  // ── Step 2: Root Vault ────────────────────────────────────────────────────
+  step(2, 4, "Root Vault");
+  output.write(dim("Absolute path to your source files. The LLM will discover types and structure.\n\n"));
+  const rootVaultPath  = await ask(rl, "Root Vault path (absolute)");
 
-  // ── Step 2 ────────────────────────────────────────────────────────────────
-  step(2, 5, "Sources");
-  output.write(info("Where your research material lives and what types you work with.\n\n"));
-
-  const rootVaultPath   = await ask(rl, "Root Vault path (absolute path to source files)");
-  const sourceTypes     = splitList(await ask(rl, "Main source types (comma-separated)", "documents, notes"));
-  const incoming        = await ask(rl, "Expected incoming sources", "to refine during LLM onboarding");
-
-  // ── Step 3 ────────────────────────────────────────────────────────────────
-  step(3, 5, "External Source Policy");
-  output.write(info("Controls whether the LLM agent may fetch external (web) sources.\n\n"));
-
-  const externalPolicy = await choose(
-    rl,
-    "External source policy",
+  // ── Step 3: External policy (arrow keys) ───────────────────────────────────
+  step(3, 4, "External Source Policy");
+  rl.close();
+  const externalPolicy = await select(
+    "May the LLM fetch external sources from the web?",
     ["explicit_request_only", "closed", "logged_monitoring_allowed"],
     "explicit_request_only",
   );
+  rl = createRL();
 
-  // ── Step 4 ────────────────────────────────────────────────────────────────
-  step(4, 5, "LLM Tooling");
-  output.write(info("Which CLI agent you use for research sessions.\n\n"));
-
-  const preferredCli = await choose(
-    rl,
+  // ── Step 4: CLI (arrow keys + note) ───────────────────────────────────────
+  step(4, 4, "LLM CLI");
+  rl.close();
+  const preferredCli = await select(
     "Preferred LLM CLI",
     ["Claude Code", "Codex", "OpenCode", "Kilo", "Other"],
     "Codex",
+    "This will be used to open the CLI tool after onboarding.",
   );
-
-  // ── Step 5 ────────────────────────────────────────────────────────────────
-  step(5, 5, "Outputs & Preferences");
-  output.write(info("What you expect to produce and any style constraints.\n\n"));
-
-  const outputs         = splitList(await ask(rl, "Expected outputs (comma-separated)", "evidence briefs, concept indexes, memos"));
-  const preferences     = await ask(rl, "Researcher preferences / sensitivities", "to refine during LLM onboarding");
+  rl = createRL();
 
   // ── Review ─────────────────────────────────────────────────────────────────
-  review({
-    projectTitle, researchObject, scope, questions, rootVaultPath,
-    sourceTypes, incoming, externalPolicy, preferredCli, outputs, preferences,
-  });
+  review({ projectTitle, researchObject, scope, questions, rootVaultPath, externalPolicy, preferredCli });
 
-  const isForce = process.argv.includes("--force");
+  // ── Confirm (Y/n style) ───────────────────────────────────────────────────
   if (!isForce) {
-    output.write("\n");
-    const confirm = (await ask(rl, "Write these files?", "yes")).toLowerCase();
-    if (!["y", "yes"].includes(confirm)) {
-      output.write("\n  " + info("Cancelled. Nothing was written.\n\n"));
-      await rl.close();
+    const yn = (await ask(rl, "Write files?  " + dim("Y") + dim("/n"), "y")).toLowerCase();
+    if (!["y", "yes"].includes(yn)) {
+      output.write("\n  " + dim("Cancelled. Nothing was written.") + "\n\n");
+      rl.close();
       return;
     }
   }
-
-  await rl.close();
+  rl.close();
 
   // ── write blueprint ───────────────────────────────────────────────────────
   const blueprint = `---
@@ -308,8 +263,8 @@ ${yamlList(questions, "to refine during LLM onboarding")}
 
 ## Sources
 - Root Vault path: ${rootVaultPath || "[path]"}
-- Main source types: ${sourceTypes.join(", ") || "[source types]"}
-- Expected incoming sources: ${incoming}
+- Main source types: [to refine during LLM onboarding — discovered from Root Vault]
+- Expected incoming sources: [to refine during LLM onboarding]
 
 ## Research Vocabulary
 - Key actors / institutions / places: [to refine during LLM onboarding]
@@ -325,13 +280,13 @@ ${yamlList(questions, "to refine during LLM onboarding")}
 - External source policy: ${externalPolicy}
 
 ## Outputs
-${yamlList(outputs, "to refine during LLM onboarding")}
+- [to refine during LLM onboarding]
 
 ## Blind Spots
 - [to refine during LLM onboarding]
 
 ## Researcher Preferences
-${preferences}
+[to refine during LLM onboarding]
 
 ## Preferred LLM CLI
 ${preferredCli}
@@ -396,22 +351,20 @@ preferred_llm_cli: "${preferredCli}"
     omenCreated = true;
   }
 
-  // ── success output ────────────────────────────────────────────────────────
+  // ── success ───────────────────────────────────────────────────────────────
   output.write("\n");
   divider("━");
   output.write(`\n  ${c.bGreen}${c.bold}✦ Onboarding files written${c.reset}\n\n`);
-  output.write(`  ${c.dim}─${c.reset} ${c.cyan}${paths.blueprint}${c.reset}\n`);
-  output.write(`  ${c.dim}─${c.reset} ${c.cyan}${paths.config}${c.reset}\n`);
-  if (omenCreated) {
-    output.write(`  ${c.dim}─${c.reset} ${c.cyan}${paths.omen}${c.reset}\n`);
-  }
+  output.write(`  ${dim("─")} ${c.cyan}${paths.blueprint}${c.reset}\n`);
+  output.write(`  ${dim("─")} ${c.cyan}${paths.config}${c.reset}\n`);
+  if (omenCreated) output.write(`  ${dim("─")} ${c.cyan}${paths.omen}${c.reset}\n`);
   output.write("\n");
 
   const launch = cliLaunch[preferredCli] || cliLaunch.Other;
-  output.write(`  ${c.bold}Next steps:${c.reset}\n\n`);
+  output.write(`  ${bold("Next:")}\n\n`);
   if (launch.command) {
-    output.write(`  1. ${c.bold}Run${c.reset} ${c.bGreen}\`${launch.command}\`${c.reset} from this folder.\n`);
-    output.write(`  2. ${c.bold}Say:${c.reset} ${c.bGreen}${launch.prompt}${c.reset}\n`);
+    output.write(`  1. ${bold("Run")} ${c.bGreen}\`${launch.command}\`${c.reset} from this folder.\n`);
+    output.write(`  2. ${bold("Say:")} ${c.bGreen}${launch.prompt}${c.reset}\n`);
   } else {
     output.write(`  ${c.bGreen}${launch.prompt}${c.reset}\n`);
   }
