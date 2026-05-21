@@ -6,7 +6,7 @@ When reviewing the researcher's working hypothesis, you MUST answer:
 
 1. **Counter-evidence**: What evidence contradicts this?
 2. **Alternative interpretation**: What alternative interpretation fits the same fragments?
-3. **Unmapped territory**: Which Root Vault folders have NOT been mapped that might change the picture?
+3. **Unmapped territory**: Which Root Vault folders have NOT been mapped that might change the picture? (Read only — never modify source folders.)
 4. **Fixation check**: Has the same concept appeared in the last 3+ questions? (If yes, flag it)
 5. **Domain contingency**: Is this finding specific to one domain/subject area, or does it generalize?
 6. **Evidence integrity**: Are the evidence type + level labels correct on all referenced pieces?

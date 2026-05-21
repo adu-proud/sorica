@@ -11,6 +11,9 @@ description: Log questions and detect recurring research needs from questions, s
 ## Reads First
 `00_system/REALM_CONFIGURATION.md`, `02_user_realm/RESEARCH_BLUEPRINT.md`, `03_logs/source_intake_log.md`, `01_llm_realm/00_realm_index.md`
 
+## Boundary
+Read the Root Vault and the Realm freely, never modify either layer. Logs and tendency signals are Realm artifacts. Root Vault source files are read-only.
+
 ## Use When
 - Researcher asks a question
 - A new source batch may affect active research direction

@@ -11,6 +11,9 @@ description: Map Root Vault and incoming research sources into source maps, meta
 ## Reads First
 `00_system/REALM_CONFIGURATION.md`, `02_user_realm/RESEARCH_BLUEPRINT.md`, `03_logs/source_intake_log.md`
 
+## Boundary
+Read the Root Vault freely, never modify it. All output goes to the Realm. Root Vault files are the protected source layer — maps, fragments, and indexes reference them but never alter them.
+
 ## Use When
 - First mapping pass
 - New source batch

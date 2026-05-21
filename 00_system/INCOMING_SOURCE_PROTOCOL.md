@@ -7,7 +7,7 @@ updated: 2026-05-21
 
 # Incoming Source Protocol
 
-Use when new material enters the Root Vault or an approved external source is retained.
+Use when new material has been placed in the Root Vault by the researcher, or an approved external source is retained.
 
 ## Steps
 1. Register the batch in `03_logs/source_intake_log.md`.
@@ -28,3 +28,4 @@ If the batch came from outside the Root Vault:
 ## Do Not
 - Duplicate existing maps or indexes.
 - Create fragments for material that will not be reused, compared, contradicted, or cited.
+- Modify, reorganize, or delete files in the Root Vault. Only the researcher places material there.

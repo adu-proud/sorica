@@ -11,6 +11,9 @@ description: Detect contradictions, negative cases, missing sources, anomalies, 
 ## Reads First
 `00_system/REALM_CONFIGURATION.md`, `02_user_realm/RESEARCH_BLUEPRINT.md`, `02_user_realm/RESEARCH_TENDENCIES.md`, `03_logs/source_intake_log.md`, `01_llm_realm/`
 
+## Boundary
+Read the entire Realm and Root Vault for source-checking and contradiction, never modify either. Root Vault files are protected source material. Mailbox notes and memos live in the Realm.
+
 ## Use When
 - Researcher asks a broad/open question
 - New indexes or source batches may change the map

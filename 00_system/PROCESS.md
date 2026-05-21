@@ -9,7 +9,12 @@ updated: 2026-05-21
 
 Use this file only to choose the path. Use the skill/protocol/template for details.
 
-| Trigger | Agent | Path |
+## Non-Negotiable
+- Root Vault is read-only — never modify, reorganize, or delete source files.
+- `02_user_realm/writing/` is read-only — researcher's protected writing space.
+- All agent work happens in the Realm (`00_system/`, `01_llm_realm/`, `03_logs/`, `04_mailbox/`, `05_agent_reports/`).
+
+## Triggers
 |---|---|---|
 | New project | Varro + Human | `00_system/ONBOARDING.md` |
 | First Root Vault mapping | Cicero | `00_system/INITIAL_TRANSLATION_PROTOCOL.md` |

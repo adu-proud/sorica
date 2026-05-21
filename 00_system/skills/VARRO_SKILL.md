@@ -11,6 +11,9 @@ description: Keep the Realm clean, navigable, non-duplicative, and methodologica
 ## Reads First
 `00_system/REALM_CONFIGURATION.md`, `03_logs/source_intake_log.md`, `02_user_realm/RESEARCH_TENDENCIES.md`, `01_llm_realm/`
 
+## Boundary
+Operate only within `00_system/`, `01_llm_realm/`, and `05_agent_reports/`. The Root Vault and `02_user_realm/writing/` are read-only — never modify, reorganize, or delete files there. All cleanup applies to Realm artifacts, never source files.
+
 ## Use When
 - After major Cicero work
 - After source intake
@@ -27,4 +30,4 @@ description: Keep the Realm clean, navigable, non-duplicative, and methodologica
 6. Write one maintenance report for structural changes.
 
 ## Guardrail
-Do not create cleanup work for its own sake. Prefer the smallest edit that restores clarity.
+Do not create cleanup work for its own sake. Prefer the smallest Realm edit that restores clarity. Never touch Root Vault files or `02_user_realm/writing/`.
