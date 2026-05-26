@@ -17,20 +17,22 @@ If `preferred_llm_cli` is present in `00_system/REALM_CONFIGURATION.md`, adapt s
 ## Startup Gate
 Do not map, index, answer from sources, or ingest new material until `00_system/REALM_CONFIGURATION.md` and `02_user_realm/RESEARCH_BLUEPRINT.md` have been filled for the project.
 
-If either file still contains required placeholders such as `[path]`, `[project name]`, or `[project description]`, automatically start the Realm:
+When the user says `Read AGENTS.md and start the Realm`, treat that as authorization to complete startup and run the first mapping pass. Do not ask for a second confirmation before initial mapping.
+
+If either file still contains required placeholders such as `[path]`, `[project name]`, or `[project description]`, or either file contains `setup_status: cli_started`, automatically start the Realm:
 1. Read `00_system/ONBOARDING.md`.
-2. Create a short startup todo list with the CLI's todo/task tool if available.
+2. Create and maintain a short startup todo list with the CLI's todo/task tool if available. Do this before editing files or mapping sources.
 3. First translate the existing setup draft into a usable research configuration without asking the researcher.
 4. Use the project description, artifact references, and Root Vault path to infer missing scope, source universe, vocabulary, methods, outputs, and initial mapping targets.
 5. Use shell/file tools to verify local paths. Use web/MCP/browser tools for artifact URLs only when allowed by `external_sources_allowed`, and log external use when required.
 6. Use the CLI's question/input tool only if a required field is absent, the Root Vault cannot be located, or a risky assumption would block immediate mapping.
-7. Fill `02_user_realm/RESEARCH_BLUEPRINT.md` and `00_system/REALM_CONFIGURATION.md`.
+7. Fill `02_user_realm/RESEARCH_BLUEPRINT.md` and `00_system/REALM_CONFIGURATION.md`; replace `setup_status: cli_started` with `setup_status: realm_started` when the setup draft has been translated.
 8. Check that the draft has been fully translated: every useful project detail, artifact reference, path, policy, and inferred mapping target must either appear in the filled files or be explicitly marked as deferred with a reason.
 9. Initialize `01_llm_realm/06_research_tendencies/RESEARCH_NEED_AGGREGATOR.md` from the template if missing.
-10. Ask the researcher whether to start the initial mapping.
-11. If yes, run the first mapping pass through `00_system/INITIAL_MAPPING_PROTOCOL.md`.
+10. Run the first mapping pass through `00_system/INITIAL_MAPPING_PROTOCOL.md`.
+11. Update the startup todo list as each step completes and report the completed checklist in the final response.
 
-During startup, use the CLI's todo/task tool if available to track progress. Do not create a Markdown todo file unless the user asks for one.
+During startup, use the CLI's todo/task tool if available to track progress; this is mandatory when the tool exists. Do not create a Markdown todo file unless the user asks for one.
 
 ## Smallest Valid Action
 Do the smallest Realm action that satisfies the task. Do not create a fragment, memo, mailbox note, concept index, report, or archive entry unless it has a distinct purpose.

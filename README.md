@@ -55,11 +55,11 @@ The agent will:
 8. fill `02_user_realm/RESEARCH_BLUEPRINT.md`,
 9. fill `00_system/REALM_CONFIGURATION.md`,
 10. initialize `RESEARCH_NEED_AGGREGATOR.md` if missing,
-11. ask whether to start the initial mapping.
+11. run the first mapping pass.
 
 If the CLI has a todo/task tool, the agent should use it to track startup progress without creating extra files.
 
-If you agree, the agent starts the first mapping pass and then runs the smoke test in `00_system/ONBOARDING.md`.
+The prompt `Read AGENTS.md and start the Realm.` is permission to complete startup and run the first mapping pass. The agent should ask a question only if required setup information is missing, the Root Vault cannot be located, or external URL access needs permission.
 
 ## Daily Use
 
