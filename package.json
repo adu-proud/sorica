@@ -8,6 +8,7 @@
   },
   "scripts": {
     "setup": "node bin/onboard.mjs",
+    "check-startup": "node bin/check-startup.mjs",
     "onboard": "node bin/onboard.mjs",
     "llm-onboard": "node bin/onboard.mjs",
     "realm-setup": "node bin/onboard.mjs",
@@ -15,6 +16,7 @@
   },
   "bin": {
     "llm-realm-setup": "bin/onboard.mjs",
+    "llm-realm-check-startup": "bin/check-startup.mjs",
     "llm-realm-onboard": "bin/onboard.mjs",
     "llm-onboard": "bin/onboard.mjs"
   }
