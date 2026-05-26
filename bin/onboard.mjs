@@ -50,11 +50,8 @@ function oneLine(s) { return s.replace(/\s+/g, " ").trim(); }
 function isUrl(s) { return /^https?:\/\//i.test(s); }
 function artifactAccessNote(artifacts, externalPolicy) {
   if (!artifacts.some(isUrl)) return "";
-  if (externalPolicy === "closed") {
-    return "\n- URL access note: URLs were recorded for context, but external access is closed. Agents must not fetch them unless policy changes.\n";
-  }
-  if (externalPolicy === "explicit_request_only") {
-    return "\n- URL access note: URLs were recorded for context. Agents must ask before fetching them.\n";
+  if (externalPolicy === "no") {
+    return "\n- URL access note: URLs were recorded for context, but external access is disabled. Agents must not fetch them unless policy changes.\n";
   }
   return "\n- URL access note: URLs may be fetched and logged under the configured external source policy.\n";
 }
@@ -309,12 +306,12 @@ ${c.bCyan}██╗  ██╗      ██╗     ██╗     ███╗   �
   rl.close();
   const externalPolicy = await select(
     "May the LLM fetch external sources from the web?",
-    ["explicit_request_only", "closed", "logged_monitoring_allowed"],
-    "explicit_request_only",
+    ["no", "yes"],
+    "no",
   );
   rl = createRL();
-  if (externalPolicy === "closed" && projectArtifacts.some(isUrl)) {
-    output.write("\n" + c.yellow + "Note:" + c.reset + " You listed URLs, but external access is closed. Agents will record those URLs but must not fetch them.\n");
+  if (externalPolicy === "no" && projectArtifacts.some(isUrl)) {
+    output.write("\n" + c.yellow + "Note:" + c.reset + " You listed URLs, but external access is disabled. Agents will record those URLs but must not fetch them.\n");
   }
 
   // ── Step 4: CLI (arrow keys + note) ───────────────────────────────────────

@@ -28,7 +28,7 @@ If the user already ran `npm run llm-onboard`, the agent must treat those answer
    - infer a tentative source universe, vocabulary, methods, outputs, and mapping target from the description, artifacts, and Root Vault,
    - keep inferred fields explicitly marked as inferred when useful.
 5. Use shell/file tools to confirm the Root Vault path exists and is treated as read-only.
-6. If artifact URLs are present, use web/MCP/browser tools only when `external_sources_allowed` permits it. If the policy is `explicit_request_only`, ask before fetching URLs.
+6. If artifact URLs are present, use web/MCP/browser tools only when `external_sources_allowed` is set to `yes`. If the policy is `no`, record URLs but do not fetch them.
 7. Fill `02_user_realm/RESEARCH_BLUEPRINT.md`.
 8. Fill `00_system/REALM_CONFIGURATION.md`, especially `root_vault_path` and source policy. Replace `setup_status: cli_started` with `setup_status: realm_started` in both startup files when translation is complete.
 9. Audit the translation before moving on:
