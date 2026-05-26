@@ -65,20 +65,78 @@ async function ask(rl, text, fallback = "") {
   return a || fallback;
 }
 
-async function askMultiline(rl, text, fallback = "") {
-  output.write(bold(text) + "\n");
-  output.write(dim("Paste or type multiple lines. Finish with a line containing only END.") + "\n");
-  if (fallback) output.write(dim(`Leave empty and type END to use: ${fallback}`) + "\n");
+async function askPastedText(rl, text, fallback = "") {
+  if (!input.isTTY) return ask(rl, text, fallback);
 
-  const lines = [];
-  while (true) {
-    const line = await rl.question(dim("> "));
-    if (line.trim() === "END") break;
-    lines.push(line);
-  }
+  output.write(bold(text) + dim(": "));
 
-  const value = lines.join("\n").trim();
-  return value || fallback;
+  return new Promise((resolve) => {
+    let value = "";
+    let inPaste = false;
+
+    const cleanup = () => {
+      output.write("\x1b[?2004l");
+      if (input.isRaw) input.setRawMode(false);
+      input.removeListener("data", onData);
+    };
+
+    const finish = () => {
+      output.write("\n");
+      cleanup();
+      resolve(value.trim() || fallback);
+    };
+
+    const append = (chunk) => {
+      value += chunk;
+      output.write(chunk);
+    };
+
+    const onData = (buf) => {
+      let s = buf.toString("utf8");
+
+      while (s.length) {
+        if (s.startsWith("\x1b[200~")) {
+          inPaste = true;
+          s = s.slice(6);
+          continue;
+        }
+
+        if (s.startsWith("\x1b[201~")) {
+          inPaste = false;
+          s = s.slice(6);
+          continue;
+        }
+
+        const ch = s[0];
+        s = s.slice(1);
+
+        if (ch === "\x03") {
+          cleanup();
+          process.exit(0);
+        }
+
+        if ((ch === "\r" || ch === "\n") && !inPaste) {
+          finish();
+          return;
+        }
+
+        if (ch === "\x7f" || ch === "\b") {
+          if (value.length) {
+            value = value.slice(0, -1);
+            output.write("\b \b");
+          }
+          continue;
+        }
+
+        append(ch === "\r" ? "\n" : ch);
+      }
+    };
+
+    output.write("\x1b[?2004h");
+    input.setRawMode(true);
+    input.resume();
+    input.on("data", onData);
+  });
 }
 
 // ── arrow-key selection (raw stdin, zero-dependency) ─────────────────────────
@@ -214,7 +272,7 @@ ${c.bCyan}██╗  ██╗      ██╗     ██╗     ███╗   �
   // ── Step 1: Project ───────────────────────────────────────────────────────
   step(1, 4, "Project Identity");
   const projectTitle   = await ask(rl, "Project name");
-  const projectDescription = await askMultiline(rl, "Project description");
+  const projectDescription = await askPastedText(rl, "Project description");
   const projectArtifacts = splitList(await ask(
     rl,
     "Helpful artifacts — URLs or file paths (comma-separated)",
