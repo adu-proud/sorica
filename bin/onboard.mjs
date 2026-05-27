@@ -3,7 +3,6 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import readline from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
-import { spawnSync } from "node:child_process";
 
 // ── ANSI colors (zero-dependency) ────────────────────────────────────────────
 const noColor = process.argv.includes("--no-color") || process.env.NO_COLOR;
@@ -81,6 +80,8 @@ async function ask(rl, text, fallback = "", hint = "type your answer") {
 
 async function askPastedText(rl, text, fallback = "", hint = "type or paste content, press Enter when done") {
   if (!input.isTTY) return ask(rl, text, fallback, hint);
+
+  rl.close(); // prevent readline from echoing keystrokes
 
   output.write(dim("  ↳ " + hint + "\n"));
   output.write(bold(text) + dim(": "));
@@ -289,6 +290,7 @@ ${c.bCyan}██╗  ██╗      ██╗     ██╗     ███╗   �
   step(1, 4, "Project Identity");
   const projectTitle   = await ask(rl, "Project name", "", "e.g. My Research Project");
   const projectDescription = await askPastedText(rl, "Project description");
+  rl = createRL(); // fresh readline after raw mode closed the old one
   const projectArtifacts = splitList(await ask(
     rl,
     "Helpful artifacts — URLs or file paths (comma-separated)",
@@ -478,26 +480,7 @@ preferred_llm_cli: "${preferredCli}"
   if (launch.command && launch.args && launch.args.length) {
     output.write(`  ${bold("Command")}:\n\n`);
     output.write(`    ${c.bGreen}${launch.command} ${launch.args.map(a => `'${a}'`).join(" ")}${c.reset}\n`);
-    output.write(`\n  ${dim("Copy the line above into your terminal, or let the script open it for you.")}\n\n`);
-    if (input.isTTY) {
-      const launchRl = createRL();
-      const openNow = (await ask(launchRl, `Type y to open ${preferredCli} now, or press Enter to skip`, "")).toLowerCase();
-      launchRl.close();
-      if (["y", "yes"].includes(openNow)) {
-        output.write("\n" + dim(`Opening ${preferredCli} in ${root}...\n`));
-        const found = spawnSync("which", [launch.command], { stdio: "pipe" });
-        if (found.status !== 0) {
-          output.write(c.yellow + `\n${launch.command} not found on PATH. Run it manually:\n` + c.reset);
-          output.write(`  ${launch.command} ${launch.args.map(a => `'${a}'`).join(" ")}\n`);
-        } else {
-          const result = spawnSync(launch.command, launch.args, { cwd: root, stdio: "inherit", shell: false });
-          if (result.error || result.status) {
-            output.write(c.yellow + "\nCould not open the selected CLI automatically. Run this manually:\n" + c.reset);
-            output.write(`  ${launch.command} ${launch.args.map(a => `'${a}'`).join(" ")}\n`);
-          }
-        }
-      }
-    }
+    output.write(`\n  ${dim("Copy the line above into your terminal to open it.")}\n\n`);
   } else if (launch.command) {
     output.write(`  ${bold("Command")}:\n\n`);
     output.write(`    ${c.bGreen}${launch.command}${c.reset}\n`);
