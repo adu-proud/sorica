@@ -86,7 +86,68 @@ Search the LLM Realm first for token economy. Open the Root Vault only when you 
 
 The framework is intentionally asymmetric: the Root Vault is evidence, and the LLM Realm is the writable retrieval layer that helps agents get back to that evidence quickly.
 
-## 2. First Read
+## 2. File Map
+Every .md file in the repo and what it is for.
+
+### Root
+| File | What it is |
+|---|---|
+| `AGENTS.md` | This playbook — orchestrator operating contract |
+| `README.md` | Human-facing project overview and setup instructions |
+| `GLOSSARY.md` | Shared vocabulary: agent, evidence level, concept index, etc. |
+
+### `.github/`
+| File | What it is |
+|---|---|
+| `.github/copilot-instructions.md` | Copilot integration — tells the agent to read AGENTS.md and the config |
+
+### `00_system/instructions/`
+| File | What it is |
+|---|---|
+| `REALM_CONFIGURATION.md` | Realm-wide config: Root Vault path, source policy, protected paths |
+| `SYSTEM_ARCHITECTURE_MAP.md` | Repo-wide architecture and data-flow diagrams |
+| `PROCESS_ROUTER.md` | Prompt classification logic and route table |
+| `ONBOARDING.md` | Translates user setup answers into concrete Realm configuration |
+| `STARTUP.md` | Converts the startup draft into an initial index and smoke-tests retrieval |
+
+### `00_system/sub_agents/`
+| File | What it is |
+|---|---|
+| `conceptualizer/SOUL.md` | Conceptualizer spec — translates requests into search concepts and routes |
+| `navigator/SOUL.md` | Navigator spec — finds material in Realm and Root Vault, produces evidence packets |
+| `packer/SOUL.md` | Packer spec — turns retrieved material into reports and structured answers |
+| `checker/SOUL.md` | Checker spec — verifies claims, quotes, paths, and indexes against the Root Vault |
+
+### `00_system/templates/`
+| File | What it is |
+|---|---|
+| `STARTUP_REPORT_TEMPLATE.md` | Template for the structured output written at startup completion |
+
+### `01_llm_realm/`
+| File | What it is |
+|---|---|
+| `00_realm_index.md` | Master index of the LLM Realm — maps all retrieval layers |
+| `00_root_mirror/FOLDER_INDEX_TEMPLATE.md` | Template for folder mirror index files that map Root Vault directories |
+| `01_metadata/HEADER_TEMPLATE.md` | Canonical YAML header schema for all framework .md files |
+| `03_concept_indexes/CONCEPT_INDEX_TEMPLATE.md` | Template for thematic concept indexes |
+| `04_evidence_fragments/EVIDENCE_FRAGMENT_TEMPLATE.md` | Template for reusable evidence excerpts with source paths and tags |
+
+### `02_user_realm/`
+| File | What it is |
+|---|---|
+| `RESEARCH_BLUEPRINT.md` | Research scope, questions, corpus, evidence standards, and direction |
+
+### `03_logs/`
+| File | What it is |
+|---|---|
+| `user_requests.md` | Every user prompt logged as a routing row |
+| `execution_runs.md` | Non-linear or failure-prone routed runs (retries, timeouts, checkpoints) |
+| `source_intake_log.md` | Tracks new Root Vault batches and retained external sources |
+| `external_queries.md` | Records explicitly authorized external source use |
+| `structured_research_needs/STRUCTURED_RESEARCH_NEED_TEMPLATE.md` | Shape of a reusable search plan entry |
+| `research_tendencies/RESEARCH_NEED_AGGREGATOR_TEMPLATE.md` | Accumulates research needs, detects repeated themes |
+
+## 2.1 First Read
 At the start of a session or after context loss, read:
 
 1. `AGENTS.md`
