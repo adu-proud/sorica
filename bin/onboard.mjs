@@ -480,7 +480,7 @@ preferred_llm_cli: "${preferredCli}"
   if (launch.command && launch.args && launch.args.length) {
     output.write(`  ${bold("Command")}:\n\n`);
     output.write(`    ${c.bGreen}${launch.command} ${launch.args.map(a => `'${a}'`).join(" ")}${c.reset}\n`);
-    output.write(`\n  ${dim("Copy the line above into your terminal to open it.")}\n\n`);
+    output.write(`\n  ${dim(`Copy this prompt, open ${preferredCli} on this folder and paste it.`)}\n\n`);
   } else if (launch.command) {
     output.write(`  ${bold("Command")}:\n\n`);
     output.write(`    ${c.bGreen}${launch.command}${c.reset}\n`);
