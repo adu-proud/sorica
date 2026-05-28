@@ -57,6 +57,8 @@ Startup translates a protected Root Vault into the first usable LLM Realm. You f
 - `02_user_realm/RESEARCH_BLUEPRINT.md` — filled from setup draft.
 - `00_system/instructions/REALM_CONFIGURATION.md` — filled, `setup_status` updated.
 - `03_logs/research_tendencies/RESEARCH_NEED_AGGREGATOR.md` — created if missing.
+- `03_logs/source_intake_log.md` — register source batch.
+- `03_logs/external_queries.md` — log external sources (if any).
 - `05_agent_reports/` — startup report.
 
 ## Must Do

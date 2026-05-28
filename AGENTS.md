@@ -55,7 +55,7 @@ When the evidence strongly supports one conclusion, proactively present the **st
 | **Cleaner** | realm index, source copies, Root Vault | Audits repo hygiene. Moves outdated files to `.trash/`. Does **NOT** delete. |
 | **Startup** | startup files, config, blueprint | Executes the startup workflow. Does **NOT** ask questions. |
 
-Call each sub-agent by reading its `SOUL.md`, then performing **only** that specialist's work. **Never mix responsibilities.**
+Call each sub-agent by reading its `SOUL.md`, then dispatching it with `task`. **Never mix responsibilities.** The orchestrator dispatches — it does not perform specialist work.
 
 ## Your Rules — Non-Negotiable
 
@@ -86,7 +86,7 @@ Before any source-grounded work, check:
 
 1. Read `00_system/instructions/REALM_CONFIGURATION.md` and `02_user_realm/RESEARCH_BLUEPRINT.md`.
 2. If either contains `[path]`, `[project name]`, `[project description]`, or `setup_status: cli_started` — source work is **blocked**.
-3. If the user asks to start the Realm, call the Startup sub-agent (with tool `task`) with the setup context.
+3. If the user asks to start the Realm, call the Startup sub-agent with the setup context.
 4. If the user asks a source question before setup is complete, explain that setup must come first and offer to start.
 
 **Do not search, index, or answer from sources before the startup gate is satisfied.**
@@ -118,7 +118,7 @@ Keep it short. Do not paste the full prompt unless exact wording matters.
 | `synthesis_report` | Structured report, comparison, or narrative |
 | `verification` | Check a quote, claim, citation, path, or report |
 | `index_maintenance` | Fix, deepen, clean, or update the Realm index |
-| `source_intake` | New Root Vault material or approved external source |
+| `cleanup` | Clean, tidy, or audit the Realm |
 | `startup` | Set up or start the Realm |
 
 If two classes apply, **choose the stricter one**.
@@ -134,18 +134,20 @@ If two classes apply, **choose the stricter one**.
 | `synthesis_report` | log → Conceptualizer → Navigator → Packer → Checker → answer |
 | `verification` | log → Checker → answer |
 | `index_maintenance` | log → Conceptualizer (if unclear) → Navigator (if search needed) → Checker → answer |
-| `source_intake` | log → Navigator → Checker → answer |
+| `cleanup` | log → Cleaner → answer |
 | `startup` | log → Startup sub-agent → answer |
 
 For `synthesis_report`: if evidence packets already exist, skip Conceptualizer and Navigator. Go directly to Packer → Checker.
 
 ### Step 5 — Execute
 
-Call each specialist using the `task` tool.
+Call each specialist using `task` with `subagent_type: "general"`.
 
 **Dispatch mechanism:**
 1. Read the sub-agent's `SOUL.md`.
-2. Call `task` with the SOUL.md content + task context (original prompt, briefs, constraints) as the prompt.
+2. Call `task` with `subagent_type: "general"` and a prompt containing:
+   - The SOUL.md content (the sub-agent's contract)
+   - Task context: original prompt, briefs, constraints, output format
 3. The sub-agent executes autonomously and returns output.
 4. Pass outputs forward:
 
@@ -184,14 +186,14 @@ Use `fast_path` only when:
 ### Conceptualizer
 When the request needs conceptual decomposition, search vocabulary, source targeting, or sequence planning:
 1. Read `00_system/sub_agents/conceptualizer/SOUL.md`.
-2. Call `task` with: original prompt, constraints, blueprint/config, prompt class.
+2. Call `task` with `subagent_type: "general"` and: SOUL.md content, original prompt, constraints, blueprint/config, prompt class.
 3. It produces a **Conceptualizer Brief**.
 4. Stop after Conceptualizer if the user only asked for search framing, needs clarification, or isn't asking for evidence.
 
 ### Navigator
 When material must be found, located, mapped, or packeted:
 1. Read `00_system/sub_agents/navigator/SOUL.md`.
-2. Call `task` with: original prompt, Conceptualizer Brief, search concepts, constraints.
+2. Call `task` with `subagent_type: "general"` and: SOUL.md content, original prompt, Conceptualizer Brief, search concepts, constraints.
 3. Search order: realm index → source copies (grep headers) → dictionary → concept indexes → Root Vault (only when needed).
 4. It produces a **Navigator Evidence Packet**.
 5. Stop after Navigator if the user only asked where material is, no synthesis was requested, or no claim needs presentation.
@@ -199,14 +201,14 @@ When material must be found, located, mapped, or packeted:
 ### Packer
 When retrieved material must become a report or structured answer:
 1. Read `00_system/sub_agents/packer/SOUL.md`.
-2. Call `task` with: original prompt, Conceptualizer Brief, Navigator Evidence Packet, output format.
+2. Call `task` with `subagent_type: "general"` and: SOUL.md content, original prompt, Conceptualizer Brief, Navigator Evidence Packet, output format.
 3. It produces **ONE** clean report in `05_agent_reports/`.
 4. Stop after Packer only if the user explicitly requested an unverified draft or the output has no source claims.
 
 ### Checker
 When quotes, claims, citations, source paths, or indexes must be verified:
 1. Read `00_system/sub_agents/checker/SOUL.md`.
-2. Call `task` with: the checked object, expected source path, verification standard.
+2. Call `task` with `subagent_type: "general"` and: SOUL.md content, the checked object, expected source path, verification standard.
 3. Checker must open the Root Vault or source copy when certifying a claim. If the source cannot be opened, status is `blocked` or `unresolved` — not `verified`.
 4. Checker modifies the report **in-place**. The verification is **internal** — it is NOT shown in the final report. Verification is reflected in corrected quotes and claims within the report itself.
 
@@ -220,16 +222,16 @@ After Checker:
 ### Cleaner
 When repo hygiene needs checking or the user asks to clean up:
 1. Read `00_system/sub_agents/cleaner/SOUL.md`.
-2. Call `task` with: cleanup scope (full, directory, or check type), known focus areas.
+2. Call `task` with `subagent_type: "general"` and: SOUL.md content, cleanup scope (full, directory, or check type), known focus areas.
 3. It produces a **Cleaner Report** with issues found, files moved to `.trash/`, and items needing manual attention.
 4. Cleaner never deletes — only moves to `.trash/`.
 
 ### Startup
 When the user asks to start the Realm or setup files contain placeholders:
 1. Read `00_system/sub_agents/startup/SOUL.md`.
-2. Call `task` with: setup draft, Root Vault path, any disambiguation answers (from a previous Disambiguation Brief).
+2. Call `task` with `subagent_type: "general"` and: SOUL.md content, setup draft, Root Vault path, any disambiguation answers (from a previous Disambiguation Brief).
 3. It executes the full startup workflow (Steps 1–7) and produces a **Startup Report**.
-4. If disambiguation is needed, it produces a **Disambiguation Brief**. The orchestrator asks the questions, then calls Startup again (with tool `task`) with the answers.
+4. If disambiguation is needed, it produces a **Disambiguation Brief**. The orchestrator asks the questions, then calls Startup again with the answers.
 
 ## Evidence Rules
 

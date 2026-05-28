@@ -73,6 +73,10 @@ List every directory in the Root Vault. For each directory:
 
 Separate text-based files (already copied to `sources/`) from binary files (still in Root Vault).
 
+## Step 2b — Log Source Intake
+
+Register the source batch in `03_logs/source_intake_log.md`. If any sources are external, also log them in `03_logs/external_queries.md`. This creates a traceable record of what was intake and when.
+
 ## Step 3 — Build Master Dictionary
 
 Read every text-based source copy in `01_llm_realm/sources/`. Extract:

@@ -62,6 +62,7 @@ log -> answer
 | Repair stale source paths or broken evidence links | **Checker** | Updated index/report |
 | Deepen a source copy header or concept index | **Conceptualizer → Navigator → Checker** | Updated LLM Realm index |
 | Verify repo cleanliness | **Cleaner** | Cleaner report with issues, moved files, manual items |
+| Clean or tidy up the Realm | **Cleaner** | Cleaner report with issues, moved files, manual items |
 | Startup / initial vault setup | **Startup** | Completed configuration, blueprint, source copies, dictionary, and initial Realm index |
 | Disambiguation during startup | **Startup → Orchestrator → Startup** | Disambiguation Brief → user answers → updated dictionary/headers |
 
