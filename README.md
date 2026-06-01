@@ -9,6 +9,7 @@ It keeps original material in a protected **Root Vault** and builds a lightweigh
 | Tool | Version |
 |---|---|
 | bash | `>=3.2` (ships with macOS and most Linux distros) |
+| Git Bash | Required only for Windows double-click onboarding |
 | LLM agent CLI | Optional, but recommended: Codex, Claude Code, OpenCode, Kilo, or equivalent |
 
 ## Quick Start
@@ -18,6 +19,8 @@ git clone https://github.com/<owner>/llm-realm.git
 cd llm-realm
 bash bin/onboard.sh
 ```
+
+On macOS, you can also double-click [`onboard.command`](./onboard.command). On Windows, install Git for Windows, then double-click [`onboard.cmd`](./onboard.cmd), which runs the same Bash onboarding script through Git Bash.
 
 The onboarding command asks for the project name, Root Vault path, source policy, and preferred agent CLI. It writes the setup draft into:
 
@@ -87,7 +90,7 @@ The home session orchestrates the sequence through [`PROCESS_ROUTER.md`](./00_sy
 ## Rules To Preserve
 
 - Keep the Root Vault read-only.
-- Do not copy the source corpus into `01_llm_realm/`.
+- Keep copied material in `01_llm_realm/sources/` limited to text-based source copies.
 - Keep `02_user_realm/writing/` protected from agent edits.
 - Require source paths for factual claims.
 - Run Checker before presenting source-grounded claims as established.
@@ -98,6 +101,8 @@ The home session orchestrates the sequence through [`PROCESS_ROUTER.md`](./00_sy
 | Command | Purpose |
 |---|---|
 | `bash bin/onboard.sh` | Collect setup answers and write the startup draft |
+| `./onboard.command` | macOS launcher for onboarding |
+| `onboard.cmd` | Windows launcher for onboarding through Git Bash |
 | `bash bin/check-startup.sh` | Validate that startup completed cleanly |
 
 ## Fresh Clone State

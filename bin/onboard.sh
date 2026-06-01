@@ -111,6 +111,28 @@ copy_to_clipboard() {
 
 sanitize_yaml() { echo "$1" | tr '"' "'" | tr '\n' ' '; }
 
+should_skip_source_file() {
+  case "$1" in
+    */.DS_Store|*/.gitkeep|*/node_modules/*|*/.git/*) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+is_text_source_file() {
+  local path="$1"
+  local name ext
+  name="$(basename "$path")"
+
+  [[ "$name" == *.* ]] || return 1
+  ext="${name##*.}"
+  ext="$(printf '%s' "$ext" | tr '[:upper:]' '[:lower:]')"
+
+  case "|$TEXT_EXTENSIONS|" in
+    *"|$ext|"*) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
 # ── ASCII loader ────────────────────────────────────────────────────────────
 loader_pid=""
 
@@ -140,11 +162,14 @@ copy_root_vault() {
   local vault_path="$1"
   local dest_dir="$2"
 
-  # count text files first
+  # Count text files first. Keep this scan POSIX-find compatible so it works
+  # on stock macOS, Linux, and Git Bash without GNU find extensions.
   local file_count=0
   while IFS= read -r -d '' f; do
+    should_skip_source_file "$f" && continue
+    is_text_source_file "$f" || continue
     file_count=$((file_count + 1))
-  done < <(find "$vault_path" -type f -regextype posix-extended -iregex ".*\.(${TEXT_EXTENSIONS})" -not -name '.DS_Store' -not -path '*/node_modules/*' -not -path '*/.git/*' -print0 2>/dev/null)
+  done < <(find "$vault_path" -type f -print0 2>/dev/null)
 
   if [[ "$file_count" -eq 0 ]]; then
     warn "No text-based files found in Root Vault."
@@ -156,6 +181,9 @@ copy_root_vault() {
   local copied=0 skipped=0
 
   while IFS= read -r -d '' src_file; do
+    should_skip_source_file "$src_file" && continue
+    is_text_source_file "$src_file" || continue
+
     # compute relative path from vault
     local rel_path="${src_file#"$vault_path"/}"
     local dest_file="$dest_dir/$rel_path"
@@ -171,15 +199,17 @@ copy_root_vault() {
 
     cp "$src_file" "$dest_file"
     copied=$((copied + 1))
-  done < <(find "$vault_path" -type f -regextype posix-extended -iregex ".*\.(${TEXT_EXTENSIONS})" -not -name '.DS_Store' -not -path '*/node_modules/*' -not -path '*/.git/*' -print0 2>/dev/null | sort -z)
+  done < <(find "$vault_path" -type f -print0 2>/dev/null)
 
   loader_stop
 
   # count non-text files for the summary
   local binary_count=0
   while IFS= read -r -d '' f; do
+    should_skip_source_file "$f" && continue
+    is_text_source_file "$f" && continue
     binary_count=$((binary_count + 1))
-  done < <(find "$vault_path" -type f -not -regextype posix-extended -iregex ".*\.(${TEXT_EXTENSIONS})" -not -name '.DS_Store' -not -name '.gitkeep' -not -path '*/node_modules/*' -not -path '*/.git/*' -print0 2>/dev/null)
+  done < <(find "$vault_path" -type f -print0 2>/dev/null)
 
   printf '  %s %s\n' "${G}✦${RESET}" "${BOLD}Root vault cloned to${RESET} ${C}${dest_dir}${RESET}"
   printf '  %s %s\n' "${DIM}→${RESET}" "${copied} text files copied"
