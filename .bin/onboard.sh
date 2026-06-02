@@ -25,11 +25,22 @@ RawDir="$ROOT/01_llm_zone/raw"
 # text-based extensions to copy from Root Vault
 TEXT_EXTENSIONS="md|txt|rtf|csv|json|yaml|yml|toml|xml|html|css|js|ts|py|rb|sh|log|ini|cfg|conf|tex|bib|org|adoc|rst|wiki|mediawiki|asciidoc|textile|dokuwiki|pmwiki|tiddlywiki|opml|outliner|workflowy|dynalist|logseq|roam|obsidian"
 
-divider() { printf '%s\n' "${DIM}$(printf '%.0s─' 1 {1..78})${RESET}"; }
-header()  { printf '\n%s\n\n' "${BOLD}${C}$1${RESET}"; }
-info()    { printf '  %s %s\n' "${DIM}→${RESET}" "$1"; }
-ok()      { printf '  %s %s\n' "${G}✦${RESET}" "$1"; }
-warn()    { printf '  %s %s\n' "${Y}⚠${RESET}" "$1"; }
+divider()   { printf '%s\n' "${DIM}$(printf '%.0s─' 1 {1..78})${RESET}"; }
+header()    { printf '\n%s\n\n' "${BOLD}${C}$1${RESET}"; }
+info()      { printf '  %s %s\n' "${DIM}→${RESET}" "$1"; }
+ok()        { printf '  %s %s\n' "${G}✦${RESET}" "$1"; }
+warn()      { printf '  %s %s\n' "${Y}⚠${RESET}" "$1"; }
+note()      { printf '  %s↳%s %s\n' "${DIM}" "${RESET}" "$1"; }
+print_step(){ printf '\n  %s%s[%s/%s] %s%s\n' "${BOLD}" "${C}" "$1" "$2" "$3" "${RESET}"; }
+print_box() {
+  printf '\n  %s┌%s┐%s\n' "${DIM}" "$(printf '%.0s─' 1 {1..76})" "${RESET}"
+  printf '  %s│%s %s%s%s\n' "${DIM}" "${RESET}" "${BOLD}$1${RESET}" "${DIM}" "${RESET}"
+  printf '  %s├%s┤%s\n' "${DIM}" "$(printf '%.0s─' 1 {1..76})" "${RESET}"
+  while IFS= read -r line; do
+    printf '  %s│%s %s\n' "${DIM}" "${RESET}" "$line"
+  done
+  printf '  %s└%s┘%s\n' "${DIM}" "$(printf '%.0s─' 1 {1..76})" "${RESET}"
+}
 
 ask() {
   local prompt="$1" default="${2:-}" hint="${3:-}"
@@ -69,11 +80,12 @@ arrow_select() {
   # Arrow-key menu with TTY detection.
   # - In a TTY: up/down keys move the cursor, Enter selects, q cancels.
   # - Outside a TTY (piped input, non-interactive shells): fall back to select_menu.
+  # - Set NUMBERED=1 in the environment to force the numbered menu.
   local prompt="$1"
   shift
   local options=("$@")
 
-  if [[ ! -t 0 ]] || [[ ! -t 1 ]]; then
+  if [[ "${NUMBERED:-0}" == "1" ]] || [[ ! -t 0 ]]; then
     select_menu "$prompt" "${options[@]}"
     return
   fi
@@ -100,7 +112,14 @@ arrow_select() {
     fi
   done
 
-  stty raw -echo 2>/dev/null
+  if ! stty raw -echo 2>/dev/null; then
+    printf '\n  %s arrow-key mode failed, falling back to numbered menu\n' "${Y}⚠${RESET}" >&2
+    # Clear the partial menu we already printed
+    printf '\033[%dA' "$count" >&2
+    for _ in "${!options[@]}"; do printf '\033[2K\n' >&2; done
+    select_menu "$prompt" "${options[@]}"
+    return
+  fi
 
   # Cleanup on any exit path
   cleanup_arrow() {
@@ -140,7 +159,7 @@ arrow_select() {
   cleanup_arrow
 
   # Print final selection visibly
-  printf '  %s %s %s\n' "${G}" "✓" "${options[$current]}" >&2
+  printf '  %s %s %s\n' "${G}" "✓" "${BOLD}${options[$current]}${RESET}" >&2
   echo "${options[$current]}"
 }
 
@@ -275,7 +294,10 @@ copy_root_vault() {
     return 1
   fi
 
-  loader_start "Transposing $file_count text files into markdown raw copies..."
+  # Print a persistent status line FIRST, then run the spinner BELOW it.
+  # After the spinner stops, the status line remains visible alongside the success line.
+  printf '\n  %sTransposing %d text files into markdown raw copies...%s\n' "${DIM}" "$file_count" "${RESET}"
+  loader_start ""
 
   local copied=0 skipped=0
 
@@ -310,13 +332,13 @@ copy_root_vault() {
     binary_count=$((binary_count + 1))
   done < <(find "$vault_path" -type f -print0 2>/dev/null)
 
-  printf '  %s %s\n' "${G}✦${RESET}" "${BOLD}Root vault transposed to${RESET} ${C}${dest_dir}${RESET}"
-  printf '  %s %s\n' "${DIM}→${RESET}" "${copied} markdown raw copies written"
+  printf '  %s✓%s %sRoot vault transposed to%s %s%s%s\n' "${G}${BOLD}" "${RESET}" "${BOLD}" "${RESET}" "${C}${BOLD}" "${dest_dir}" "${RESET}"
+  printf '  %s→%s %s markdown raw copies written\n' "${DIM}" "${RESET}" "${copied}"
   if [[ "$skipped" -gt 0 ]]; then
-    printf '  %s %s\n' "${DIM}→${RESET}" "${skipped} markdown raw copies skipped (already exist)"
+    printf '  %s→%s %s markdown raw copies skipped (already exist)\n' "${DIM}" "${RESET}" "$skipped"
   fi
   if [[ "$binary_count" -gt 0 ]]; then
-    printf '  %s %s\n' "${DIM}→${RESET}" "${binary_count} non-text files (PDFs, images, etc.) left in original vault"
+    printf '  %s→%s %s non-text files (PDFs, images, etc.) left in original vault\n' "${DIM}" "${RESET}" "$binary_count"
   fi
   return 0
 }
@@ -351,12 +373,14 @@ main() {
   for arg in "$@"; do
     case "$arg" in
       --force) FORCE="1" ;;
+      --numbered) NUMBERED="1" ;;
       --no-color) R="" G="" B="" Y="" C="" M="" DIM="" BOLD="" RESET="" ;;
       --help|-h)
         printf '\n  %s\n\n' "${BOLD}LLM Zone Setup${RESET}"
-        printf '  %s\n\n' "${DIM}Usage:${RESET} bash .bin/onboard.sh [--force] [--no-color]"
+        printf '  %s\n\n' "${DIM}Usage:${RESET} bash .bin/onboard.sh [--force] [--numbered] [--no-color]"
         printf '  %s\n\n' "${DIM}Flags:${RESET}"
         printf '    %-14s %s\n' "--force" "Overwrite existing setup data"
+        printf '    %-14s %s\n' "--numbered" "Force numbered menu instead of arrow-key picker"
         printf '    %-14s %s\n' "--no-color" "Disable colored output"
         printf '\n  %s\n' "${DIM}Collects: project name, CLI preference, Root Vault path. The rest is gathered by your LLM CLI after the handoff.${RESET}"
         return 0
@@ -387,16 +411,29 @@ main() {
   fi
 
   # ── Question 1: project name ─────────────────────────────────────────────
+  print_step 1 3 "Project name"
+  note "This is the working title for your research framework."
+  note "It appears at the top of every report and in the blueprint."
+  note "You can change it later by editing 02_user_zone/RESEARCH_BLUEPRINT.md."
   project_title=""
   while [[ -z "$project_title" ]]; do
     project_title="$(ask "Project name" "" "e.g. My Research Project")"
     [[ -z "$project_title" ]] && printf '  %s\n' "${R}Project name is required.${RESET}" >&2
   done
+  ok "Project: ${BOLD}${project_title}${RESET}"
 
   # ── Question 2: CLI preference ───────────────────────────────────────────
+  print_step 2 3 "Preferred LLM CLI"
+  note "Which CLI will you paste the startup prompt into?"
+  note "You can change this later; the prompt is the same shape."
   preferred_cli="$(arrow_select "Preferred LLM CLI" "Claude Code" "Codex" "OpenCode" "Kilo" "Other")" || preferred_cli="Claude Code"
+  ok "CLI: ${BOLD}${preferred_cli}${RESET}"
 
   # ── Question 3: Root Vault path ──────────────────────────────────────────
+  print_step 3 3 "Root Vault"
+  note "The Root Vault is the folder of your source files — PDFs, notes, transcripts, etc."
+  note "Nothing is moved or renamed. We will copy text-based files into 01_llm_zone/raw/."
+  note "Use an absolute path (drag the folder onto the terminal to paste its path)."
   root_vault_path=""
   while [[ -z "$root_vault_path" ]]; do
     root_vault_path="$(ask "Root Vault path (absolute)" "" "e.g. /Users/name/Documents/my-sources")"
@@ -408,6 +445,7 @@ main() {
     printf '\n  %s Root Vault path does not exist: %s\n\n' "${R}✗${RESET}" "$root_vault_path" >&2
     return 1
   fi
+  ok "Root Vault: ${BOLD}${root_vault_path}${RESET}"
 
   # transpose accepted text-based files into markdown raw copies
   printf '\n'
@@ -583,13 +621,16 @@ Do not re-ask questions the CLI draft already answered. Do not stop after one in
 PROMPT_EOF
   )
 
+  # Present the prompt in a clearly demarcated block.
   if copy_to_clipboard "$startup_prompt"; then
-    info "Prompt copied to clipboard."
+    clipboard_status="copied to your clipboard"
+    note "Just open your LLM CLI in this folder and paste (Cmd-V / Ctrl-V)."
   else
-    info "Select and copy the prompt below."
+    clipboard_status="not copied (no clipboard tool found) — select and copy from the block below"
+    note "Click and drag to select the block, then Cmd-C / Ctrl-C."
   fi
-  info "Open your LLM CLI on this folder and paste it:"
-  printf '\n    %s%s%s\n\n' "${G}${BOLD}" "$startup_prompt" "${RESET}"
+  print_box "LLM Zone Startup Prompt — ${clipboard_status}" <<< "$startup_prompt"
+  printf '\n'
   divider
   printf '\n'
 }
