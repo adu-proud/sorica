@@ -31,6 +31,17 @@ info()   { printf '  %s %s\n' "${DIM}→${RESET}" "$1"; }
 ok()     { printf '  %s %s\n' "${G}✦${RESET}" "$1"; }
 warn()   { printf '  %s %s\n' "${Y}⚠${RESET}" "$1"; }
 
+flush_paste() {
+  # Drain any pre-buffered input from stdin (e.g., from a paste that left
+  # content in the kernel buffer after a previous read). Prevents paste
+  # spillover into the next prompt. Non-blocking: returns immediately if
+  # no input is available.
+  local _
+  while read -t 0 -r _ 2>/dev/null; do
+    IFS= read -r _ 2>/dev/null || break
+  done
+}
+
 ask() {
   local prompt="$1" default="${2:-}" hint="${3:-}"
   local fb=""
@@ -40,6 +51,7 @@ ask() {
   local reply
   IFS= read -r reply || true
   reply="${reply:-$default}"
+  flush_paste
   echo "$reply"
 }
 
@@ -47,14 +59,15 @@ ask_multiline() {
   local prompt="$1" hint="${2:-}"
   printf '%s\n' "${BOLD}${prompt}${RESET}" >&2
   [[ -n "$hint" ]] && printf '  %s %s\n' "${DIM}↳${RESET}" "${hint}" >&2
-  printf '  %s\n' "${DIM}↳ Type your answer. Press Enter on an empty line when done.${RESET}" >&2
+  printf '  %s\n' "${DIM}↳ Paste or type freely. To finish, type a single . on its own line and press Enter.${RESET}" >&2
   local lines="" line=""
   while true; do
     IFS= read -r line || break
-    [[ -z "$line" ]] && break
+    [[ "$line" == "." ]] && break
     [[ -n "$lines" ]] && lines="${lines}
 ${line}" || lines="$line"
   done
+  flush_paste
   echo "$lines"
 }
 
