@@ -42,6 +42,32 @@ print_box() {
   printf '  %s└%s┘%s\n' "${DIM}" "$(printf '%.0s─' 1 {1..76})" "${RESET}"
 }
 
+prompt_preview() {
+  local line count=0
+  while IFS= read -r line; do
+    printf '%s\n' "$line"
+    count=$((count + 1))
+    [[ "$count" -ge 4 ]] && break
+  done
+  printf '...\n'
+}
+
+shell_quote() {
+  local value="$1"
+  value="${value//\'/\'\\\'\'}"
+  printf "'%s'" "$value"
+}
+
+cli_command_for() {
+  case "$1" in
+    "Claude Code") echo "claude" ;;
+    "Codex") echo "codex" ;;
+    "OpenCode") echo "opencode" ;;
+    "Kilo") echo "kilo" ;;
+    *) echo "<your-llm-cli>" ;;
+  esac
+}
+
 ask() {
   local prompt="$1" default="${2:-}" hint="${3:-}"
   local fb=""
@@ -668,15 +694,46 @@ Do not re-ask questions the CLI draft already answered. Do not stop after one in
 PROMPT_EOF
   )
 
-  # Present the prompt in a clearly demarcated block.
-  if copy_to_clipboard "$startup_prompt"; then
-    clipboard_status="copied to your clipboard"
-    note "Just open your LLM CLI in this folder and paste (Cmd-V / Ctrl-V)."
+  local startup_prompt_preview
+  startup_prompt_preview="$(prompt_preview <<< "$startup_prompt")"
+  print_box "LLM Zone Startup Prompt Preview" <<< "$startup_prompt_preview"
+
+  local prompt_copied="no"
+  if confirm "  Copy the full startup prompt to your clipboard?" "y"; then
+    if copy_to_clipboard "$startup_prompt"; then
+      prompt_copied="yes"
+      ok "Startup prompt copied to your clipboard."
+    else
+      warn "No clipboard tool found. Copy the full prompt from the block below."
+      print_box "LLM Zone Startup Prompt — full text" <<< "$startup_prompt"
+    fi
   else
-    clipboard_status="not copied (no clipboard tool found) — select and copy from the block below"
-    note "Click and drag to select the block, then Cmd-C / Ctrl-C."
+    warn "Startup prompt not copied."
   fi
-  print_box "LLM Zone Startup Prompt — ${clipboard_status}" <<< "$startup_prompt"
+
+  local cli_cmd root_cmd next_steps
+  cli_cmd="$(cli_command_for "$preferred_cli")"
+  root_cmd="$(shell_quote "$ROOT")"
+  if [[ "$prompt_copied" == "yes" ]]; then
+    next_steps=$(cat <<NEXT_STEPS_EOF
+Open a new terminal, then run:
+cd $root_cmd
+$cli_cmd
+
+When the CLI opens, paste the copied startup prompt.
+NEXT_STEPS_EOF
+)
+  else
+    next_steps=$(cat <<NEXT_STEPS_EOF
+Open a new terminal, then run:
+cd $root_cmd
+$cli_cmd
+
+When the CLI opens, paste the startup prompt. If you did not copy it, rerun onboarding and answer yes at the clipboard step.
+NEXT_STEPS_EOF
+)
+  fi
+  print_box "Open Your LLM CLI" <<< "$next_steps"
   printf '\n'
   divider
   printf '\n'
