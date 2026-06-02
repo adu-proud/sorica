@@ -208,11 +208,18 @@ confirm() {
   local prompt="$1" default="${2:-y}"
   local hint="Y/n"
   [[ "$default" == "n" ]] && hint="y/N"
-  printf '%s' "${BOLD}${prompt}${RESET} ${DIM}${hint}${RESET}: " >&2
-  local reply
-  IFS= read -r reply || reply="$default"
-  reply="${reply:-$default}"
-  case "$reply" in y|Y|yes|Yes|YES) return 0;; *) return 1;; esac
+  local reply normalized
+  while true; do
+    printf '%s' "${BOLD}${prompt}${RESET} ${DIM}${hint}${RESET}: " >&2
+    IFS= read -r reply || reply="$default"
+    reply="${reply:-$default}"
+    normalized="$(printf '%s' "$reply" | tr '[:upper:]' '[:lower:]')"
+    case "$normalized" in
+      y|yes) return 0 ;;
+      n|no) return 1 ;;
+      *) printf '  %s\n' "${R}Please answer y/yes or n/no.${RESET}" >&2 ;;
+    esac
+  done
 }
 
 copy_to_clipboard() {

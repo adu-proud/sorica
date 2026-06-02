@@ -16,6 +16,7 @@ Short routing log for user prompts. Log the request before deciding whether to a
 
 | Date | Request summary | Route | Status | Output |
 |---|---|---|---|---|
+| 2026-06-02 | Make onboarding clipboard confirmation accept Enter/Y/yes variants explicitly | fast_path | done | Confirmation prompts now use default on blank input, accept case-insensitive yes/no, and reprompt on unclear input |
 | 2026-06-02 | Shorten onboarding startup prompt display and add CLI launch instructions | fast_path | done | Startup prompt is previewed, clipboard copy is confirmed, and selected CLI launch commands are shown |
 | 2026-06-02 | Improve onboarding Root Vault visibility with scan summary, current-file progress, and completion box | fast_path | done | Onboarding now shows text/non-text/ignored counts, current file during copy, and a transposition summary box |
 | 2026-06-02 | Add onboarding transposition count and Unicode progress bar | fast_path | done | Root Vault scan reports transposable file count; copy phase updates a Unicode processed-files bar |
