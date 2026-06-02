@@ -97,7 +97,7 @@ arrow_select() {
 
   local count=${#options[@]}
   local current=0
-  local key seq
+  local key seq part
   local old_stty
   old_stty=$(stty -g 2>/dev/null) || { select_menu "$prompt" "${options[@]}"; return; }
 
@@ -121,11 +121,21 @@ arrow_select() {
     return
   fi
 
-  # Cleanup on any exit path
+  local old_int_trap old_term_trap old_exit_trap
+  old_int_trap="$(trap -p INT || true)"
+  old_term_trap="$(trap -p TERM || true)"
+  old_exit_trap="$(trap -p EXIT || true)"
+
+  restore_arrow_traps() {
+    if [[ -n "$old_int_trap" ]]; then eval "$old_int_trap"; else trap - INT; fi
+    if [[ -n "$old_term_trap" ]]; then eval "$old_term_trap"; else trap - TERM; fi
+    if [[ -n "$old_exit_trap" ]]; then eval "$old_exit_trap"; else trap - EXIT; fi
+  }
+
   cleanup_arrow() {
     stty "$old_stty" 2>/dev/null || true
     printf '\033[?25h' >&2
-    trap - INT TERM EXIT
+    restore_arrow_traps
   }
   trap 'cleanup_arrow; printf "\n  Cancelled.\n" >&2; exit 1' INT TERM
   trap 'cleanup_arrow' EXIT
@@ -134,7 +144,11 @@ arrow_select() {
     IFS= read -r -n 1 -s key 2>/dev/null || { cleanup_arrow; return 1; }
     case "$key" in
       $'\x1b')
-        IFS= read -r -n 2 -s -t 0.05 seq 2>/dev/null || true
+        seq=""
+        while IFS= read -r -n 1 -s -t 1 part 2>/dev/null; do
+          seq+="$part"
+          [[ ${#seq} -ge 2 ]] && break
+        done
         case "$seq" in
           '[A'|'OA') ((current--)); ((current < 0)) && current=$((count - 1)) ;; # up
           '[B'|'OB') ((current++)); ((current >= count)) && current=0 ;;            # down
@@ -152,6 +166,7 @@ arrow_select() {
         done
         ;;
       ''|$'\n'|$'\r') break ;; # Enter
+      $'\x03') cleanup_arrow; printf '\n  %s\n' "${DIM}Cancelled.${RESET}" >&2; return 1 ;;
       'q'|'Q') cleanup_arrow; printf '\n  %s\n' "${DIM}Cancelled.${RESET}" >&2; return 1 ;;
     esac
   done
@@ -426,7 +441,7 @@ main() {
   print_step 2 3 "Preferred LLM CLI"
   note "Which CLI will you paste the startup prompt into?"
   note "You can change this later; the prompt is the same shape."
-  preferred_cli="$(arrow_select "Preferred LLM CLI" "Claude Code" "Codex" "OpenCode" "Kilo" "Other")" || preferred_cli="Claude Code"
+  preferred_cli="$(arrow_select "Preferred LLM CLI" "Claude Code" "Codex" "OpenCode" "Kilo" "Other")" || return 1
   ok "CLI: ${BOLD}${preferred_cli}${RESET}"
 
   # ── Question 3: Root Vault path ──────────────────────────────────────────
