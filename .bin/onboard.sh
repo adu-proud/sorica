@@ -266,7 +266,7 @@ markdown_raw_rel_path() {
 }
 
 render_copy_progress() {
-  local processed="$1" total="$2" copied="$3" skipped="$4"
+  local processed="$1" total="$2" copied="$3" skipped="$4" current_file="${5:-}"
   local width=28
   local filled=0
   local bar="" i
@@ -283,8 +283,50 @@ render_copy_progress() {
     fi
   done
 
-  printf '\r\033[2K  %s[%s]%s %d/%d files processed (%d copied, %d skipped)' \
-    "${C}" "$bar" "${RESET}" "$processed" "$total" "$copied" "$skipped" >&2
+  if [[ -n "$current_file" ]]; then
+    current_file="$(truncate_display_path "$current_file" 46)"
+    printf '\r\033[2K  %s[%s]%s %d/%d %s•%s %s (%d copied, %d skipped)' \
+      "${C}" "$bar" "${RESET}" "$processed" "$total" "${DIM}" "${RESET}" "$current_file" "$copied" "$skipped" >&2
+  else
+    printf '\r\033[2K  %s[%s]%s %d/%d files processed (%d copied, %d skipped)' \
+      "${C}" "$bar" "${RESET}" "$processed" "$total" "$copied" "$skipped" >&2
+  fi
+}
+
+truncate_display_path() {
+  local value="$1" max_len="$2"
+  if (( ${#value} <= max_len )); then
+    echo "$value"
+  else
+    echo "...${value:$((${#value} - max_len + 3))}"
+  fi
+}
+
+plural_count() {
+  local count="$1" singular="$2" plural="${3:-$2s}"
+  if [[ "$count" -eq 1 ]]; then
+    printf '1 %s' "$singular"
+  else
+    printf '%d %s' "$count" "$plural"
+  fi
+}
+
+print_transposition_summary() {
+  local dest_dir="$1" copied="$2" skipped="$3" text_count="$4" binary_count="$5" ignored_count="$6"
+
+  printf '\n  %s┌─%s %sTransposition complete%s\n' "${DIM}" "${RESET}" "${BOLD}" "${RESET}"
+  printf '  %s│%s %s✓%s %s written\n' "${DIM}" "${RESET}" "${G}" "${RESET}" "$(plural_count "$copied" "markdown raw copy" "markdown raw copies")"
+  if [[ "$skipped" -gt 0 ]]; then
+    printf '  %s│%s %s↷%s %s already existed\n' "${DIM}" "${RESET}" "${Y}" "${RESET}" "$(plural_count "$skipped" "markdown raw copy" "markdown raw copies")"
+  fi
+  printf '  %s│%s %s◇%s %s processed\n' "${DIM}" "${RESET}" "${C}" "${RESET}" "$(plural_count "$text_count" "transposable file")"
+  if [[ "$binary_count" -gt 0 ]]; then
+    printf '  %s│%s %s•%s %s left untouched\n' "${DIM}" "${RESET}" "${DIM}" "${RESET}" "$(plural_count "$binary_count" "non-text file")"
+  fi
+  if [[ "$ignored_count" -gt 0 ]]; then
+    printf '  %s│%s %s•%s %s skipped\n' "${DIM}" "${RESET}" "${DIM}" "${RESET}" "$(plural_count "$ignored_count" "ignored file")"
+  fi
+  printf '  %s└─%s Raw copies: %s%s%s\n' "${DIM}" "${RESET}" "${C}${BOLD}" "$dest_dir" "${RESET}"
 }
 
 # ── transpose root vault text files into markdown raw copies ────────────────
@@ -294,19 +336,28 @@ copy_root_vault() {
 
   printf '\n  %sScanning Root Vault for text-based files that can become markdown raw copies...%s\n' "${DIM}" "${RESET}"
 
-  local file_count=0
+  local file_count=0 binary_count=0 ignored_count=0
   while IFS= read -r -d '' f; do
-    should_skip_source_file "$f" && continue
-    is_text_source_file "$f" || continue
-    file_count=$((file_count + 1))
+    if should_skip_source_file "$f"; then
+      ignored_count=$((ignored_count + 1))
+    elif is_text_source_file "$f"; then
+      file_count=$((file_count + 1))
+    else
+      binary_count=$((binary_count + 1))
+    fi
   done < <(find "$vault_path" -type f -print0 2>/dev/null)
+
+  printf '  %s✓%s Root Vault scan complete\n' "${G}" "${RESET}"
+  printf '  %s├─%s %s ready for markdown\n' "${DIM}" "${RESET}" "$(plural_count "$file_count" "text-based file")"
+  printf '  %s├─%s %s left untouched\n' "${DIM}" "${RESET}" "$(plural_count "$binary_count" "non-text file")"
+  printf '  %s└─%s %s skipped\n' "${DIM}" "${RESET}" "$(plural_count "$ignored_count" "ignored file")"
 
   if [[ "$file_count" -eq 0 ]]; then
     warn "No text-based files found in Root Vault."
     return 1
   fi
 
-  printf '  %s→%s %d text-based files can be transposed to markdown raw copies\n' "${DIM}" "${RESET}" "$file_count"
+  printf '  %s→%s Starting transposition of %s\n' "${DIM}" "${RESET}" "$(plural_count "$file_count" "text-based file")"
   render_copy_progress 0 "$file_count" 0 0
 
   local copied=0 skipped=0 processed=0
@@ -327,33 +378,20 @@ copy_root_vault() {
     if [[ -f "$dest_file" ]]; then
       skipped=$((skipped + 1))
       processed=$((processed + 1))
-      render_copy_progress "$processed" "$file_count" "$copied" "$skipped"
+      render_copy_progress "$processed" "$file_count" "$copied" "$skipped" "$rel_path"
       continue
     fi
 
     cp "$src_file" "$dest_file"
     copied=$((copied + 1))
     processed=$((processed + 1))
-    render_copy_progress "$processed" "$file_count" "$copied" "$skipped"
+    render_copy_progress "$processed" "$file_count" "$copied" "$skipped" "$rel_path"
   done < <(find "$vault_path" -type f -print0 2>/dev/null)
 
   printf '\n'
 
-  local binary_count=0
-  while IFS= read -r -d '' f; do
-    should_skip_source_file "$f" && continue
-    is_text_source_file "$f" && continue
-    binary_count=$((binary_count + 1))
-  done < <(find "$vault_path" -type f -print0 2>/dev/null)
-
   printf '  %s✓%s %sRoot vault transposed to%s %s%s%s\n' "${G}${BOLD}" "${RESET}" "${BOLD}" "${RESET}" "${C}${BOLD}" "${dest_dir}" "${RESET}"
-  printf '  %s→%s %s markdown raw copies written\n' "${DIM}" "${RESET}" "${copied}"
-  if [[ "$skipped" -gt 0 ]]; then
-    printf '  %s→%s %s markdown raw copies skipped (already exist)\n' "${DIM}" "${RESET}" "$skipped"
-  fi
-  if [[ "$binary_count" -gt 0 ]]; then
-    printf '  %s→%s %s non-text files (PDFs, images, etc.) left in original vault\n' "${DIM}" "${RESET}" "$binary_count"
-  fi
+  print_transposition_summary "$dest_dir" "$copied" "$skipped" "$file_count" "$binary_count" "$ignored_count"
   return 0
 }
 
