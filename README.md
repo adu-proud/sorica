@@ -1,138 +1,137 @@
-# LLM Human Ecology System
+# LLM Zone
 
-LLM Zone is a research framework that turns a protected Root Vault of source material into a searchable, header-indexed, multi-agent-readable knowledge map. The orchestrator routes every user prompt through specialist sub-agents (Conceptualizer, Navigator, Packer, Checker, Cleaner, Startup); the sub-agents never ask questions, only the orchestrator does. Startup is the one-shot path that translates the setup draft and indexes the vault. Cleaner audits repo hygiene and proposes archival moves. Checker is mandatory on every non-fast-path route. Read `AGENTS.md` for the routing contract.
+LLM Zone turns a protected folder of source material (the **Root Vault**) into a searchable, header-indexed, multi-agent-readable knowledge map. A thin orchestrator (`AGENTS.md`) routes every prompt through specialist sub-agents (Conceptualizer, Navigator, Packer, Checker, Cleaner, Startup). The **Startup** sub-agent is the one-shot path that translates the setup draft and indexes the vault. **Checker** is mandatory on every non-fast-path route. Sub-agents never ask questions — only the orchestrator does.
 
-This README is the development-branch checklist. Items are checked only when the repository currently contains an implemented framework, script, protocol, or active instruction that satisfies the task. Items that are only desired behavior, contradicted by current implementation, or not yet wired into the system remain unchecked.
+## Quick Start
 
-Last reviewed: 2026-06-02.
+### 1. Clone the repo
 
-## 1. Knowledge / Context System
+```bash
+git clone https://github.com/TommasoPrinetti/pilosa.git
+cd pilosa
+```
 
-* [x] Create a glossary + dictionaries system → `GLOSSARY.md`, [[dictionary]]
-* [x] Detect languages automatically → dictionary records language per term, raw copy headers include `language` field
-* [x] Structure project-specific files and contexts → full directory tree
-* [x] Build an internal copy/index of the root vault → `.bin/onboard.sh` transposes raw copies, `STARTUP.md` indexes
-* [x] Index YAML instructions/configurations → YAML headers are the core retrieval mechanism
-* [x] Copy only `.md` files into the indexed environment → `onboard.sh` transposes accepted text formats into markdown raw copies
-* [x] Preserve/connect headers and links during indexing → `[[wikilinks]]` in headers, `OBSIDIAN_CONSTRAINTS.md` defines rules
-* [x] Generate folder `index.md` retrieval maps → `STARTUP.md` Phase 2 Step 2.5, `HEADER_TEMPLATE.md` raw_folder_index schema
-* [ ] Improve token and context management strategy
-* [x] Move more functionality into Obsidian-compatible structures → `OBSIDIAN_CONSTRAINTS.md` created, wikilinks supported
-* [x] Support Obsidian-style paths and clickable links inside reports → verbatim quote format, wikilinks in Packer output
+### 2. Create your own branch
 
-## 2. Startup / Initialization Workflow
+Each user/research project lives on its own branch. `main` is the framework. `dev` is the active development branch. Pick a name for your project and branch from `dev` (or from `main` if you want a clean framework only):
 
-* [x] Define startup bootstrap sequence → `STARTUP.md` (Phase 1 setup translation + Phase 2 indexing)
-* [x] On startup: copy and process headers → `STARTUP.md` Step 2.4
-* [x] On startup: load glossary + dictionaries → `STARTUP.md` Step 2.3 (multilingual dictionary)
-* [x] On startup: collect name + CLI + Root Vault path → `.bin/onboard.sh` (description/URLs/policy gathered by the LLM during startup)
-* [x] Arrow-key picker in interactive TTY, numbered fallback in piped input → `.bin/onboard.sh` `arrow_select`
-* [x] Delete or archive `startup.md` after activation → [[.trash/]] directory for retired files
-* [x] Move initialization files into archive/generated folder → [[.trash/]] for retired files
-* [x] Install/setup required services automatically during onboarding → pure bash, zero deps
-* [x] Avoid requiring global NPM usage → pure bash, zero deps
+```bash
+git checkout -b my-project-name
+git push -u origin my-project-name
+```
 
-## 3. Agent Behavior & Orchestration
+> Why a branch? Onboarding rewrites `00_system/instructions/ZONE_CONFIGURATION.md` and `02_user_zone/RESEARCH_BLUEPRINT.md` and copies your Root Vault text files into `01_llm_zone/raw/`. Keeping that on a project branch lets you re-onboard, re-index, or wipe the project without touching the framework.
 
-### Main Agent Behavior
+### 3. Run the onboard script
 
-* [x] Agent should behave like an orchestrator → `AGENTS.md`
-* [x] Agent must remain naturally curious → `AGENTS.md`
-* [x] Agent should not get locked into one POV → `AGENTS.md`
-* [x] Agent should constantly ask questions → `AGENTS.md` (orchestrator owns the `question` tool)
-* [x] Agent should guide the search process actively → `AGENTS.md`
-* [x] Agent should provide counter-perspectives → `AGENTS.md`
-* [x] Agent should avoid blocking/assertive modes → `AGENTS.md`
-* [x] Agent should augment user thinking rather than replace it → `AGENTS.md`
-* [x] Agent should reason more broadly than the immediate process → `AGENTS.md` deeper-question and counter-argument rules
-* [x] Agent should maintain question-driven exploration → `AGENTS.md`
-* [x] Orchestrator can pre-process the user prompt before dispatch (trim, summarize, normalize) → `AGENTS.md` Step 4
-* [x] Orchestrator can deviate from the default route table at runtime → `AGENTS.md` Step 3
+The script collects your project name, preferred LLM CLI, and Root Vault path, transposes text-based files into markdown raw copies, writes a filled blueprint + config with placeholders, and prints a startup prompt to paste into your LLM CLI.
+
+```bash
+bash .bin/onboard.sh
+```
+
+What happens:
+- TTY arrow-key picker for the CLI choice (numbered fallback when piped).
+- Cursor hidden during file transposition, restored on exit.
+- Existing setup files trigger an overwrite confirmation unless you pass `--force`.
+- A startup prompt is written to your clipboard and printed to the terminal.
+
+Flags:
+- `--force` — overwrite existing setup data without asking
+- `--numbered` — force the numbered CLI menu instead of the arrow-key picker
+- `--no-color` — disable colored output
+- `--help` — show usage
+
+On macOS you can also double-click `onboard.command`. On Windows, double-click `onboard.cmd`.
+
+### 4. Paste the prompt into your LLM CLI
+
+Open Claude Code, Codex, OpenCode, or whichever CLI you picked, point it at this folder, and paste the prompt. The LLM will:
+
+1. Ask one question at a time to fill the remaining fields (project description, helpful artifact URLs, external source policy).
+2. Update `00_system/instructions/ZONE_CONFIGURATION.md` and `02_user_zone/RESEARCH_BLUEPRINT.md` from `setup_status: cli_started` → `zone_started`.
+3. Build the master dictionary, generate YAML headers for every raw copy, create folder `index.md` retrieval maps, build concept indexes, run the retrieval smoke test.
+4. Write a startup report to `05_agent_reports/`.
+
+After that, ask research questions normally. The orchestrator will route them through the right sub-agents.
+
+## How the Zone is Organized
+
+```
+pilosa/
+├── AGENTS.md                    The thin orchestrator (single routing file)
+├── GLOSSARY.md                  Shared vocabulary
+├── README.md                    This file
+├── .bin/
+│   ├── onboard.sh               Mechanical setup script (zero deps)
+│   └── check-startup.sh         Pre-flight check
+├── onboard.command              macOS launcher
+├── onboard.cmd                  Windows launcher
+├── 00_system/
+│   ├── instructions/            AGENTS, STARTUP, ZONE_CONFIG, OBSIDIAN rules
+│   ├── sub_agents/<name>/SOUL.md   Conceptualizer, Navigator, Packer, Checker, Cleaner, Startup
+│   └── templates/               STARTUP_REPORT_TEMPLATE
+├── 01_llm_zone/
+│   ├── 00_zone_index.md         Master index (built at startup)
+│   ├── 00_dictionary.md         Master dictionary (built at startup)
+│   ├── raw/                     Markdown raw copies of text-based Root Vault files
+│   ├── 01_metadata/             Header schema (HEADER_TEMPLATE)
+│   └── 03_concept_indexes/      Concept indexes (built from recurring themes)
+├── 02_user_zone/
+│   └── RESEARCH_BLUEPRINT.md    Project description, sources, methods, outputs
+├── 03_logs/                     Request log, source intake, external queries
+└── 05_agent_reports/            Packer / Checker / Startup reports
+```
+
+## What the Orchestrator Does
+
+Read `AGENTS.md` for the full routing contract. Briefly:
+
+- **Classifies** every prompt into one of nine classes (`fast_path`, `clarify_search`, `find_material`, `evidence_answer`, `synthesis_report`, `verification`, `index_maintenance`, `cleanup`, `startup`).
+- **Chooses a sub-agent sequence** for non-fast-path prompts — never answers them directly.
+- **Owns the question tool** — sub-agents execute; they never ask.
+- **Pre-processes** the user prompt (trim, summarize, normalize) before dispatch.
+- **Logs every request** in `03_logs/user_requests.md`.
+
+## Hard Rules
+
+- Never edit the Root Vault.
+- Never edit `02_user_zone/` content from sub-agents (it's the user's free zone).
+- `connects_to` lists in YAML frontmatter stay at 3–5 load-bearing entries.
+- File retirement goes to `.trash/`, not `rm`.
+
+## Contributing
+
+- Framework changes go to `dev` (or a feature branch off `dev`), not to your project branch.
+- Keep `.bin/` scripts pure bash, zero deps.
+- Update `01_llm_zone/01_metadata/HEADER_TEMPLATE.md` and `00_system/instructions/STARTUP.md` together if the header schema changes.
+- Add a row to `03_logs/user_requests.md` for any framework-affecting work.
+
+## Development Branch Checklist — What's Still To Do
+
+The original development checklist from the framework design notes, condensed to the items not yet implemented. Tracked openly so anyone visiting the repo can see what's left.
+
+### Knowledge / Context System
+- [ ] Improve token and context management strategy (no quota or budget system yet)
 
 ### Sub-Agent System
+- [ ] Verify whether sub-agents were already called (no call log yet)
+- [ ] Allow agents to call many sub-agents dynamically (current dispatcher is fixed-shape)
 
-* [x] Improve sub-agent calling structure → `AGENTS.md` default route shapes
-* [x] Make sub-agents easier to invoke with precise profiles → `[[00_system/]]sub_agents/*/SOUL.md` with `## Core Contract` and `## Detail` sections
-* [x] Define dedicated sub-agent profiles → `SOUL.md` files
-* [x] Sub-agents are executors; only the orchestrator asks questions → `AGENTS.md` Hard Rules
-* [ ] Verify whether sub-agents were already called
-* [ ] Allow agents to call many sub-agents dynamically
+### Reporting & Output
+- [ ] Enable direct extraction from markdown into reports (no pipe from raw copies to Packer)
 
-### Search / Research Behavior
+### UX / Interaction Design
+- [ ] Create different "attitudes" / interaction modes for orchestration (single mode today)
 
-* [x] Provide more project context when researchers are involved → `RESEARCH_BLUEPRINT.md`
-* [x] Make search behavior more exploratory and contextual → `AGENTS.md`, Conceptualizer brief, Navigator search order
+### Infrastructure
+- [ ] Explore scalable indexing architecture (current indexing is O(files) per startup)
+- [ ] Continuous Root Vault sync (today: one-shot copy at onboarding, re-run to refresh)
 
-## 4. Reporting & Output
-
-### Report Structure
-
-* [x] Improve report structure overall → clean Packer output format (Answer, Evidence, Analysis, Limitations)
-* [ ] Enable direct extraction from markdown into reports
-* [x] Keep reports cleaner and less process-heavy → Checker verification is internal, not shown
-* [x] Delete intermediate process noise when appropriate → only final report is presented
-* [x] Keep primarily the final report/output → ONE clean markdown file
-* [x] Improve navigation inside reports with Obsidian paths → wikilinks, verbatim quote format
-* [x] Ensure reports contain richer contextual references → verbatim format with author, source, date, bold key passage
-* [x] Mandatory verbatim quote format with author/title/date/place/bold → `AGENTS.md` Verbatim Quotes, Packer SOUL
-
-### Input / Output Routing
-
-* [x] Define clear log/input/routing task delegation → `AGENTS.md` The Loop
-* [x] Separate orchestration logic from execution logic → orchestrator (`AGENTS.md`) vs specialists (`SOUL.md`)
-
-## 5. UX / Interaction Design
-
-### User Interaction
-
-* [x] Build onboarding question flows → `.bin/onboard.sh`
-* [x] Prepare dynamic contextual question series → `STARTUP.md` Step 2.6 disambiguation
-* [x] Make questioning adaptive to user/project state → `STARTUP.md` Phase 1 question gating
-* [ ] Create different "attitudes"/interaction modes for orchestration
-
-### Knowledge Navigation
-
-* [x] Make Obsidian-style references clickable → `OBSIDIAN_CONSTRAINTS.md`
-* [x] Create hidden `.md` guides to connect systems → `OBSIDIAN_CONSTRAINTS.md`
-* [x] Folder `index.md` retrieval maps guide Navigator before grep → `STARTUP.md` Step 2.5
-* [x] Improve contextual navigation across notes/files → `connects_to`, zone index, dictionary, concept index template
-
-## 6. Infrastructure / Technical Decisions
-
-### Internal Vault Strategy
-
-* [x] Create an internal mirrored vault → [[raw/]]
-* [x] Synchronize root vault into internal indexed structure → initial copy via `.bin/onboard.sh`; not continuous sync
-* [x] Folder indexes replace embedded vault tree in Navigator's contract → single source of truth for structure map
-* [ ] Explore scalable indexing architecture
-
-### Dependency Management
-
-* [x] Package dependencies locally in vault → pure bash, zero deps
-* [x] Reduce reliance on globally installed packages → zero external packages
-* [x] Design standalone environment setup → `.bin/onboard.sh` + `.bin/check-startup.sh`
-
-### Cleanup and Archival
-
-* [x] Cleaner never moves to [[.trash/]] or deletes without user confirmation → `Cleaner/SOUL.md` user-confirmation gate
-* [x] Cleaner evaluates both age and research tendency before proposing archival moves → `Cleaner/SOUL.md` staleness rule
-* [x] Retired files are moved to [[.trash/]] (not deleted) with date suffix → `AGENTS.md` Write Boundaries
-
-## 7. Documentation & Communication
-
-### Structural Documentation
-
-* [x] Define workflows formally → `AGENTS.md`
-* [x] Document startup lifecycle → `STARTUP.md`
-* [x] Document agent orchestration architecture → `SYSTEM_ARCHITECTURE_MAP.md`
-* [x] Document indexing + vault synchronization process → `STARTUP.md`, `.bin/onboard.sh`
-* [x] AGENTS.md is the single routing file; routing logic no longer split across PROCESS_ROUTER + AGENTS
-
-## 8. Open Questions / Research Directions
-
-* [ ] How should token/context budgeting work long term?
-* [ ] What is the optimal orchestration strategy for sub-agents?
-* [ ] How much process visibility should remain in final reports?
-* [ ] How should the system balance exploration vs execution?
-* [ ] How should agent "attitudes" be modeled technically?
-* [ ] How should the log/report rotation policy be tuned once real data accumulates?
+### Open Questions
+- [ ] How should token/context budgeting work long term?
+- [ ] What is the optimal orchestration strategy for sub-agents?
+- [ ] How much process visibility should remain in final reports?
+- [ ] How should the system balance exploration vs execution?
+- [ ] How should agent "attitudes" be modeled technically?
+- [ ] How should the log/report rotation policy be tuned once real data accumulates?
