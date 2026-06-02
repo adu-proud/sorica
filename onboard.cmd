@@ -24,7 +24,7 @@ if not defined BASH_EXE (
   exit /b 1
 )
 
-"%BASH_EXE%" bin/onboard.sh
+"%BASH_EXE%" .bin/onboard.sh
 set "STATUS=%ERRORLEVEL%"
 
 echo.

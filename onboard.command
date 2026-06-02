@@ -11,7 +11,7 @@ if ! command -v bash >/dev/null 2>&1; then
 fi
 
 set +e
-bash bin/onboard.sh
+bash .bin/onboard.sh
 status=$?
 set -e
 

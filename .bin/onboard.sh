@@ -283,7 +283,7 @@ main() {
       --no-color) R="" G="" B="" Y="" C="" M="" DIM="" BOLD="" RESET="" ;;
       --help|-h)
         printf '\n  %s\n\n' "${BOLD}LLM Zone Setup${RESET}"
-        printf '  %s\n\n' "${DIM}Usage:${RESET} bash bin/onboard.sh [--force] [--no-color]"
+        printf '  %s\n\n' "${DIM}Usage:${RESET} bash .bin/onboard.sh [--force] [--no-color]"
         printf '  %s\n\n' "${DIM}Flags:${RESET}"
         printf '    %-14s %s\n' "--force" "Overwrite existing setup data"
         printf '    %-14s %s\n' "--no-color" "Disable colored output"
