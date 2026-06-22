@@ -10,10 +10,17 @@ connects_to:
   - 00_system/sub_agents/checker/SOUL.md
   - 00_system/sub_agents/cleaner/SOUL.md
   - 00_system/sub_agents/startup/SOUL.md
+  - 00_system/sub_agents/slicer/SOUL.md
+  - 00_system/sub_agents/encoder/SOUL.md
+  - 00_system/sub_agents/QR_slicer/SOUL.md
+  - 00_system/sub_agents/interaction_encoder/SOUL.md
+  - 00_system/sub_agents/focalizer/SOUL.md
+  - 00_system/sub_agents/challenger/SOUL.md
+  - 00_system/sub_agents/categorizer/SOUL.md
   - 00_system/instructions/ZONE_CONFIGURATION.md
   - 02_user_zone/RESEARCH_BLUEPRINT.md
-created: 2026-05-26
-updated: 2026-06-02
+created: 2026-05-02
+updated: 2026-06-22
 ---
 
 # Orchestrator Playbook
@@ -80,6 +87,9 @@ Map the prompt to one class. If two apply, choose the stricter.
 | `index_maintenance` | Fix, deepen, clean, or update the Zone index |
 | `cleanup` | Tidy or audit the Zone |
 | `startup` | Set up or start the Zone |
+| `encoding` | User asks to encode one or several interviews |
+| `focused_coding` | User asks to produce focused coding across interviews |
+| `categorizing` | User asks to build or develop grounded theory categories |
 
 ### 3. Choose Sequence
 
@@ -96,7 +106,9 @@ Default shapes are guidance. You may deviate at runtime. Every non-fast-path res
 | `index_maintenance` | Conceptualizer (if unclear) → Navigator (if search) → Checker | Stand-alone |
 | `cleanup` | Cleaner | User-confirmation gate required before any move |
 | `startup` | Startup | One-shot; may re-enter for disambiguation |
-
+| `encoding` | (QR_slicer → interaction_encoder) ∥ (Slicer → encoder) | Both chains run in parallel on the same interview. Pass both outputs to focalizer as a pair. |
+| `focused_coding` | ((QR_slicer → interaction_encoder) ∥ (Slicer → encoder)) → focalizer → challenger | Run encoding chains first if encoded files do not exist. Focalizer processes one interview pair at a time, updating the running draft after each. Challenger runs on focalizer_final.md only. |
+| `categorizing` | categorizer | Interactive route. Categorizer reads focalizer_final.md, challenger_report.md, all encoded_ and interaction_ files. Does not produce output autonomously — waits for researcher validation at each turn. |
 ### 4. Dispatch
 
 For each sub-agent in the sequence:
@@ -118,13 +130,19 @@ You may pre-process the user prompt before dispatch: trim, summarize, normalize.
 ## Sub-Agent Pointers
 
 | Agent | Contract |
-|---|---|
 | Conceptualizer | [[conceptualizer|SOUL]] |
 | Navigator | [[navigator|SOUL]] |
 | Packer | [[packer|SOUL]] |
 | Checker | [[checker|SOUL]] |
 | Cleaner | [[cleaner|SOUL]] |
 | Startup | [[startup|SOUL]] |
+| Slicer | [[slicer|SOUL]] |
+| Encoder | [[encoder|SOUL]] |
+| QR_slicer | [[QR_slicer|SOUL]] |
+| interaction_encoder | [[interaction_encoder|SOUL]] |
+| focalizer | [[focalizer|SOUL]] |
+| challenger | [[challenger|SOUL]] |
+| categorizer | [[categorizer|SOUL]] |
 
 Each contract has `## Core Contract` (always injected) and `## Detail` (read on demand).
 
@@ -150,7 +168,7 @@ Required for direct quotes:
 ```
 
 - Author in normal text. Title in italics. Date and place in parentheses. Key passage in **bold**.
-- Minimum 2 sentences or 1 full paragraph.
+- Minimum 3 sentences or 1 full paragraph.
 - Always in a blockquote.
 
 ## Write Boundaries
@@ -164,6 +182,7 @@ Required for direct quotes:
 | [[03_logs/]] | Request log, source intake, external queries, structured needs |
 | [[05_agent_reports/]] | Packer reports, Checker notes, maintenance reports |
 | [[.trash/]] | Retired files; moved here, never deleted |
+| [[05_agent_reports/categories/]] | Finalized category files; written by categorizer only upon researcher validation |
 
 ## Stop
 
@@ -220,7 +239,7 @@ Never claim validation that was not performed.
 ### Other
 - [[RESEARCH_BLUEPRINT]] — research scope
 - [[03_logs/]] — request log, source intake, external queries
-- [[05_agent_reports/]] — reports, checkpoints, evidence packets
+| [[05_agent_reports/]] | Packer reports, Checker notes, maintenance reports, encoding outputs, focused coding reports, finalized category files |
 - [[.trash/]] — retired files
 
 ## Operating Terms
@@ -240,3 +259,9 @@ Never claim validation that was not performed.
 | `execution plan` | Task schedule; inline unless route branches |
 | `checkpoint` | Durable intermediate note in [[05_agent_reports/]] |
 | `partial result` | Some branches failed; completed branches labeled |
+| `encoding chain` | Parallel execution of (Slicer → Encoder) and (QR_slicer → interaction_encoder) on one interview |
+| `focused coding` | Focalizer's iterative synthesis across all interview pairs |
+| `candidate category` | Tier 1 theme proposed by categorizer, not yet researcher-validated |
+| `finalized category` | Category explicitly validated by researcher; written to 05_agent_reports/categories/ |
+| `challenger pass` | Challenger's search for counter-evidence in encoding files against focalizer Tier 1 themes |
+| `categorizing session` | Interactive dialogue between researcher and categorizer; produces finalized category files |

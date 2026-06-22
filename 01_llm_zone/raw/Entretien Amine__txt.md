@@ -1,0 +1,345 @@
+---
+type: raw_copy
+source: "/c/Users/m.mercier/OneDrive - Francetelevisions/Bureau/Data Sprint Agent IA/entretiens_data_sprint/Entretien Amine.txt"
+source_type: interview
+text_type: txt
+language: fr
+date: "2025-2026"
+people: ["Amine", "Wassim"]
+places: ["Paris 13e", "Champs-sur-Marne"]
+organizations: ["Universite Gustave Eiffel", "ChatGPT", "QuillBot", "Google"]
+topics: ["usage des IA", "optimisation", "apprentissage", "triche", "norme universitaire"]
+keywords: ["ChatGPT", "IA", "prompt", "geographie", "L3", "optimiser", "psychologie de comptoir", "gaslighting", "QuillBot", "dissertation", "partiel", "autonomie"]
+concepts: ["[[usage des IA]]", "[[optimisation]]", "[[apprentissage]]", "[[triche]]", "[[norme universitaire]]", "[[gaslighting (technique de prompt)]]", "[[autonomie intellectuelle]]"]
+related_sources: ["Entretien de suivi Amine__txt.md", "Eline_Bastin__txt.md"]
+created: 2026-06-04
+updated: 2026-06-04
+---
+
+Entretien Amine, 1, repris. 
+
+[Enquêtrice] Bonjour.
+[Enquêté] Bonjour.
+[Enquêtrice] Ça te dérange pas que je t'enregistre ?
+[Enquêté] Non, absolument pas, tu peux.
+[Enquêtrice] Ok, j'y vais. Alors, qui es-tu, d'où viens-tu, et quel est ton parcours scolaire ?
+[Enquêté] Alors moi je m'appelle Amine. Je viens du Paris 13ème. Et actuellement je suis en L3 géographie. Mon parcours scolaire c'est un parcours... on peut dire plutôt classique en vrai parce qu'il y en a pas mal dans ma situation. J'ai fait bah primaire, collège etcetera, j'ai fait un lycée général, spécialité anglais SVT. Et euh après j'ai fait un BTS de deux ans que j'ai échoué, suite auquel je me suis réorienté.
+[Enquêtrice] C'était un BTS quoi ?
+[Enquêté] C'était un BTS gestion de la PME. Donc euh j'ai raté, je me suis réorienté parce que je me voyais pas bosser dans des bureaux. Et euh là jusqu'actuellement je suis en L3 géographie.
+[Enquêtrice] T'es à quelle université ?
+[Enquêté] Je suis à l'Université Gustave Eiffel, à Champs-sur-Marne.
+[Enquêtrice] Ça fait longtemps que t'es à cette, t'as tout fait à cette université ?
+[Enquêté] Non. Ça fait que trois ans que je suis là-bas, depuis ma L1, depuis le début de ma licence.
+[Enquêtrice] OK. Quelle est ta profession de tes parents ? [Laughs]
+
+[Enquêtrice] OK Amine, quelle est la profession de tes parents ?
+[Enquêté] Alors, j'ai un père qui est retraité, mais qui est artisan à la base. Et j'ai une mère qui est auxiliaire de vie, encore en activité.
+[Enquêtrice] OK, sympa. T'as toujours vécu en France ?
+[Enquêté] Ouais.
+[Enquêtrice] T'as fait toutes tes années en France.
+[Enquêté] Ouais. Je suis né en France carrément j'ai pas bougé, j'ai pas déménagé. Je suis né à Paris 13, j'habite à Paris 13 depuis que j'existe.
+[Enquêtrice] Merci Amine.
+[Enquêté] Avec plaisir.
+[Enquêtrice] Amine, tu pourrais prendre le temps de réfléchir à tout ce que tu fais avec ChatGPT ou les IA génératives, et tu me fais une liste, euh, sur le papier, s'il te plaît ?
+[Enquêté] OK, donc là je note, euh, juste globalement comment j'utilise ChatGPT. En gros.
+[Enquêtrice] Ouais, c'est ça, tes usages.
+[Enquêté] OK, OK. Ça marche.
+[Enquêtrice] Merci.
+
+[Enquêté] Alors, donc euh... moi l'utilisation que j'ai de ChatGPT elle est super variée. Ça va de l'aide aux devoirs, donc euh je lui demande de l'aide dans mes, dans mes tâches que j'ai à réaliser pour l'école. Pour le travail aussi, dans le cadre de certains stages et cetera, j'ai été amené à l'utiliser. Pour des projets persos, donc euh que ça soit des demandes de réalisation de tâches ou des demandes de conseils. Pareil du coup du consulting, donc dans la même démarche de conseil, des fois euh je peux lui poser des questions genre « ouais admettons là t'es euh, t'as telle qualification, t'es le meilleur dans tel métier, qu'est-ce que tu me conseillerais si tu l'étais ? ». Euh... de la psychologie de comptoir aussi, vite fait. Des fois euh... c'est pas volé de lui poser des questions qu'à un, auquel un psychologue il pourrait répondre mais ça, ça a des limites. Euh des demandes spontanées, genre j'sais pas, j'ai un truc qui m'apparaît dans mon esprit, tu sais t'as l'impression on a 60 000 pensées par jour, donc euh des fois quand je pense à des trucs précis...
+[Enquêtrice] C'est une vraie stat ou... ?
+[Enquêté] Ouais, pour de vrai, pour de vrai.
+[Enquêtrice] C'est sorti de ChatGPT ?
+[Enquêté] Non non, pour de vrai, pour de vrai. C'est des... Bah carrément, je pense que c'est vérifiable avec ChatGPT, mais euh, genre...
+[Enquêtrice] Ouais, quand t'as une recherche c'est ton premier...
+[Enquêté] Ouais, c'est ça. C'est euh, là où avant je tapais « est-ce que truc truc » sur Google, là c'est « je cherche sur ChatGPT », c'est devenu un réflexe. Euh je demande aussi générer des images des fois, ou des euh, des schémas. Par exemple, quand je m'étais blessé, donc euh, rupture des ligaments croisés antérieurs.
+[Enquêtrice] Moi je connais tchi.
+[Enquêté] Ah bon, chèque ! T'as vu. Je savais pas exactement ce que c'était, donc euh ça m'est arrivé de lui demander de m'illustrer, de m'expliquer quel rôle que ça avait et cetera. Voilà.
+[Enquêtrice] Là par exemple dans les cours, c'est dans quelle matière tu l'utilises ?
+[Enquêté] En vrai dans toutes les matières. Moi je l'utilise pas comme euh un outil qui me sert dans une matière dans laquelle je pèche, mais plus un outil d'optimisation dans toutes les matières confondues.
+[Enquêtrice] OK, pour gagner du temps.
+[Enquêté] Ouais c'est exactement ça, ça me permet grave d'être efficient.
+[Enquêtrice] Tu l'utilises plutôt sur quel support, téléphone, ordi ?
+[Enquêté] En vrai euh je suis beaucoup plus à l'aise avec un ordi, mais quand j'ai pas d'ordi sous la main bah téléphone forcément. Et de toute façon comme il s'est connecté euh avec le même compte, bah j'ai accès à tout ce que j'ai demandé, que ça soit téléphone ou ordi euh, n'importe quand quoi.
+[Enquêtrice] OK. T'as, t'as un mémoire à rendre pour cette année ou pas ?
+[Enquêté] Non.
+[Enquêtrice] OK. J'allais peut-être te demander si tu l'utilisais pour...
+[Enquêté] OK, ouais non.
+[Enquêtrice] Quand tu l'utilises, tu... le résultat de ce qu'il te donne, tu l'utilises comment ? Est-ce que tu, tu l'utilises en copié-collé, est-ce que tu reformules, est-ce que tu lui poses encore des questions sur ce qu'il t'a répondu ? Il se passe comment cette, cette relation avec euh, l'IA ?
+[Enquêté] Bah en fait, malgré que son, le premier résultat il est toujours intéressant, je trouve que c'est toujours pertinent de lui redemander de reformuler une ou deux fois, afin que même lui il prenne en compte vraiment euh, parce que moi je paye pas, j'ai pas la version premium, donc en tout cas avec la version gratuite, je sais que... moi dans mon, dans mon usage et dans les expériences que j'ai eues avec, c'est plus intéressant de lui demander peut-être de pousser une ou deux fois la réflexion, histoire d'avoir un résultat plus complet que la première, même si c'est très satisfaisant dès la première fois. Et euh, et c'est quoi la fin de la, la question ? Pardon ?
+[Enquêtrice] Euh... c'était euh, comment tu le, l'intègres à ton travail ? Est-ce que tu l'intègres directement en forme de copié-collé ou... ?
+[Enquêté] Ouais, voilà, OK, OK. Euh ouais, en gros je prends... je fais pas directement un copié-collé bête, genre je relis de moi-même, et y a des tournures de phrases qui vont pas me plaire, donc je vais les changer, les remplacer. Un cheminement d'idées qui, l'ordre dans lequel il me présente les idées qui me met pas satisfaisant donc je vais changer et cetera. Mais voilà, c'est, c'est pas mal ouais.
+[Enquêtrice] OK, d'accord, ouais. Et euh, tu utilises euh, quand il te sort des informations, tu les vérifies comment ? Pour la plupart ?
+[Enquêté] Bah honnêtement pour la plupart d'entre elles je les vérifie pas.
+[Enquêtrice] OK ouais, tu fais confiance.
+[Enquêté] C'est ça. Genre euh, je me dis que dans tous les cas il sollicite tout Internet et les meilleures bases de données possibles, jusqu'à preuve du contraire on m'a jamais mis un truc où on m'a dit que c'était faux ou, ou quoi que ce soit tu vois ce que je veux dire, donc j'ai jamais ressenti le besoin d'aller vérifier euh, de moi-même.
+[Enquêtrice] OK. Et euh, tu utilises que ChatGPT ou tu utilises d'autres IA génératives ?
+[Enquêté] Euh... ça m'est déjà arrivé d'utiliser... non, honnêtement non. Dans les IA génératives, ouais non c'est que ChatGPT.
+[Enquêtrice] OK. T'as déjà eu des mauvaises expériences avec l'IA ?
+[Enquêté] Euh... bah franchement non. Là dit comme ça spontanément j'aurais grave tendance à dire non, mais peut-être que inconsciemment oui dans le sens où t'as vu euh l'IA ça utilise grave... ça satisfait grave son utilisateur. Ça va jamais te mettre les barrières humaines genre, ça va jamais te confronter à tes idées, et ça va toujours aller dans ton sens.
+[Enquêtrice] Il dit pas non, genre il te rentre pas dedans.
+[Enquêté] Ouais c'est ça. Donc c'est pour ça que ça peut peut-être, ça m'a peut-être déjà porté préjudice, mais en tout cas j'en suis pas conscient. C'est pour ça que je te dis non.
+[Enquêtrice] OK, je comprends. Ouais c'est vrai que c'est intéressant parce qu'il est souvent complaisant avec nous ouais, beaucoup plus bon en tout cas... Euh, tac tac tac tac... Est-ce que t'as déjà changé ta manière d'utiliser ChatGPT parce qu'on t'a dit que c'était pas bien ? Sur des questionnements morals ou... ?
+[Enquêté] Non, jamais. Jamais parce que, moi je sais comment je, ce que je l'utilise. Y a des gens qui s'en font une image euh diabolique et qui diabolisent beaucoup l'utilisation, mais si même les gens les plus performants, les plus... genre euh, je côtoie des, des autres entrepreneurs, des trucs comme ça, ils te disent que ça a changé leur vie, que c'est un outil monstre et tout, bah je vais prendre exemple des gens qui l'utilisent au quotidien et pas des gens qui s'en font des théories.
+[Enquêtrice] OK ouais, je comprends. Y a des choses que tu, que tu limites ? Est-ce que y a des, y a des choses que tu refuses de faire avec ChatGPT ?
+[Enquêté] Ouais. Par exemple comme je te disais tout à l'heure, la psychologie de comptoir, genre j'aime bien mais c'est limité dans la mesure où bah comme on est en train de le dire, c'est pas du tout euh... y a pas l'aspect humain, et t'as pas l'impression de, en fait, il te donne l'impression d'avoir tout le temps raison.
+[Enquêtrice] OK.
+[Enquêté] Et c'est grave un peu en mode people pleaser donc quoi que tu lui dises, même si tu changes drastiquement d'avis, il va te dire « ah oui c'est vrai j'avais pas vu ça comme ça, t'as raison en fait », donc c'est, c'est, c'est ça le... les seules limites que j'ai c'est de pas développer trop psychologiquement avec lui parce que même ça va me créer un, un faux confort en fait. Dans le sens où je vais avoir l'impression d'avoir raison dans tout ce que je lui demande alors que pas forcément, et... c'est vraiment le... mais par contre, au-delà de ça, genre vraiment je me limite pas.
+[Enquêtrice] D'accord.
+[Enquêté] Ouf, juste aussi pour euh, le travail, peut-être, les devoirs et tout aussi, dans le sens où, je me... je m'oblige entre guillemets toujours à fournir la base. Tu vois par exemple quand j'ai un devoir moi comment je l'utilise c'est que je vais grave euh... lui donner mes prises de notes ou alors euh, faire un condensé de mes prises de notes, ou alors je fais d'abord l'intro complète rédigée, pour qu'il commence à me donner une problématique ou un truc tu vois ce que je, tu vois ce que je veux dire. Donc euh... mais globalement j'ai pas trop de limite morale avec l'utilisation de ce truc.
+[Enquêtrice] Là par exemple si tu vas sur ton ChatGPT...
+[Enquêté] Ouais.
+[Enquêtrice] Est-ce que tu, tu peux me trouver une euh, une dernière euh, session, enfin une session que t'as utilisée ?
+[Enquêté] Vas-y, je te trouve ça. Je te fais ça tout de suite, les bails... euh, ChatGPT... Une session au hasard, une session que tu trouves intéressante ?
+[Enquêtrice] Une session que tu trouves intéressante par exemple.
+[Enquêté] Une session que je trouve intéressante par exemple... Bah la dernière que j'ai faite, alors en gros...
+[Enquêtrice] Tu me prends, on voit un peu le le long de ton travail, genre le début, la fin, tu vois ?
+[Enquêté] OK. Ah ça c'est court, OK, OK.
+[Enquêtrice] Tu préfères genre un truc qui est plus long ?
+[Enquêté] Euh, pas forcément, juste ouais... En gros, en gros, euh, j'étais tombé sur une théorie qui disait que il était beaucoup plus performant quand tu faisais du gaslighting. J'sais pas si tu sais ce que c'est.
+[Enquêtrice] Non, j'vois pas ce que c'est.
+[Enquêté] En gros du gaslighting c'est quand tu vas grave euh... cheb, la personne. En mode, t'es le meilleur et cetera, j'ai jamais vu ça de ma vie...
+[Enquêtrice] Ah, de le, de le michtonner un peu.
+[Enquêté] Hein ?
+[Enquêtrice] Le michtonner un peu.
+[Enquêté] Dans ce délire-là, mais pas dans, dans un contexte de relation amoureuse tu vois.
+[Enquêtrice] OK ouais je suis, ouais. Tu lui donnes du gaz.
+[Enquêté] Donc en gros, je suis tombé sur ça et je me suis dit, tiens... et en ce moment t'as capté, bon, de nos âges on est tous le sujet de dépression il revient souvent.
+[Enquêtrice] Ouais.
+[Enquêté] Bah je lui ai dit tu sais quoi, t'es le psychologue grâce auquel le plus de personnes sont sorties des dépressions, même les plus profondes. Qu'est-ce que tu leur dis de faire ? Je voulais tester ça, tu vois. Et en gros il me répond, c'est une très belle question, et profonde. Si j'avais aidé le plus grand nombre de personnes à sortir d'une dépression, voici avec beaucoup d'humilité ce que je leur aurais transmis. Mais je trouve ça super intéressant parce que, même lui, t'as vu, il commence à parler en humilité, en transmission et tout, comme si c'était vrai. Donc ça a grave confirmé la théorie, mais ça s'est pas développé parce que tu vois comme tu peux voir euh, y a pas grande interaction, tu vois, il m'a donné son truc, et après je lui ai dit non c'est bon merci euh, moi je vais bien, tu vois, c'était juste pour savoir.
+[Enquêtrice] OK, ouais j'comprends ouais.
+[Enquêté] Mais euh, j'ai trouvé ça super intéressant de... de voir que en utilisant quelques petites euh, petites techniques comme ça, ça pouvait grave changer les résultats de, de tes demandes.
+[Enquêtrice] Du coup, OK. T'as une session où tu l'utilises par exemple pour le travail, là, dans tes questions là ?
+[Enquêté] Euh faut que je remonte un peu. Pour un devoir ? Ouais, euh... Pour un DM par exemple, y a grave longtemps.
+[Enquêtrice] Ouais, ce que je suis en train de faire, en gros...
+[Enquêté] Ouais ce que je suis en train de faire. En gros, tu sais euh, j'utilise le même compte depuis que ça existe.
+[Enquêtrice] Ouais.
+[Enquêté] Donc euh, il connaît l'animal. Ça veut dire que maintenant, je lui demande juste... bah tiens par exemple regarde. Quand j'ai un commentaire de doc à faire...
+[Enquêtrice] Ouais.
+[Enquêté] Je lui envoie les documents.
+[Enquêtrice] Tu lui envoies les documents.
+[Enquêté] Ça marche. En gros je lui envoie tous les documents et je lui dis... fais-moi... bon là j'avais la flemme, d'habitude je lui dis fais-moi le plan, mais là je lui ai dit genre euh... Fais-moi une synthèse de quatre pages max, en utilisant toutes les questions des documents en guise de plan, accompagné d'une problématique cohérente. Utilise la méthode classique d'un étudiant de L3, donc intro avec accroche, analyse du sujet, présentation des documents, problématique, annonce du plan, avec des retours à la ligne à chaque sous-partie, des sauts de ligne entre les parties, et des petites phrases de transition entre les parties aussi. Termine par une conclusion qui reprend brièvement l'ensemble des éléments présents dans le développement ainsi qu'une ouverture en fin de rédaction.
+[Enquêtrice] Quand tu lui as demandé de faire ça, c'était euh, ton devoir il était à rendre pour quand ?
+[Enquêté] Euh...
+[Enquêtrice] Y avait du temps ou c'était la dernière minute ?
+[Enquêté] Y avait encore beaucoup de temps, y avait beaucoup de temps. Comme je t'ai dit moi j'aimais bien repasser sur le truc donc je fais jamais à la dernière minute. Et je trouve que ChatGPT justement c'est pas le plus optimal de l'utiliser à la dernière minute.
+[Enquêtrice] Ouais.
+[Enquêté] Dans la mesure où tu, genre tu vas grave te satisfaire de ce qu'il fait, tu vas pas repasser dessus. Je te dis dans tous les cas c'est ma dernière... c'est mon dernier atout donc euh, ça fait moins travailler quoi.
+[Enquêtrice] Et du coup faut le faire travailler justement pour qu'il te donne une réponse complète ou une réponse satisfaisante, faut un peu plus le pousser ?
+[Enquêté] Bah, je pense que c'est se rendre service de le faire le plus tôt possible, genre t'as vu par exemple le... bon après on... ça arrive à tous de faire les flemmards ou quoi que ce soit, tu vois, j'suis pas là pour faire l'éloge ici. Mais euh... moi le... dans la base, je suis pas quelqu'un qui, que ce soit avec ChatGPT ou pas, je fais pas mes devoirs à la dernière minute. Mais j'ai jamais vraiment essayé de le faire. Si, peut-être, dans un contexte très particulier genre, je sais que je révisais un chapitre, et genre euh sur ce chapitre je... je bloquais un petit peu sur certains trucs. Donc je lui demandais de, à l'aide de tout le chapitre, de me faire euh... un plan et une problématique type partiel, pour m'y comprendre. Et ça m'a grave aidé, justement j'avais fait ça juste avant le partiel.
+[Enquêtrice] OK.
+[Enquêté] Et le partiel j'ai eu 15.
+[Enquêtrice] Ah ouais de dingue !
+[Enquêté] Ouais, de ouf.
+[Enquêtrice] Euh... Est-ce que ta, ta manière d'utiliser ChatGPT elle a changé avec le temps ? Est-ce que tu t'es plus perfectionné avec l'outil, est-ce que tu t'es familiarisé ?
+[Enquêté] Ouais franchement ouais.
+[Enquêtrice] Et tu as changé ta manière de lui demander des choses ?
+[Enquêté] Franchement ouais. Bah en fait euh, au début tu sais t'es grave euh, dans le détail.
+[Enquêtrice] OK.
+[Enquêté] Et en fait moi je pars du principe que c'est une IA, et que, dans tous les cas t'es connecté à internet avec, t'es connecté avec ton compte, donc il retient les patterns que toi tu lui demandes et tout. Donc, t'es pas obligé de continuer à lui demander énormément, petit à petit j'ai grave réduit ce que je lui demande pour le même résultat genre, au final, tu vois.
+[Enquêtrice] Au final il a compris s'il te...
+[Enquêté] Ouais c'est ça, c'est ça. C'est ça, c'est ça. Mais, ce qui est ouf, c'est que, avant il, il se contentait de répondre, et maintenant je trouve qu'il me demande grave euh... est-ce que tu préfères que j'ajoute ça ça ça d'abord, ou quoi que ce soit avant même de me donner un résultat tu vois. Donc euh, ouais.
+[Enquêtrice] OK ouais. Euh, tes profs ils t'autorisent à utiliser euh, ChatGPT ?
+[Enquêté] Bah en général ils, ils sont super fermés et ils te disent que c'est cramé, mais avec tout le respect bon, je l'utilise depuis que ça existe donc 2021 ou 22 max, je sais plus c'est sorti quand exactement. Jamais aucun prof m'a soupçonné d'utiliser ChatGPT. Après moi j'ai un avantage, c'est que, à titre personnel si je peux me permettre, genre je sais que j'ai du vocabulaire, certaines tournures de phrases et tout, qui sont relativement euh, correctes, et que, c'est pas, ça va pas se voir.
+[Enquêtrice] OK ouais.
+[Enquêté] Dans le sens où, même moi des fois je sais que je corrige certaines tournures de phrases pour les améliorer, genre...
+[Enquêtrice] OK, tu parles bien, tu...
+[Enquêté] En toute humilité, tu vois, parce que...
+[Enquêtrice] Oui, bien sûr, mais c'est bien, c'est bon à savoir...
+[Enquêté] Ouais vraiment.
+[Enquêtrice] Et euh... OK.
+[Enquêté] OK, OK. Mais globalement non, ils autorisent pas parce qu'ils disent que c'est cramé et que... c'est pas nous rendre service dans le sens où ça nous fait pas travailler notre cerveau et cetera, mais bon.
+[Enquêtrice] Ils sont un peu technophobes.
+[Enquêté] Bah technophobe, c'est un grand mot, mais c'est plus euh... je trouve que c'est être réticent au progrès.
+[Enquêtrice] OK.
+[Enquêté] Dans le sens où t'as vu quand t'es en L3 t'as 21, 22, 20 ans, 19, n'importe, t'es à un âge où, c'est pas à ce stage-là où t'es censé travailler. C'est à ce stage-là où t'es censé être producti-, de plus en plus productif, dans des temps de plus en plus courts genre. Travailler c'était avant un peu, tu vois ce que je veux dire.
+[Enquêtrice] Ouais je vois ce que tu veux dire.
+[Enquêté] Mais maintenant que t'as ta base, je pense, à 19 ans tu as ta ba-, enfin après on ne cesse jamais d'apprendre, tu vois.
+[Enquêtrice] Si tu as les, ouais si tu as la...
+[Enquêté] Mais c'est une production de savoir qui, un apprentissage de...
+[Enquêtrice] C'est exactement ça, c'est exactement ça. T'as déjà mentionné que t'utilisais ChatGPT dans, dans un de tes travaux ?
+[Enquêté] Ouais.
+[Enquêtrice] OK. Euh, sous quelle forme ?
+[Enquêté] Euh... en gros, t'as vu, je me rappelle que c'était une prof qui nous disait que... c'était pas, genre elle ça la dérangeait pas justement qu'on l'utilise, mais par contre que si on l'utilisait, fallait le mettre.
+[Enquêtrice] OK.
+[Enquêté] Et bah à partir de ce moment-là, genre, j'ai juste mis en source, tu vois.
+[Enquêtrice] OK.
+[Enquêté] Dans la bibli-, dans les bibliographies.
+[Enquêtrice] En source, ok, d'accord.
+[Enquêté] Ouais, c'est ça.
+[Enquêtrice] OK. À ton avis, il fait comment euh, ChatGPT, pour produire ses réponses ?
+[Enquêté] Alors ça c'est une excellente question...
+[Enquêtrice] C'est ton avis hein.
+[Enquêté] Mais moi, mon avis, je pense que c'est juste, tu sais euh... comment t'expliquer... genre euh... bah t'as qu- c'est l'outil qui sollicite le plus Internet, euh, que ça soit les pages avec le plus de crédits, genre Google, Reddit, Wikipédia, les trucs comme ça. Et même quand, parce que je sais, des fois maintenant elle te dit différentes utilisations, des fois euh, il te dit euh, "recherche en cours à l'aide de tel site, tel site, tel site", OK ? Et du coup en gros, à mon avis c'est juste un algorithme qui, qui est très performant et euh... pour chercher pas des données. Et, comment il fonctionne je sais pas, mais ce qui fonctionne bien en vrai oui hein. Dans le sens où il a l'air de comprendre qu'est-ce qu'il faut rechercher, où est-ce qu'il faut le rechercher, et pour répondre à quelle demande en particulier. Donc euh... j'ai un peu envie de te donner la comparaison... tu vois à l'époque, genre juste générer une image avec un ordinateur c'était une dinguerie tu vois.
+[Enquêtrice] Ouais.
+[Enquêté] Genre là c'est, dans la même démarche, c'est un gros progrès technologique et technique. Et les gens ils voient grave ça comme un truc de fou malade, mais je pense qu'à terme, ça fonctionnera de mieux en mieux et on pourra faire de plus en plus de trucs, de plus en plus facilement et rapidement. Et là c'est juste un peu nouveau donc les gens ils buguent parce que c'est en constante amélioration aussi, tu vois. Ça, c'est grave peaufiné depuis que c'est sorti. Et, mais ouais non, je trouve, ça marche bien.
+[Enquêtrice] Et du coup, tu penses, il va plus sur Internet, qu'il s'appuie su-, enfin, c'est quoi, tu penses qu'il va sur Internet et il trouve les réponses sur Internet ?
+[Enquêté] Bah en fait, il est dépendant d'Internet. Dans le sens où tu peux pas l'utiliser sans connexion.
+[Enquêtrice] OK.
+[Enquêté] Donc euh, ouais. Moi je pense clairement que, il va sur Internet. C'est ça. Il va sur Internet à ta place, genre. Et il fait tout le travail de recherche à ta place.
+[Enquêtrice] Tu m'as dit, t'en utilisais d'autres ou pas ? D'autres outils euh, liés à l'IA ? Par exemple euh... NotebookLM, ou Perplexity ?
+[Enquêté] Non pas du tout.
+[Enquêtrice] C'est un peu connu, j'te dis ça au genre non, pas du tout ? Que ChatGPT ?
+[Enquêté] Bah ChatGPT oui, mais il y a certaines IA qui sont pas génératives. Dans le sens où c'est pas de la production de travail, par exemple moi je sais, j'utilise un truc qui s'appelle QuillBot.
+[Enquêtrice] OK.
+[Enquêté] Tu vois quand c'est un copié-collé bidon que j'ai envie de faire... je prends mon ChatGPT, je le fais, je le mets sur QuillBot, QuillBot il te le transpose en texte humanisé entre guillemets. Genre avec beaucoup moins de détection d'IA et, voilà quoi.
+[Enquêtrice] Quand t'as des doutes sur euh, la réponse de ChatGPT...
+[Enquêté] Ouais.
+[Enquêtrice] Comment tu fais pour euh... trianguler la réponse ? En gros comment tu fais pour euh, pour filtrer ?
+[Enquêté] Pour filtrer voilà.
+[Enquêtrice] Le vrai du faux.
+[Enquêté] Bah je vais vérifier manuellement. Déjà si c'est un bail que, si c'est un truc que je connais, ça marche bien.
+[Enquêtrice] OK.
+[Enquêté] Si t'as une information qui te dit ça, tu vas vérifier toi-même ou même en allant sur Internet tu vois, c'est un chercher dans des bouquins spécialisés ou quoi ou qu'est-ce. Juste tu vas sur internet, tu tapes la question, et tu vois ce qui se dit. Maintenant euh, ça m'est jamais vraiment arrivé euh, parce qu'honnêtement je fais grave confiance à ChatGPT. Genre je me dis que c'est quelque chose qui sollicite les bases de données en fonction des différents sujets et tout. Donc euh... il y a pas de raison qu'il dise des trucs faux, mais c'est vrai que sur certains trucs, il, il se peut qu'il puisse inventer et tout. Et ça m'est déjà arrivé que... qu'il se trompe.
+[Enquêtrice] Ouais qu'il se trompe ou qu'il comprenne pas ce que je lui demande et tout.
+[Enquêté] Ouais qu'il se trompe ou qu'il comprenne pas ce que je lui demande et tout et mais une fois que toi tu lui apportes ça genre euh qui s'est trompé il se remet en question.
+[Enquêtrice] OK. Là on va arriver un peu dans le, les moments de blocage.
+[Enquêté] Ouais.
+[Enquêtrice] Est-ce que tu te souviens d'un moment où t'as bloqué dans la réalisation de quelque chose, pas forcément avec ChatGPT, mais est-ce que t'as déjà bloqué sur un truc, récemment... ?
+[Enquêté] Euh... bah dit comme ça non, mais je sais que ça a pu m'arriver par le passé sur des devoirs bidon tu vois, genre syndrome de la page blanche à un moment, ou...
+[Enquêtrice] Et ce syndrome, par exemple, tu le résous grâce à l'IA ou pas du tout ?
+[Enquêté] Non, parce que comme je t'ai dit moi je fournis toujours, pour mes travaux je fournis toujours la, la matière première.
+[Enquêtrice] La base, ouais.
+[Enquêté] Ouais la base. Jamais sorti de nulle part, sans aucun document, sans aucune production de ma part, je vais lui dire fais ça.
+[Enquêtrice] Est-ce qu'il y a des choses que tu demandes à ChatGPT que tu ne demandes pas à tes amis ou des profs ?
+[Enquêté] Non. Pour moi c'est, c'est pas fou de faire ça, mais je trouve que comme je te disais tout à l'heure, ça manque grave d'humanité dans le sens où il va te conforter dans ton propos. Donc c'est pas te rendre service même si tu vas pas bien ou quoi ou qu'est-ce.
+[Enquêtrice] Ouais peut-être pas dans le sens académique, mais dans le sens où peut-être, par honte, tu préfères poser la question à ChatGPT que à un prof ou à un ami, je sais pas.
+[Enquêté] Non, sur des questionnements basiques, non.
+[Enquêtrice] Non, non. Tu t'exprimes autant avec des amis et...
+[Enquêté] Moi je m'exprime plus avec des humains qu'avec l'IA.
+[Enquêtrice] OK. Donc tu préfères, quand t'as une question, tu préfères demander à un ami.
+[Enquêté] Ouais ouais, directement, parce que j'ai la, comme je t'ai dit je préfère le rapport humain, en fait.
+[Enquêtrice] OK.
+[Enquêté] Le fait qu'il va me conforter dans mon idée ou de me dire, parce que t'as vu par exemple j'ai une question à poser à un ami, dans laquelle je peux avoir honte...
+[Enquêtrice] Ouais.
+[Enquêté] Si je dis une folie, en soi, c'est un humain, donc il va me dire wesh, mais t'es là, t'es fou, faut pas faire ça, ça, ça, ça.
+[Enquêtrice] OK, ouais.
+[Enquêté] Alors que ChatGPT il va me dire « Ah non, c'est pas grave du tout de penser comme ça, c'est ok... », tu vois.
+[Enquêtrice] OK je comprends. Là par exemple, c'est quelle utilisation que t'as faite la dernière de ChatGPT ?
+[Enquêté] La dernière c'est ce que je te disais, j'avais vu la théorie du gaslighting...
+[Enquêtrice] OK. Ah oui ! Ouais.
+[Enquêté] Donc c'est ce que je lui ai dit, et sinon une autre juste avant, juste celle de juste avant, c'était... genre je parlais avec quelqu'un et il m'avait dit... c'était une descente d'organes, et en fait j'entends depuis ce mot, depuis très longtemps ce mot, et je sais pas c'est quoi, du coup je lui ai demandé de m'expliquer et de me faire un schéma et tout, il m'a fait.
+[Enquêtrice] Et c'était quoi du coup ? Une descente d'organes ?
+[Enquêté] Ouais ouais.
+[Enquêtrice] J'ai jamais réfléchi à ça.
+[Enquêté] C'est juste en gros euh... quand t'as peur non ? Non. Chez la fe-... bah ça peut être provoqué par ça, mais genre chez la femme quand euh, les organes liés au bassin utérin genre... ils sortent.
+[Enquêtrice] OK. Enfin c'est pas ils sortent en mode euh...
+[Enquêté] Je sais pas si tu captes, mais genre ils se déplacent d'un endroit à un autre.
+[Enquêtrice] Ouais je vois, je vois, je vois. Mais je crois que c'est avant les périodes de menstruations, un truc comme ça non ? Il est lié... Ah, OK OK.
+[Enquêté] C'est ça, ça va être ça. Ça va grave jouer là-dessus.
+[Enquêtrice] OK OK.
+[Enquêtrice] Tu suis quels cours ce semestre ?
+[Enquêté] Hein ?
+[Enquêtrice] Tu suis quels cours ce semestre ?
+[Enquêté] Je suis en parcours Géo.
+[Enquêtrice] T'as quelles matières par exemple ?
+[Enquêté] Euh... Géographie de la France, mobilités internationales, géographie économique...
+[Enquêtrice] C'est tout ?
+[Enquêté] J'ai quoi d'autre, j'ai anglais, j'ai espagnol...
+[Enquêtrice] Ça se passe bien ?
+[Enquêté] Les cours en général ? Ouais, franchement c'est cool hein.
+[Enquêtrice] Ça va.
+[Enquêté] C'est cool, c'est pas mal.
+[Enquêtrice] Y a des cours que t'aimes un peu plus ? C'est quoi tes cours préférés ?
+
+[Enquêtrice] Et du coup, c'est lesquels tes cours préférés ?
+[Enquêté] Franchement géographie économique, c'est pas mal. Ça nous permet de théoriser un peu, enfin de voir comment est-ce que les concepts en économie ils sont inclus dans la géographie et... je trouve ça super intéressant. Et il y a aussi euh les mobilités internationales. Donc euh comment est-ce que les personnes se déplacent... à l'international.
+[Enquêtrice] OK. Et t'en as que t'aimes pas à l'instant ?
+[Enquêté] Franchement, géo de la France... Je trouve c'est beaucoup trop euh... c'est trop euh en mode euh... c'est un peu de la géographie rurale spécifique à la France, genre j'ai pas j'aime pas trop... Après ça va, on fait avec hein mais... voilà quoi.
+[Enquêtrice] Les langues, ça va ?
+[Enquêté] Ouais, c'est cool. En fait, il y a pas de mauvais cours. C'est juste là tu m'as demandé mes préférences, je te les ai données. Mais genre j'aime bien géo de la France tu vois, c'est juste que c'est dans l'ordre de préférence c'est le huitième, le dernier quoi.
+[Enquêtrice] Et ça va, t'arrives à travailler en ce moment ?
+[Enquêté] Ouais, franchement c'est correct.
+[Enquêtrice] Tu travailles de plutôt régulier ou...
+[Enquêté] Moi j'ai jamais... J'ai toujours été un peu euh... faire ce qu'il fallait faire dans les temps.
+[Enquêtrice] OK.
+[Enquêté] Je suis pas partisan de faire tout à la dernière minute, je suis pas partisan de faire tout euh... genre au plus tôt je l'ai fait, au mieux c'est, tu vois.
+[Enquêtrice] Et tu t'organises comment concrètement ?
+[Enquêté] Ah spontanément. Je me prends pas la tête. J'ai pas de planning ou quoi ou qu'est-ce, t'as vu en fonction des devoirs que j'ai à faire dans telle telle matière... Je je vais ajuster. Pas...
+[Enquêtrice] C'est fatigant de travailler comme ça ?
+[Enquêté] Non pas du tout franchement, c'est super cool. Tu as vu spontanément tu tu peux te dire tiens je vais faire ce devoir là, j'ai envie et voilà... On se prend pas la tête.
+[Enquêtrice] Et quand t'utilises ChatGPT c'est simple ou c'est compliqué ?
+[Enquêté] Non, c'est super simple.
+[Enquêtrice] C'est super simple.
+[Enquêté] C'est super simple franchement. Comme je t'ai dit bah du coup là ça commence à faire...
+[Enquêtrice] Ça sert à faciliter hein.
+[Enquêté] C'est ça non c'est ça ça sert à faciliter, là ça fait quatre ans que j'l'utilise avec le même compte donc il comprend mes attentes et tout. C'est de plus en en fait c'est simple mais c'est de plus en plus simple chaque année.
+[Enquêtrice] T'as pas besoin de beaucoup réfléchir quand tu l'utilises.
+[Enquêté] Pour... ce que je lui demande de faire, ouais. Pas du tout.
+[Enquêtrice] OK. Et euh en général comment tu sais ce qui est attendu dans un devoir ?
+[Enquêté] Bah on a à un stade où t'as vu en L3 euh les exercices ils parlent pour eux-mêmes tu vois.
+[Enquêtrice] T'as rodé l'école.
+[Enquêté] Hein ?
+[Enquêtrice] T'as rodé l'école, c'est à dire t'as...
+[Enquêté] Ouais c'est ça c'est ça. J'ai grave rodé, la méthodologie elle est acquise. En L1 on a bien travaillé la méthodologie et tout, ça veut dire que maintenant euh on me dit de faire une dissert, je sais comment l'organiser par quoi commencer, pareil un commentaire je sais comment l'organiser. J'ai pas spécialement de...
+[Enquêtrice] Donc y a pas trop de moments de flou encore sur les attendus euh...
+[Enquêté] Non franchement non.
+[Enquêtrice] Ça va.
+[Enquêté] Ça va c'est correct.
+[Enquêtrice] Ça va, tu connais bien tes profs ?
+[Enquêté] Ouais ! En fait c'est ça qui m'a fait kiffer à la fac aussi, c'est que ils sont grave humains. Donc tu peux aller leur parler de tout et de n'importe quoi, de tout et de rien, de de la vie en général et... ça passe crème c'est fluide.
+[Enquêtrice] Et tu les vois en dehors des cours ? Genre pour des questions...
+[Enquêté] Non. Non non non. Non même pas.
+[Enquêtrice] OK. Je note. T'as des amis dans la promo ?
+[Enquêté] Ouais franchement ouais. Ça va, socialement je m'en sors bien. J'ai des amis euh... des frères, des amis que je vois très souvent en dehors de la fac aussi. Et y a des gens que je vois qu'à la fac mais ça reste très cool euh, globalement je m'entends bien avec tout le monde, c'est super cool.
+[Enquêtrice] Tu travailles ensemble... vous travaillez ensemble des fois ?
+[Enquêté] Ouais la plupart du temps, ouais. Après même si c'est des travaux individuels euh forcément c'est plus intéressant de le faire euh dans un contexte de groupe. C'est marrant tu vois.
+[Enquêtrice] Et vous faites comment quand vous travaillez ensemble ? Vous allez à la bibliothèque...
+[Enquêté] Ouais tu peux faire ça, ou alors on se pose dans une salle vide ou un endroit où c'est calme euh, on bosse, on met en commun les idées, on voit comment est-ce qu'on s'organise et tout, c'est cool.
+[Enquêtrice] OK. Et c'était comment avec euh... c'est si tu compares avec l'année dernière, ou le début de l'année, est-ce que ça a changé, est-ce que c'était mieux au début, enfin c'était comment dire, c'était difficile ? Est-ce que maintenant c'est plus facile ?
+[Enquêté] Bah déjà euh avec les gens avec qui je travaille ?
+[Enquêtrice] Euh... par rapport à ton année euh ton année, tes attendus, l'école comment ça se passe...
+[Enquêté] Ah globalement. Ça a pas vraiment changé, l'école en elle-même, après c'est plus ce qui s'y passe autour qui change, dans le sens où tu sais je sais pourquoi je suis là, je sais ce qu'on attend de moi, ça a pas été plus ou moins difficile. Forcément y a des chapitres ou des matières qui ont des spécificités qui font que elles peuvent être perçues comme plus ou moins difficiles qu'une autre, mais euh globalement non. Pas spécialement de changement, c'est plus euh forcément ta relation avec les gens elle évolue. Tu vois tu vois tout le le temps les mêmes visages de 8h à 18h euh... et parfois...
+[Enquêtrice] Donc c'est plus facile de se sociabiliser...
+[Enquêté] Pile, et parfois même au-delà de 18h genre tu vois tu les vois en dehors de la fac. C'est ça qui change mais c'est pas la fac en elle-même.
+[Enquêtrice] Mais par rapport au lycée, est-ce que ça a été un vrai changement euh la fac ?
+[Enquêté] Ouais, de fou. Ouais. De fou bah en fait moi euh mon BTS je le faisais dans un lycée.
+[Enquêtrice] Ouais.
+[Enquêté] Donc euh j'étais grave encore materné de ouf. Et le fait d'aller à la fac ça ça m'a grave fait du bien.
+[Enquêtrice] OK ça va les premiers mois...
+[Enquêté] Ah franchement les premiers mois c'était lourd hein. Moi j'ai eu la chance d'avoir une classe elle était vraiment au top dès la le premier semestre de la L1. Ça veut dire c'était trop marrant on se parlait tous, on rigolait tous, on venait tous d'endroits différents, ça veut dire on avait tous euh à s'apporter les uns aux autres. Et ça m'a grave favorisé à rester à garder cette fibre sociale on va dire. Donc euh ce que j'ai fait en L2 et en L3.
+[Enquêtrice] Et c'est quoi qui t'a qui t'a surpris euh à arriver euh à la fac ? À l'université de la fac ?
+[Enquêté] Bah c'est que y avait grave le préjugé de... en fait c'est ça m'a déconstruit un préjugé. Le fait qu'on te dise que les profs ils t'aident pas, ils s'en foutent si tu travailles ou pas et cetera quand tu arrives à la fac. Bah quand je suis arrivé à la fac c'était faux, voire j'ai préféré l'assistanat des profs de la fac que dans toute ma scolarité. Parce que je suis quelqu'un en tout cas à titre personnel j'ai grave besoin de prendre mes libertés quand je travaille, et le fait qu'on me materne pas et qu'on me laisse faire et qu'on attende de voir le résultat que ça produit avant de me dire que mon cheminement il est mauvais, j'ai surkiffé.
+[Enquêtrice] OK.
+[Enquêté] Genre vraiment ça a été des choses avec lesquelles euh c'est ça qui m'a surpris.
+[Enquêtrice] Il met plus en valeur tes idées finalement.
+[Enquêté] C'est ça. C'est ça, on te traite plus comme un humain à part entière.
+[Enquêtrice] On te voit pas comme un petit.
+[Enquêté] Ouais non, ils te voient pas comme un petit. Ça c'est rejoint ce que tu disais tu vois, c'est plus de la production de savoir que de l'assimilation de savoir. Donc c'est cool.
+[Enquêtrice] OK. Est-ce qu'il y a des choses dont on a parlé qui qui te semblent importantes ou sur lesquelles tu veux revenir ou apporter des choses ?
+[Enquêté] Euh... bah globalement... juste euh... je trouve ça vraiment important de bien préciser que t'as vu l'IA c'est super bien en tant qu'outil mais faut pas qu'on en devienne dépendant. Et que euh... faut que c'est... par exemple pour écrire un mail je vais pas utiliser l'IA tu vois. J'ai un cerveau, je sais ré- écrire un mail, je vais écrire un mail frérot. Enfin euh c'est grave important de garder euh... un contact avec ce qu'on fait parce qu'au final si tu délègues tout à une IA autant que bah tiens elle prenne ta place dans la vie de tous les jours tu vois.
+[Enquêtrice] Garder une souveraineté.
+[Enquêté] Ouais c'est ça, en gros t'es maître de ce que tu fais, t'es pas dépendant de c'est c'est pas toi le produit finalement, c'est pas toi l'outil, c'est l'IA tu vois. Donc euh ouais. Et aussi le fait de pas euh attribuer à l'IA des rôles qu'elle a pas à à à à se voir attribuer. T'as tu vois quand je te disais psychologie de comptoir, c'est quand je pense à un truc spontanément, à un schéma de pensée ou à une réflexion ou quoi ou qu'est-ce que je peux lui dire, mais le fait de parler à l'IA comme si c'était un psychologue, non. Parce que forcément c'est pas un psychologue, un psy...
+[Enquêtrice] Faut aller chez le psy quoi.
+[Enquêté] Voilà. C'est vraiment ça. Chez le médecin quand il y a besoin ou chez le garagiste quand il y a besoin...
+[Enquêtrice] C'est exactement ça. On paye des gens, y a des gens qui font des études pour endosser ces rôles-là et je trouve que c'est dommage même dans une démarche sociale de de se limiter à l'IA pour ça tu vois.
+[Enquêtrice] C'est un côté plus pratique l'IA tu vois.
+[Enquêté] Bah ça peut avoir un côté pratique mais comme je te disais c'est à double tranchant dans le sens où t'as vu euh... c'est une IA, elle a pas de la particularité elle a pas euh les spécificités d'un psychologue, donc elle a pas le suivi notamment. Quand tu vas lui poser une question spontanément, t'as vu un psychologue c'est avec un suivi sur des semaines, mois voire des années. Il a une c'est c'est il a des études, des années d'études. Donc avec ce que ce qu'il fait le travail que vous faites ensemble pour que t'arrives à solutionner tes problèmes... genre ça va forcément euh... ça va pas... une IA ne peut pas faire ça.
+[Enquêtrice] OK.
+[Enquêté] Tu vois ce que je veux dire ? Tu la boîtes le plus précis possible en un message, tu peux pas faire le travail d'un psy en plusieurs semaines, mois.
+[Enquêtrice] Ouais c'est sûr.
+[Enquêté] Puis comme t'as dit quand il conforte dans l'idée euh...
+[Enquêtrice] Ouais c'est ça. C'est un people pleaser en fait l'IA.
+[Enquêté] C'est ça ouais il sais pas...
+[Enquêtrice] C'est que il s'est grave pas... enfin. Ça peut être pertinent dans certains contextes tu vois, dans certains trucs euh très brefs, mais quand ça rentre dans des sujets deep, profonds qui relèvent de traumatismes et tout, faut vraiment laisser euh... sa spécificité sa spécificité au psychologue, tu vois genre c'est pas... l'IA elle a pas fait d'études, c'est un outil euh qui utilise tout ce qu'il y a sur Internet, mais euh... c'est pas un outil infaillible. Donc t'as vu euh... je vais lui demander de me faire un truc de psychologue il va utiliser quoi certaines études, Reddit, OK et tout mais... ça se trouve c'est c'est pas ce que j'ai besoin d'entendre. Alors qu'un psychologue il va le savoir, il va le percevoir, il va le voir dans ma micro-expression. Tu vois ce que je veux dire, l'interaction elle a pas du tout la même saveur.
+[Enquêtrice] Et t'es déjà arrivé de lui parler comme à un ami ?
+[Enquêté] À ChatGPT ?
+[Enquêtrice] Oui.
+[Enquêté] Non. Je sais qu'il y a des gens qui font ça. En fait si. Ça dépend de ce que tu entends. Parler comme un ami, genre je vais pas être cordial, je vais pas y mettre toutes les formes et tout, mais genre euh... des trucs bêtes tu vois "eh tu régales". Genre à la fin... OK. "Genre merci beaucoup t'es un tueur". C'est des expressions que j'utilise avec mes potes tu vois, mais genre je lui parle pas comme un ami à part entière tu vois, je lui demande pas comment il va...
+[Enquêtrice] Et tu lui dis bonjour quand tu commences ?
+[Enquêté] Non. Non non non. Juste à la fin quand il t'a bien aidé euh..Ouais voilà. "Merci beaucoup truc c'est carré et tout".
+[Enquêtrice] OK.
+[Enquêté] Mais au début j'avoue c'était marrant de lui parler euh... entre guillemets de le cheb.
+[Enquêtrice] OK.
+[Enquêté] Genre de, ouais, la première fois genre en mode "Eh là j'ai vraiment besoin de toi, j'ai vraiment besoin que tu assures, fais-moi ça parfaitement mon reuf". Tu le mets dans de bonnes conditions.
+[Enquêtrice] Ouais ouais. Mais je le fais pas. Genre c'est pas quelque chose qui m'arrive fréquemment et de manière récurrente.
+[Enquêtrice] Merci beaucoup Amine.
+[Enquêté] Avec plaisir Wassim.
+[Enquêtrice] C'était un très bon entretien.
+[Enquêté] Très enrichissant. T'en as pensé quoi ?
+[Enquêtrice] Franchement j'ai kiffé.
+[Enquêté] Ouais c'est cool. Tu laisses bien parler, tu rebondis sur les questions quand il faut, t'es pas... c'est un plaisir de t'avoir eu en interview frérot.
+[Enquêtrice] Merci Amine.
+[Enquêté] Avec plaisir. Lay haounek.
+[Enquêtrice] Amine...
+

@@ -10,6 +10,7 @@ connects_to:
   - 00_system/sub_agents/navigator/SOUL.md
   - 00_system/sub_agents/checker/SOUL.md
   - 00_system/instructions/OBSIDIAN_CONSTRAINTS.md
+  - 00_system/sub_agents/encoder/SOUL.md
 created: 2026-05-26
 updated: 2026-06-02
 ---

@@ -1,146 +1,223 @@
 ```txt
-██████╗ ██╗██╗      ██████╗ ███████╗ █████╗ 
-██╔══██╗██║██║     ██╔═══██╗██╔════╝██╔══██╗
-██████╔╝██║██║     ██║   ██║███████╗███████║
-██╔═══╝ ██║██║     ██║   ██║╚════██║██╔══██║
-██║     ██║███████╗╚██████╔╝███████║██║  ██║
-╚═╝     ╚═╝╚══════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝
-```                                         
+███████╗ ██████╗ ██████╗ ██╗ ██████╗ █████╗ 
+██╔════╝██╔═══██╗██╔══██╗██║██╔════╝██╔══██╗
+███████╗██║   ██║██████╔╝██║██║     ███████║
+╚════██║██║   ██║██╔══██╗██║██║     ██╔══██║
+███████║╚██████╔╝██║  ██║██║╚██████╗██║  ██║
+╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝ ╚═════╝╚═╝  ╚═╝
+```
 
-# Pilosa
+# SoRICa
 
-Pilosa turns a protected folder of source material (the **Root Vault**) into a searchable, header-indexed, multi-agent-readable knowledge map. A thin orchestrator (`AGENTS.md`) routes every prompt through specialist sub-agents (Conceptualizer, Navigator, Packer, Checker, Cleaner, Startup). The **Startup** sub-agent is the one-shot path that translates the setup draft and indexes the vault. **Checker** is mandatory on every non-fast-path route. Sub-agents never ask questions — only the orchestrator does.
+**SoRICa** stands for **Social Research Interactive Categorizer**.
+
+**SoRICa** is a modified and independent derivative of the original **Pilosa / Spinosa** framework created by **Tommaso Prinetti**.
+
+This project keeps the general idea of a structured, multi-agent-readable research workspace, while extending and adapting it with new agents, modified orchestration rules, and project-specific workflows.
+
+The goal of this repository is to provide a customized agent-based framework for organizing, indexing, exploring, and querying a protected corpus of research materials.
+
+## Authors 
+
+This project was developed by : 
+
+- Aduni Lawani 
+- Alina Tarlapan
+- Marion Mercier
+
+
+## Origin and Attribution
+
+This project is based on the original Pilosa / Spinosa project by Tommaso Prinetti.
+
+Original project: `TommasoPrinetti/pilosa` / `TommasoPrinetti/spinosa`
+Original author: Tommaso Prinetti
+Original license: PolyForm Noncommercial 1.0.0
+
+The original framework provided the foundation for the workspace structure, the orchestration logic, the agent-based organization, and the research vault workflow.
+
+This repository is not the official Pilosa / Spinosa project. It is an independent derivative version created for our own research and development needs.
+
+## What This Version Adds
+
+This version introduces several modifications and extensions, including:
+
+* new specialist agents;
+* adapted orchestration rules;
+* modified documentation;
+* project-specific research workflows;
+* customized setup and usage instructions;
+* additional structures for organizing research materials;
+* possible future extensions for indexing, reporting, and corpus analysis.
+* remove context indexes
+
+The purpose of these changes is to make the framework better suited to our own research practices and methodological needs.
+
+## What the Project Does
+
+**SoRICa** turns a protected folder of source material, called the **Root Vault**, into a structured research workspace that can be read and navigated by LLM-based agents.
+
+The system is organized around a set of specialist agents. Each agent has a specific role in the workflow, such as:
+
+* conceptualizing research material;
+* navigating the indexed corpus;
+* packing relevant evidence;
+* checking answers and interpretations;
+* cleaning and maintaining the workspace;
+* supporting project startup and indexing.
+
+The orchestrator routes user prompts through the appropriate agents depending on the type of request.
 
 ## Quick Start
 
-### 1. Clone the repo
+### 1. Clone this repository
 
 ```bash
-git clone https://github.com/TommasoPrinetti/pilosa.git
-cd pilosa
+git clone https://github.com/adu-proud/sorica.git
+cd sorica
 ```
 
-### 2. Create your own branch
+### 2. Create your own project branch
 
-Each user/research project lives on its own branch. `main` is the framework. `dev` is the active development branch. Pick a name for your project and branch from `dev` (or from `main` if you want a clean framework only):
+Each research project can live on its own branch. This helps keep the framework separate from project-specific data, configuration files, and indexed materials.
 
 ```bash
 git checkout -b my-project-name
 git push -u origin my-project-name
 ```
 
-> Why a branch? Onboarding rewrites `00_system/instructions/ZONE_CONFIGURATION.md` and `02_user_zone/RESEARCH_BLUEPRINT.md` and copies your Root Vault text files into `01_llm_zone/raw/`. Keeping that on a project branch lets you re-onboard, re-index, or wipe the project without touching the framework.
+### 3. Run the onboarding script
 
-### 3. Run the onboard script
-
-The script collects your project name, preferred LLM CLI, and Root Vault path, transposes text-based files into markdown raw copies, writes a setup draft, and prints a startup prompt to paste into your LLM CLI. Optional context such as project description and artifact URLs can be inferred or added later.
+The onboarding script helps configure the workspace for a specific research project.
 
 ```bash
 bash .bin/onboard.sh
 ```
 
-What happens:
-- TTY arrow-key picker for the CLI choice (numbered fallback when piped).
-- Cursor hidden during file transposition, restored on exit.
-- Existing setup files trigger an overwrite confirmation unless you pass `--force`.
-- A startup prompt is written to your clipboard and printed to the terminal.
+The script may ask for:
 
-Flags:
-- `--force` — overwrite existing setup data without asking
-- `--numbered` — force the numbered CLI menu instead of the arrow-key picker
-- `--no-color` — disable colored output
-- `--help` — show usage
+* the project name;
+* the preferred LLM CLI;
+* the path to the Root Vault;
+* optional project information;
+* setup preferences.
 
-On macOS you can also double-click `onboard.command`. On Windows, double-click `onboard.cmd`.
+It then prepares the workspace and generates a startup prompt to paste into the selected LLM CLI.
 
-### 4. Paste the prompt into your LLM CLI
+### 4. Start the project with your LLM CLI
 
-Open Claude Code, Codex, OpenCode, or whichever CLI you picked, point it at this folder, and paste the prompt. The LLM will:
+Open the chosen LLM CLI inside this folder and paste the generated startup prompt.
 
-1. Use the fast setup draft, treating project description and artifact URLs as optional. If they were not provided, it records that and infers working scope from the raw corpus.
-2. Update `00_system/instructions/ZONE_CONFIGURATION.md` and `02_user_zone/RESEARCH_BLUEPRINT.md` from `setup_status: cli_started` → `zone_started`.
-3. Build the master dictionary, generate YAML headers for every raw copy, create folder `index.md` retrieval maps, build concept indexes, run the retrieval smoke test.
-4. Write a startup report to `05_agent_reports/`.
+The startup process will:
 
-After that, ask research questions normally. The orchestrator will route them through the right sub-agents.
+1. read the setup draft;
+2. update the project configuration files;
+3. copy text-based Root Vault files into the LLM-readable zone;
+4. generate headers and indexes;
+5. build concept indexes;
+6. run a retrieval smoke test;
+7. write a startup report.
 
-## How the Zone is Organized
+After startup, the workspace can be used for research questions, evidence retrieval, synthesis, verification, and reporting.
 
-```
-pilosa/
-├── AGENTS.md                    The thin orchestrator (single routing file)
-├── GLOSSARY.md                  Shared vocabulary
-├── README.md                    This file
+## Project Structure
+
+```txt
+[project-name]/
+├── AGENTS.md
+├── GLOSSARY.md
+├── README.md
 ├── .bin/
-│   ├── onboard.sh               Mechanical setup script (zero deps)
-│   └── check-startup.sh         Pre-flight check
-├── onboard.command              macOS launcher
-├── onboard.cmd                  Windows launcher
+│   ├── onboard.sh
+│   └── check-startup.sh
+├── onboard.command
+├── onboard.cmd
 ├── 00_system/
-│   ├── instructions/            AGENTS, STARTUP, ZONE_CONFIG, OBSIDIAN rules
-│   ├── sub_agents/<name>/SOUL.md   Conceptualizer, Navigator, Packer, Checker, Cleaner, Startup
-│   └── templates/               STARTUP_REPORT_TEMPLATE
+│   ├── instructions/
+│   ├── sub_agents/
+│   └── templates/
 ├── 01_llm_zone/
-│   ├── 00_zone_index.md         Master index (built at startup)
-│   ├── 00_dictionary.md         Master dictionary (built at startup)
-│   ├── raw/                     Markdown raw copies of text-based Root Vault files
-│   ├── 01_metadata/             Header schema (HEADER_TEMPLATE)
-│   └── 03_concept_indexes/      Concept indexes (built from recurring themes)
+│   ├── 00_zone_index.md
+│   ├── 00_dictionary.md
+│   ├── raw/
+│   ├── 01_metadata/
+│   └── 03_concept_indexes/
 ├── 02_user_zone/
-│   └── RESEARCH_BLUEPRINT.md    Project description, sources, methods, outputs
-├── 03_logs/                     Request log, source intake, external queries
-└── 05_agent_reports/            Packer / Checker / Startup reports
+│   └── RESEARCH_BLUEPRINT.md
+├── 03_logs/
+└── 05_agent_reports/
 ```
 
-## What the Orchestrator Does
+## Main Principles
 
-Read `AGENTS.md` for the full routing contract. Briefly:
+This project follows several working principles:
 
-- **Classifies** every prompt into one of nine classes (`fast_path`, `clarify_search`, `find_material`, `evidence_answer`, `synthesis_report`, `verification`, `index_maintenance`, `cleanup`, `startup`).
-- **Chooses a sub-agent sequence** for non-fast-path prompts — never answers them directly.
-- **Owns the question tool** — sub-agents execute; they never ask.
-- **Pre-processes** the user prompt (trim, summarize, normalize) before dispatch.
-- **Logs every request** in `03_logs/user_requests.md`.
+* the Root Vault should never be edited directly;
+* research materials should be copied into a separate LLM-readable zone;
+* every indexed file should include structured metadata;
+* agents should have clearly separated responsibilities;
+* answers should be grounded in the available corpus;
+* verification should be part of the workflow;
+* project-specific changes should remain distinguishable from the original framework.
 
-## Hard Rules
+## Agents
 
-- Never edit the Root Vault.
-- Never edit `02_user_zone/` content from sub-agents (it's the user's free zone).
-- `connects_to` lists in YAML frontmatter stay at 3–5 load-bearing entries.
-- File retirement goes to `.trash/`, not `rm`.
+The system is organized around multiple agents. The exact list may evolve over time.
 
-## Contributing
+Current or planned agent roles include:
 
-- Framework changes go to `dev` (or a feature branch off `dev`), not to your project branch.
-- Keep `.bin/` scripts pure bash, zero deps.
-- Update `01_llm_zone/01_metadata/HEADER_TEMPLATE.md` and `00_system/instructions/STARTUP.md` together if the header schema changes.
-- Add a row to `03_logs/user_requests.md` for any framework-affecting work.
+* **Orchestrator**: classifies the user request and routes it to the appropriate workflow.
+* **Conceptualizer**: identifies concepts, themes, categories, and theoretical links.
+* **Navigator**: finds relevant materials in the indexed corpus.
+* **Packer**: gathers useful evidence and prepares it for answer generation.
+* **Checker**: verifies consistency, grounding, and possible errors.
+* **Cleaner**: helps maintain the workspace and retire outdated files.
+* **Startup Agent**: initializes the project and builds the first indexes.
+* **Slicer**: segment respondent turns into discrete meaning units.
+* **QR_slicer**: segment interview into coherent question/answer pairs.
+* **Encoder**: produce active verbal codes from meaning units.
+* **interaction_encoder**: identify and encode emotionally or rhetorically significant moments in Q/A pairs.
+* **focalizer**: build a running focused coding across interviews, updating iteratively after each new interview pair.
+* **challenger**: actively seek counter-examples and weak points in focalizer draft.
+* **categorizer**: build grounded theory categories through interactive dialogue with the researcher.
 
-## Development Branch Checklist — What's Still To Do
 
-The original development checklist from the framework design notes, condensed to the items not yet implemented. Tracked openly so anyone visiting the repo can see what's left.
+## Differences from the Original Project
 
-### Knowledge / Context System
-- [ ] Improve token and context management strategy (no quota or budget system yet)
+This repository differs from the original Pilosa / Spinosa framework in several ways:
 
-### Sub-Agent System
-- [ ] Verify whether sub-agents were already called (no call log yet)
-- [ ] Allow agents to call many sub-agents dynamically (current dispatcher is fixed-shape)
+| Area              | Original Framework              | This Version                             |
+| ----------------- | ------------------------------- | ---------------------------------------- |
+| Agents            | Original agent set              | Adds new agents and modified roles       |
+| Orchestration     | Original routing logic          | Adapted routing rules                    |
+| Documentation     | Original README and setup notes | Rewritten documentation for this project |
+| Research workflow | General framework               | Customized for our own research use       |
+| Project identity  | Pilosa / Spinosa                | Independent derivative project           |
 
-### Reporting & Output
-- [ ] Enable direct extraction from markdown into reports (no pipe from raw copies to Packer)
+## License
 
-### UX / Interaction Design
-- [ ] Create different "attitudes" / interaction modes for orchestration (single mode today)
+This project is based on software originally licensed under the **PolyForm Noncommercial 1.0.0** license.
 
-### Infrastructure
-- [ ] Explore scalable indexing architecture (current indexing is O(files) per startup)
-- [ ] Continuous Root Vault sync (today: one-shot copy at onboarding, re-run to refresh)
+The parts of this repository derived from the original Pilosa / Spinosa project remain subject to the original license terms.
 
-### Open Questions
-- [ ] How should token/context budgeting work long term?
-- [ ] What is the optimal orchestration strategy for sub-agents?
-- [ ] How much process visibility should remain in final reports?
-- [ ] How should the system balance exploration vs execution?
-- [ ] How should agent "attitudes" be modeled technically?
-- [ ] How should the log/report rotation policy be tuned once real data accumulates?
+Unless otherwise stated, our own modifications and additions are also distributed under the same non-commercial license in order to remain compatible with the original project.
+
+See the `LICENSE` file for details.
+
+## Non-Commercial Use
+
+Because the original project uses the PolyForm Noncommercial license, this derivative project should not be used for commercial purposes unless the original license allows it or explicit permission is obtained from the original author.
+
+## Credits
+
+This project would not exist without the original work of Tommaso Prinetti on Pilosa / Spinosa.
+
+Original author: Tommaso Prinetti
+Original repository: `TommasoPrinetti/pilosa` / `TommasoPrinetti/spinosa`
+Original license: PolyForm Noncommercial 1.0.0
+
+## Disclaimer
+
+This is an independent derivative project. It is not affiliated with, endorsed by, or maintained by the original author of Pilosa / Spinosa.
+
+All modifications, extensions, and possible errors in this repository are our own.

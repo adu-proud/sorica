@@ -31,43 +31,61 @@ updated: 2026-05-28
 
 | Source type | Count | Last updated |
 |---|---|---|
-| — | 0 | — |
+| interview (txt) | 9 raw copies | 2026-06-04 |
+| binary (pointer-only) | 3 (PDF x2, DOCX x1) | 2026-06-04 |
 
 ## Dictionary Status
 
 | Category | Count | Last updated |
 |---|---|---|
-| Canonical names | 0 | — |
-| Canonical places | 0 | — |
-| Canonical organizations | 0 | — |
-| Canonical concepts | 0 | — |
-| Domain terms | 0 | — |
+| Canonical names | 15 | 2026-06-04 |
+| Canonical places | 4 | 2026-06-04 |
+| Canonical organizations | 15 | 2026-06-04 |
+| Canonical concepts | 19 | 2026-06-04 |
+| Domain terms | 26 | 2026-06-04 |
+
+## Raw Folder Indexes
+
+| Index file | Scope | Last updated |
+|---|---|---|
+| 01_llm_zone/raw/index.md | All 9 raw copies in raw/ | 2026-06-04 |
 
 ## Active Concept Indexes
 
 | Index name | Tags | Coverage | Last updated |
 |---|---|---|---|
-| — | — | — | — |
+| usage_des_IA.md | usage des IA, ChatGPT, pratiques numériques | 9/9 files | 2026-06-04 |
+| triche_et_plagiat.md | triche, plagiat, détecteur d'IA | 8/10 files | 2026-06-04 |
+| dependance_et_autonomie.md | dépendance, autonomie intellectuelle, flemme | 7/10 files | 2026-06-04 |
+| impact_environnemental.md | impact environnemental, data centers | 4/10 files | 2026-06-04 |
+| relation_affective_IA.md | relation affective, personnification, confident | 5/10 files | 2026-06-04 |
 
 ## Research Tendencies
 
-Startup generates `03_logs/research_tendencies/RESEARCH_NEED_AGGREGATOR.md` from its template.
+See `03_logs/research_tendencies/RESEARCH_NEED_AGGREGATOR.md` for aggregated research needs.
 
-## Non-Text Files in Root Vault
+## Non-Text Files in Root Vault (pointer-only)
 
-Files that cannot be copied (PDFs, images, audio, video) are noted here as pointer-only.
+Files that cannot be copied — noted here as pointer-only.
 
-| File type | Count | Notes |
+| File | Type | Notes |
 |---|---|---|
-| — | 0 | — |
+| Hippolyte Sabolo - Entretien.pdf | PDF | Needs OCR or PDF conversion before transposition |
+| Irene.ColasLopez-enquêteIA.docx | DOCX | Needs conversion before transposition |
+| Pas_info_VERGNES-Aloïs- INTERVIEW IA.pdf | PDF | Needs OCR or PDF conversion before transposition |
 
 ## Source Intake
 
-See `03_logs/source_intake_log.md` for new Root Vault batches and retained external sources.
+See `03_logs/source_intake_log.md` for Root Vault batches and retained external sources.
+
+## Ambiguities
+
+- Several files have encoding issues (mojibake) in the body text due to source file encoding. Headers are UTF-8; body text may render incorrectly in some contexts.
+- `Entretien_ (48)` was a duplicate of `Entretien_ (1)` (same transcript, Rabia/Lucia Monteiro Paredes) — moved to `.trash/` on 2026-06-04.
 
 ## Vault Overview
 
-- Total raw copies: 0
-- Total non-text files (pointer-only): 0
-- Dictionary status: not built
-- Mapping status: not started
+- Total raw copies: 9
+- Total non-text files (pointer-only): 3
+- Dictionary status: built (2026-06-04)
+- Mapping status: complete (all 9 raw copies have YAML headers; 1 raw folder index; 5 concept indexes)
