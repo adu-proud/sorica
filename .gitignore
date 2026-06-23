@@ -1,5 +1,7 @@
 # Research data / private corpus
 entretiens/
+05_agent_reports/
+raw/
 
 # OS junk
 .DS_Store
