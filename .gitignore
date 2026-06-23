@@ -1,7 +1,13 @@
 # Research data / private corpus
 entretiens/
-05_agent_reports/
-raw/
+
+# Generated/private agent reports
+05_agent_reports/*
+!05_agent_reports/.gitkeep
+
+# Private copied source material
+01_llm_zone/raw/*
+!01_llm_zone/raw/.gitkeep
 
 # OS junk
 .DS_Store

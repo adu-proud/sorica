@@ -194,6 +194,12 @@ This repository differs from the original Pilosa / Spinosa framework in several 
 | Research workflow | General framework               | Customized for our own research use       |
 | Project identity  | Pilosa / Spinosa                | Independent derivative project           |
 
+## Private and Generated Folders 
+Some folders are required by the framework but are intentionally not versioned with their contents: 
+- `01_llm_zone/raw/` contains local copies of source materials from the user's Root Vault. 
+- `05_agent_reports/` contains generated reports produced during startup and agent workflows. For privacy and security reasons, the contents of these folders are ignored by Git. When setting up the project locally, keep these folders in place, but do not commit personal research materials, interview transcripts, generated reports, or private corpus files.
+
+
 ## License
 
 This project is based on software originally licensed under the **PolyForm Noncommercial 1.0.0** license.
